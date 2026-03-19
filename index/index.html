@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>개인 학습 저장소</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0a0a0f; --surface:#111118; --surface2:#1a1a25;
+      --border:#2a2a3a; --accent:#6c63ff; --accent2:#ff6584;
+      --accent3:#43e97b; --text:#e8e8f0; --text-dim:#7a7a9a;
+      --text-faint:#3a3a5a; --radius:12px;
+      --mono:'JetBrains Mono',monospace;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html, body { height:100%; overflow:hidden; }
+
+    body {
+      background:var(--bg); color:var(--text);
+      font-family:'Noto Sans KR',sans-serif;
+    }
+
+    /* 배경 그리드 */
+    body::before {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(108,99,255,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255,101,132,.06) 0%, transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--text-faint) 39px, var(--text-faint) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, var(--text-faint) 39px, var(--text-faint) 40px);
+      opacity:.3;
+    }
+
+    /* ══════════════════════
+       뷰 전환 시스템
+    ══════════════════════ */
+    #home-view, #preview-view {
+      position:fixed; inset:0;
+      transition:opacity .25s ease;
+    }
+    /* 홈: 기본 active */
+    #home-view {
+      z-index:10; overflow-y:auto;
+      opacity:1; pointer-events:all;
+    }
+    #home-view.hidden {
+      opacity:0; pointer-events:none;
+    }
+    /* 미리보기: 기본 숨김 */
+    #preview-view {
+      z-index:20;
+      display:flex; flex-direction:column;
+      background:var(--bg);
+      opacity:0; pointer-events:none;
+    }
+    #preview-view.visible {
+      opacity:1; pointer-events:all;
+    }
+
+    /* ══════════════════════
+       홈 스타일
+    ══════════════════════ */
+    .home-inner { position:relative; z-index:1; }
+
+    .site-header { padding:48px 48px 0; }
+    .site-header::after {
+      content:''; display:block; height:1px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2),transparent);
+      margin-top:32px;
+    }
+    .header-label {
+      font-family:var(--mono); font-size:11px; color:var(--accent);
+      letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;
+    }
+    .site-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(48px,8vw,96px); letter-spacing:4px; line-height:1;
+      background:linear-gradient(135deg,#fff 0%,var(--accent) 50%,var(--accent2) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .header-meta { display:flex; align-items:center; gap:16px; margin-top:16px; }
+    .badge {
+      font-family:var(--mono); font-size:11px;
+      padding:4px 10px; border-radius:100px; border:1px solid;
+    }
+    .badge-py   { border-color:#3572A5; color:#3572A5; background:rgba(53,114,165,.1); }
+    .badge-html { border-color:#e34c26; color:#e34c26; background:rgba(227,76,38,.1); }
+    .badge-css  { border-color: #be0bbe; color: #be0bbe; background: rgba(218, 20, 218, .1); }
+    .badge-JS   { border-color: #3df33d; color: #3df33d; background: rgba(62, 242, 95, .1); } 
+    .badge-sql  { border-color: #e8e80a; color:#e8e80a; background: rgba(254, 254, 59, .1); }
+
+    .main-content {
+      padding:48px;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:28px;
+    }
+    .category-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:var(--radius); overflow:hidden;
+      transition:border-color .3s,transform .3s; animation:fadeUp .5s ease both;
+    }
+    .category-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .category-card:nth-child(1){animation-delay:.05s}
+    .category-card:nth-child(2){animation-delay:.15s}
+    .category-card:nth-child(3){animation-delay:.25s}
+
+    .category-header {
+      padding:20px 24px; display:flex; align-items:center; gap:12px;
+      border-bottom:1px solid var(--border); background:var(--surface2);
+    }
+    .category-icon {
+      width:36px; height:36px; border-radius:8px;
+      display:flex; align-items:center; justify-content:center; font-size:18px;
+    }
+    .category-title { font-size:16px; font-weight:700; letter-spacing:.5px; }
+
+    .subcategory { border-bottom:1px solid var(--border); }
+    .subcategory:last-child { border-bottom:none; }
+
+    /* ── 폴더 토글 헤더 ── */
+    .folder-toggle {
+      padding:11px 24px; display:flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.02);
+      cursor:pointer; user-select:none;
+      transition:background .15s;
+    }
+    .folder-toggle:hover { background:rgba(108,99,255,.06); }
+
+    .folder-chevron {
+      font-size:10px; color:var(--text-dim);
+      transition:transform .22s ease; flex-shrink:0;
+      display:inline-block;
+    }
+    .folder-toggle.closed .folder-chevron { transform:rotate(-90deg); }
+
+    .folder-emoji { font-size:13px; flex-shrink:0; }
+    .folder-name {
+      font-family:var(--mono); font-size:11px; color:var(--text-dim);
+      letter-spacing:1px; text-transform:uppercase; flex:1;
+    }
+    .folder-count {
+      font-family:var(--mono); font-size:10px; color:var(--text-faint);
+    }
+
+    /* ── 폴더 바디 (접기/펼치기 애니메이션) ── */
+    .folder-body {
+      overflow:hidden;
+      max-height:2000px;
+      transition:max-height .3s cubic-bezier(.4,0,.2,1), opacity .25s ease;
+      opacity:1;
+    }
+    .folder-body.closed {
+      max-height:0;
+      opacity:0;
+    }
+
+    .file-list { padding:8px 0; }
+    .file-item {
+      display:flex; align-items:center; gap:10px; padding:10px 24px;
+      cursor:pointer; transition:background .15s; user-select:none;
+    }
+    .file-item:hover { background:rgba(108,99,255,.08); }
+    .file-item:hover .file-name { color:var(--accent); }
+    .file-item:hover .hint { opacity:1; }
+
+    .file-icon {
+      font-family:var(--mono); font-size:10px;
+      padding:2px 6px; border-radius:4px; flex-shrink:0;
+    }
+    .icon-py   { background:rgba(53,114,165,.2); color:#5a9fd4; }
+    .icon-html { background:rgba(227,76,38,.2);  color:#e34c26; }
+    .icon-css  { background: rgba(218, 20, 218, .2); color: #be0bbe; }
+    .icon-js   { background: rgba(62, 242, 95, .2); color: #3df33d; }
+    .icon-sql  { background: rgba(254, 254, 59, .2); color: #e8e80a; }
+
+    .file-name { font-size:13px; font-weight:500; flex:1; transition:color .15s; }
+    .hint { font-size:10px; color:var(--text-faint); font-family:var(--mono); opacity:0; transition:opacity .15s; }
+    .empty-cell { padding:16px 24px; font-size:12px; color:var(--text-faint); font-family:var(--mono); font-style:italic; }
+
+    /* ══════════════════════
+       미리보기 뷰 스타일
+    ══════════════════════ */
+    .topbar {
+      background:var(--surface); border-bottom:1px solid var(--border);
+      padding:0 20px; height:52px; flex-shrink:0;
+      display:flex; align-items:center; gap:14px;
+    }
+    .btn {
+      display:flex; align-items:center; gap:6px; padding:7px 16px;
+      border-radius:8px; font-family:'Noto Sans KR',sans-serif; font-size:13px;
+      cursor:pointer; transition:all .2s; flex-shrink:0; text-decoration:none;
+    }
+    .btn-ghost { background:transparent; border:1px solid var(--border); color:var(--text-dim); }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); background:rgba(108,99,255,.08); }
+    .btn-newtab { background:transparent; border:1px solid var(--border); color:var(--text-dim); }
+    .btn-newtab:hover { border-color:var(--accent2); color:var(--accent2); background:rgba(255,101,132,.08); }
+
+    .topbar-path { flex:1; display:flex; align-items:center; gap:5px; overflow:hidden; min-width:0; }
+    .path-seg { font-family:var(--mono); font-size:11px; color:var(--text-dim); white-space:nowrap; }
+    .path-seg.cur { color:var(--text); }
+    .path-sep { color:var(--text-faint); font-size:11px; flex-shrink:0; }
+
+    /* 패널 레이아웃 */
+    .preview-body { flex:1; display:flex; overflow:hidden; min-height:0; }
+
+    /* 코드 패널 */
+    #panel-code {
+      display:flex; flex-direction:column; overflow:hidden;
+      width:100%; transition:width .3s ease; flex-shrink:0;
+    }
+    #panel-code.split { width:50%; border-right:1px solid var(--border); }
+
+    .panel-label {
+      display:flex; align-items:center; gap:8px; flex-shrink:0;
+      padding:9px 18px; font-family:var(--mono); font-size:10px;
+      letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim);
+      background:var(--surface2); border-bottom:1px solid var(--border);
+    }
+    .dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .dot-green { background:var(--accent3); }
+    .dot-red   { background:var(--accent2); }
+
+    /* 코드 pre */
+    #code-pre {
+      flex:1; overflow:auto; margin:0;
+      padding:28px 32px;
+      font-family:var(--mono); font-size:13px; line-height:1.85;
+      color:#cdd6f4; white-space:pre; background:var(--bg); tab-size:4;
+    }
+    #code-pre.is-loading { color:var(--text-dim); font-style:italic; }
+
+    /* 렌더 패널 */
+    #panel-render {
+      width:50%; display:flex; flex-direction:column; overflow:hidden; flex-shrink:0;
+    }
+    #render-iframe { flex:1; width:100%; border:none; background:#fff; }
+
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @media (max-width:768px) {
+      .site-header { padding:28px 20px 0; }
+      .main-content { padding:24px 20px; grid-template-columns:1fr; }
+      #panel-code.split { width:100%; border-right:none; }
+      #panel-render { display:none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ 홈 ════ -->
+<div id="home-view">
+  <div class="home-inner">
+    <header class="site-header">
+      <p class="header-label">// Personal Repository</p>
+      <h1 class="site-title">학습 저장소</h1>
+      <div class="header-meta">
+        <span class="badge badge-py">Python</span>
+        <span class="badge badge-html">HTML / CSS / JS</span>
+        <span class="badge badge-sql">SQL</span>
+      </div>
+    </header>
+    <main class="main-content">
+
+      <!-- 백준 -->
+      <div class="category-card">
+        <div class="category-header">
+          <div class="category-icon" style="background:rgba(53,114,165,.15)">🐍</div>
+          <span class="category-title">백준 (Python)</span>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">#2000</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./000/Baejoon/2000/2751.수 정렬하기 2.py" data-type="code">
+                <span class="file-icon icon-py">py</span><span class="file-name">수 정렬하기 2</span><span class="hint">클릭하여 열기 →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">#5000</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./000/Baejoon/5000/5073.삼각형과 세 변.py" data-type="code">
+                <span class="file-icon icon-py">py</span><span class="file-name">삼각형과 세 변</span><span class="hint">클릭하여 열기 →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">#20000</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./000/Baejoon/20000/23974.ZOAC 4.py" data-type="code">
+                <span class="file-icon icon-py">py</span><span class="file-name">ZOAC 4</span><span class="hint">클릭하여 열기 →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 프로그래머스 -->
+      <div class="category-card">
+        <div class="category-header">
+          <div class="category-icon" style="background:rgba(255,101,132,.15)">💡</div>
+          <span class="category-title">프로그래머스</span>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">코딩테스트 입문</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./000/programmers/코딩테스트 입문/두 수의 곱 구하기.py" data-type="code"><span class="file-icon icon-py">py</span><span class="file-name">두 수의 곱 구하기</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="./000/programmers/코딩테스트 입문/두 수의 나눗셈.py" data-type="code"><span class="file-icon icon-py">py</span><span class="file-name">두 수의 나눗셈</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="./000/programmers/코딩테스트 입문/두 수의 차 구하기.py" data-type="code"><span class="file-icon icon-py">py</span><span class="file-name">두 수의 차 구하기</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="./000/programmers/코딩테스트 입문/두 수의 합 구하기.py" data-type="code"><span class="file-icon icon-py">py</span><span class="file-name">두 수의 합 구하기</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="../000/programmers/코딩테스트 입문/몫 구하기.py" data-type="code"><span class="file-icon icon-py">py</span><span class="file-name">몫 구하기</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="../000/programmers/코딩테스트 입문/옹알이 (1).py" data-type="code"><span class="file-icon icon-py">py</span><span class="file-name">옹알이 (1)</span><span class="hint">클릭하여 열기 →</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HTML / CSS / JS -->
+      <div class="category-card">
+        <div class="category-header">
+          <div class="category-icon" style="background:rgba(67,233,123,.12)">🌐</div>
+          <span class="category-title">HTML / CSS / JavaScript</span>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">02</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./001/02/result/web.html" data-type="html"><span class="file-icon icon-html">html</span><span class="file-name">웹 개발 기초</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="./001/02/index.html" data-type="html"><span class="file-icon icon-html">html</span><span class="file-name">웹 개발 입문</span><span class="hint">클릭하여 열기 →</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">03</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./001/03/css/structure.css" data-type="css"><span class="file-icon icon-css">css</span><span class="file-name">웹 개발 기초</span><span class="hint">클릭하여 열기 →</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">추가 예정</span>
+          </div>
+          <div class="folder-body">
+            <div class="empty-cell">// 아직 파일이 없습니다</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SQL -->
+      <div class="category-card">
+        <div class="category-header">
+          <div class="category-icon" style="background:rgba(67,233,123,.12)">📊</div>
+          <span class="category-title">SQL</span>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">예제 파일</span>
+          </div>
+          <div class="folder-body">
+            <div class="file-list">
+              <div class="file-item" data-src="./web/basic.sql" data-type="sql"><span class="file-icon icon-sql">sql</span><span class="file-name">웹 개발 기초</span><span class="hint">클릭하여 열기 →</span></div>
+              <div class="file-item" data-src="./web/intro.sql" data-type="sql"><span class="file-icon icon-sql">sql</span><span class="file-name">웹 개발 입문</span><span class="hint">클릭하여 열기 →</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="subcategory">
+          <div class="folder-toggle" onclick="toggleFolder(this)">
+            <span class="folder-chevron">▾</span>
+            <span class="folder-emoji">📁</span>
+            <span class="folder-name">추가 예정</span>
+          </div>
+          <div class="folder-body">
+            <div class="empty-cell">// 아직 파일이 없습니다</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ════ 미리보기 ════ -->
+<div id="preview-view">
+  <div class="topbar">
+    <button class="btn btn-ghost" id="btn-home">← 홈으로</button>
+    <div class="topbar-path" id="topbar-path"></div>
+    <a class="btn btn-newtab" id="btn-newtab" href="#" target="_blank">↗ 새 탭</a>
+  </div>
+  <div class="preview-body">
+
+    <!-- 코드 패널: fetch로 읽어서 pre에 표시 -->
+    <div id="panel-code">
+      <div class="panel-label"><span class="dot dot-green"></span>소스 코드</div>
+      <pre id="code-pre"></pre>
+    </div>
+
+    <!-- 렌더 패널: HTML 파일 전용 -->
+    <div id="panel-render" style="display:none">
+      <div class="panel-label"><span class="dot dot-red"></span>렌더링 결과</div>
+      <iframe id="render-iframe"></iframe>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ── 폴더 접기/펼치기 ── */
+function toggleFolder(toggle) {
+  var body = toggle.nextElementSibling;
+  var isClosed = body.classList.toggle('closed');
+  toggle.classList.toggle('closed', isClosed);
+  var emoji = toggle.querySelector('.folder-emoji');
+  emoji.textContent = isClosed ? '📂' : '📁';
+}
+
+(function(){
+  'use strict';
+
+  var homeView    = document.getElementById('home-view');
+  var previewView = document.getElementById('preview-view');
+  var topbarPath  = document.getElementById('topbar-path');
+  var btnNewtab   = document.getElementById('btn-newtab');
+  var panelCode   = document.getElementById('panel-code');
+  var panelRender = document.getElementById('panel-render');
+  var codePre     = document.getElementById('code-pre');
+  var renderIframe= document.getElementById('render-iframe');
+
+  var curSrc = '';
+
+  /* breadcrumb */
+  function makeCrumb(src) {
+    var parts = src.replace(/^\.\//, '').split('/');
+    return parts.map(function(p, i){
+      var cls = i === parts.length - 1 ? 'path-seg cur' : 'path-seg';
+      return (i ? '<span class="path-sep">/</span>' : '')
+           + '<span class="' + cls + '">' + p + '</span>';
+    }).join('');
+  }
+
+  /* 미리보기 열기 */
+  function openPreview(src, type) {
+    curSrc = src;
+    topbarPath.innerHTML = makeCrumb(src);
+    btnNewtab.href = src;
+
+    var isHTML = (type === 'html');
+
+    /* 뷰 전환 먼저 */
+    homeView.classList.add('hidden');
+    previewView.classList.add('visible');
+
+    /* 로딩 표시 */
+    codePre.textContent = '불러오는 중...';
+    codePre.classList.add('is-loading');
+
+    /* 패널 레이아웃 */
+    if (isHTML) {
+      panelCode.classList.add('split');
+      panelRender.style.display = 'flex';
+      renderIframe.src = src;   /* 렌더 iframe은 바로 로드 */
+    } else {
+      panelCode.classList.remove('split');
+      panelRender.style.display = 'none';
+      renderIframe.src = '';
+    }
+
+    /* fetch로 소스 코드 읽기 */
+    fetch(src)
+      .then(function(res){
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function(text){
+        codePre.classList.remove('is-loading');
+        codePre.textContent = text;   /* textContent → HTML 자동 이스케이프 */
+      })
+      .catch(function(err){
+        codePre.classList.remove('is-loading');
+        codePre.textContent =
+          '⚠  소스 코드를 불러올 수 없습니다.\n\n'
+          + err.message + '\n\n'
+          + 'VS Code Live Server 또는\n'
+          + 'python -m http.server 8080\n'
+          + '으로 실행해 주세요.';
+      });
+  }
+
+  /* 홈으로 */
+  function goHome() {
+    previewView.classList.remove('visible');
+    homeView.classList.remove('hidden');
+    codePre.textContent = '';
+    renderIframe.src = '';
+    panelCode.classList.remove('split');
+    panelRender.style.display = 'none';
+    curSrc = '';
+  }
+
+  /* 이벤트 */
+  homeView.addEventListener('click', function(e){
+    var item = e.target.closest('.file-item[data-src]');
+    if (item) openPreview(item.dataset.src, item.dataset.type);
+  });
+
+  document.getElementById('btn-home').addEventListener('click', goHome);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && previewView.classList.contains('visible')) goHome();
+  });
+})();
+</script>
+</body>
+</html>
