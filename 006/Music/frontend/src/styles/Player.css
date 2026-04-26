@@ -1,0 +1,341 @@
+.player-page {
+    min-height: calc(100vh - 52px);
+    background-color: #f5f0e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+.player-card {
+    width: 340px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* CD 래퍼 */
+.cd-wrapper {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+}
+
+/* CD 디스크 */
+.cd-disc {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: #1a1a1a;
+    border: 6px solid #2c2c2c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 재생 중 회전 — 이미지도 함께 회전 */
+.cd-disc.playing {
+    animation: spin 4s linear infinite;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 일시정지 시 현재 각도에서 멈춤 */
+.cd-disc:not(.playing) {
+    animation-play-state: paused;
+}
+
+/* CD 커버 이미지 — disc 안에 꽉 차게 */
+.cd-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.85;
+}
+
+/* CD 중앙 구멍 */
+.cd-center {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #f5f0e8;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+/* CD 회전 애니메이션 */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* 당기는 줄 */
+.pull-string {
+    width: 1px;
+    height: 48px;
+    background-color: #bbb;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.pull-string::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #999;
+}
+
+.pull-string:hover               { background-color: #555; }
+.pull-string:hover::after        { background-color: #333; }
+
+/* 곡 정보 */
+.song-info  { text-align: center; }
+
+.song-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+    letter-spacing: 0.04em;
+    margin: 0 0 4px;
+}
+
+.song-artist {
+    font-size: 12px;
+    color: #999;
+    letter-spacing: 0.06em;
+    margin: 0;
+}
+
+/* 프로그레스 바 */
+.progress-bar-wrapper {
+    width: 100%;
+    height: 2px;
+    background-color: #e8e4dc;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #1a1a1a;
+    border-radius: 1px;
+    transition: width 0.5s linear;
+}
+
+/* 재생시간 */
+.time-display {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 0.04em;
+    margin-top: -16px;
+}
+
+/* 곡 목록 */
+.song-list {
+    width: 340px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.song-list-item {
+    padding: 12px 16px;
+    background-color: #fff;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #333;
+    transition: background-color 0.15s;
+}
+
+.song-list-item:hover          { background-color: #eee9e1; }
+.song-list-item.active         { background-color: #1a1a1a; color: #f5f0e8; }
+
+.song-list-artist              { font-size: 11px; color: #999; }
+.song-list-item.active .song-list-artist { color: #aaa; }
+
+/* 가사 오버레이 */
+.lyrics-overlay-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-height: 40vh;
+    background: linear-gradient(
+        to top,
+        rgba(245, 240, 232, 0.98),
+        rgba(245, 240, 232, 0.6)
+    );
+    padding: 32px 24px 48px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.lyrics-line-bar {
+    text-align: center;
+    font-size: 14px;
+    color: #bbb;
+    letter-spacing: 0.08em;
+    line-height: 2.2;
+    transition: color 0.4s ease, font-size 0.4s ease;
+}
+
+.lyrics-line-bar.active {
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Spinner */
+@keyframes spinSmall {
+    to { transform: rotate(360deg); }
+}
+
+/* 플레이어 + 가사 나란히 배치 */
+.player-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 40px;
+    width: 100%;
+    max-width: 760px;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+/* 왼쪽 — 플레이어 영역 */
+.player-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* 오른쪽 — 가사 패널 */
+.lyrics-panel {
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #ede8df;
+    padding: 24px;
+    flex: 1;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.06);
+    min-width: 0;
+}
+
+.lyrics-panel-title {
+    font-size: 11px;
+    color: #bbb;
+    letter-spacing: 0.1em;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+}
+
+.lyrics-panel-song {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lyrics-panel-artist {
+    font-size: 12px;
+    color: #aaa;
+    margin: 0 0 16px;
+}
+
+.lyrics-panel-divider {
+    border: none;
+    border-top: 1px solid #f0ebe2;
+    margin: 0 0 16px;
+}
+
+/* 가사 스크롤 영역 */
+.lyrics-panel-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 4px;
+}
+
+.lyrics-panel-body::-webkit-scrollbar {
+    width: 3px;
+}
+
+.lyrics-panel-body::-webkit-scrollbar-thumb {
+    background: #e0dbd2;
+    border-radius: 2px;
+}
+
+/* 가사 한 줄 */
+.lyrics-panel-line {
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    transition: color 0.3s ease, font-size 0.3s ease, font-weight 0.3s ease;
+    padding: 2px 0;
+    cursor: default;
+}
+
+.lyrics-panel-line.active {
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.lyrics-panel-line.near {
+    color: #888;
+}
+
+/* 가사 없을 때 */
+.lyrics-panel-empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.lyrics-panel-empty p {
+    font-size: 12px;
+    color: #ccc;
+    letter-spacing: 0.06em;
+    margin: 0;
+}

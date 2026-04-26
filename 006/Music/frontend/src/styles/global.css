@@ -1,0 +1,190 @@
+/* ── 리셋 ── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
+    background-color: #f5f0e8;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+input, textarea {
+    font-family: inherit;
+}
+
+/* ── 네비게이션 바 ── */
+.navbar {
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ede8df;
+    padding: 0 32px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar-logo {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.navbar-logo span {
+    color: #aaa;
+    font-weight: 400;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-btn {
+    padding: 6px 14px;
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0.06em;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-btn:hover {
+    background: #f5f0e8;
+    color: #1a1a1a;
+}
+
+.nav-btn.active {
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.nav-btn.primary {
+    background: #1a1a1a;
+    color: #f5f0e8;
+    margin-left: 8px;
+}
+
+.nav-btn.primary:hover {
+    background: #333;
+}
+
+.nav-btn.danger {
+    color: #c0392b;
+}
+
+.nav-btn.danger:hover {
+    background: #fdf0ee;
+}
+
+/* ── 페이지 공통 래퍼 ── */
+.page-wrapper {
+    min-height: calc(100vh - 52px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px 80px;
+}
+
+/* ── 카드 ── */
+.card {
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ── 공통 입력 ── */
+.input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e0dbd2;
+    border-radius: 2px;
+    font-size: 13px;
+    background: #faf9f6;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input:focus {
+    border-color: #aaa;
+}
+
+/* ── 공통 버튼 ── */
+.btn {
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    border: none;
+    transition: background 0.15s;
+}
+
+.btn-dark {
+    background: #1a1a1a;
+    color: #f5f0e8;
+}
+
+.btn-dark:hover { background: #333; }
+
+.btn-ghost {
+    background: transparent;
+    color: #888;
+    border: 1px solid #ddd;
+}
+
+.btn-ghost:hover {
+    background: #f5f0e8;
+    color: #555;
+}
+
+.btn-dashed {
+    background: transparent;
+    color: #aaa;
+    border: 1px dashed #ccc;
+    width: 100%;
+}
+
+.btn-dashed:hover {
+    border-color: #aaa;
+    color: #555;
+}
+
+/* ── 에러 텍스트 ── */
+.error-text {
+    font-size: 12px;
+    color: #c0392b;
+}
+
+/* ── 빈 상태 안내 ── */
+.empty-text {
+    text-align: center;
+    color: #bbb;
+    font-size: 12px;
+    padding: 40px 0;
+    letter-spacing: 0.06em;
+}
+
+/* ── 구분선 ── */
+.divider {
+    border: none;
+    border-top: 1px solid #f0ebe2;
+    margin: 16px 0;
+}

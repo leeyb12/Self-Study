@@ -1,0 +1,132 @@
+/* 1. 배경 레이어: 화면 전체를 덮음 */
+.lyrics-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* 배경을 조금 더 어둡게 하여 몰입감 부여 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px; /* 모바일 대응을 위한 여백 */
+}
+
+/* 2. 모달 본체: 높이와 스크롤 최적화 */
+.lyrics-modal {
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 32px;
+    width: 440px;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 201;
+    pointer-events: auto;
+    border: 1px solid #ede8df;
+}
+
+/* 3. 헤더: 제목과 아티스트 */
+.lyrics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0; /* 헤더 크기 고정 */
+    margin-bottom: 16px;
+}
+
+.lyrics-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.lyrics-artist {
+    font-size: 13px;
+    color: #888;
+    margin: 4px 0 0;
+}
+
+/* 4. 가사 스크롤 영역: 여기가 핵심 */
+.lyrics-box {
+    background: #faf9f6;
+    border-radius: 4px;
+    padding: 16px;
+    flex: 1; /* 남은 공간을 모두 차지 */
+    overflow-y: auto; /* 가사 양에 따라 내부 스크롤 생성 */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 스크롤바 디자인 (선택사항 - 더 깔끔하게) */
+.lyrics-box::-webkit-scrollbar {
+    width: 4px;
+}
+.lyrics-box::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+}
+
+/* 5. 가사 한 줄 디자인 */
+.lyrics-line {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+}
+
+.lyrics-time {
+    font-size: 11px;
+    color: #bbb;
+    min-width: 35px;
+    font-variant-numeric: tabular-nums; /* 숫자 폭 고정 */
+}
+
+.lyrics-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 6. 하단 버튼 영역 */
+.lyrics-buttons {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    gap: 8px;
+    margin-top: 16px;
+    flex-shrink: 0;
+}
+
+/* 공통 버튼 스타일 */
+.btn-dark, .btn-ghost {
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-dark {
+    background: #1a1a1a;
+    color: #fff;
+}
+.btn-dark:hover { background: #333; }
+
+.btn-ghost {
+    background: #fff;
+    color: #666;
+    border: 1px solid #ddd;
+}
+.btn-ghost:hover { background: #f9f9f9; border-color: #ccc; }
+
+.btn-danger:hover {
+    color: #c0392b;
+    background: #fff5f5;
+    border-color: #f5c6cb;
+}

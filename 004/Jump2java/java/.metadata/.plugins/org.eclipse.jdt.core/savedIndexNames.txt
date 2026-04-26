@@ -1,1 +1,0 @@
-INDEX VERSION 1.134+D:\lyb\Self-Study\004\Jump2java\java\.metadata\.plugins\org.eclipse.jdt.core

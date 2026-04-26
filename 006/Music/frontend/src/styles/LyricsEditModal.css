@@ -1,0 +1,244 @@
+.edit-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+}
+
+.edit-modal {
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #ede8df;
+    padding: 32px;
+    width: 480px;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* 헤더 */
+.edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.edit-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+}
+
+.edit-subtitle {
+    font-size: 12px;
+    color: #999;
+    margin: 0;
+}
+
+.edit-close {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.edit-close:hover { color: #555; }
+
+/* 구분선 */
+.edit-divider {
+    border: none;
+    border-top: 1px solid #f0ebe2;
+    margin: 0 0 20px;
+}
+
+/* 에러 */
+.edit-error {
+    font-size: 12px;
+    color: #c0392b;
+    margin: 0 0 12px;
+}
+
+/* 탭 */
+.edit-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #f0ebe2;
+}
+
+.edit-tab {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 12px;
+    color: #aaa;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.06em;
+    margin-bottom: -1px;
+    transition: color 0.15s;
+}
+
+.edit-tab.active {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+}
+
+/* 간격 설정 */
+.edit-interval-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.edit-interval-label {
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.edit-interval-input {
+    width: 56px;
+    padding: 6px 8px;
+    border: 1px solid #e0dbd2;
+    border-radius: 2px;
+    font-size: 12px;
+    background: #faf9f6;
+    outline: none;
+    text-align: center;
+    font-family: inherit;
+}
+
+.edit-interval-unit {
+    font-size: 11px;
+    color: #aaa;
+}
+
+.edit-interval-hint {
+    font-size: 11px;
+    color: #ccc;
+    margin-left: auto;
+    letter-spacing: 0.02em;
+}
+
+/* 가사 textarea */
+.edit-textarea {
+    width: 100%;
+    height: 240px;
+    padding: 12px;
+    border: 1px solid #e0dbd2;
+    border-radius: 2px;
+    font-size: 13px;
+    background: #faf9f6;
+    outline: none;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.9;
+    box-sizing: border-box;
+    color: #333;
+}
+
+.edit-textarea:focus {
+    border-color: #aaa;
+}
+
+.edit-textarea::placeholder {
+    color: #ccc;
+}
+
+/* 미리보기 */
+.edit-preview {
+    height: 240px;
+    overflow-y: auto;
+    background: #faf9f6;
+    border-radius: 2px;
+    border: 1px solid #e0dbd2;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-preview-empty {
+    text-align: center;
+    color: #ccc;
+    font-size: 13px;
+    margin: auto 0;
+}
+
+.edit-preview-line {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+}
+
+.edit-preview-time {
+    font-size: 10px;
+    color: #ccc;
+    min-width: 36px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.edit-preview-text {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 버튼 영역 */
+.edit-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #f0ebe2;
+    align-items: center;
+}
+
+.edit-btn-dark {
+    padding: 9px 24px;
+    background: #1a1a1a;
+    color: #f5f0e8;
+    border: none;
+    border-radius: 2px;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    font-family: inherit;
+}
+
+.edit-btn-dark:hover    { background: #333; }
+.edit-btn-dark:disabled { background: #bbb; cursor: not-allowed; }
+
+.edit-btn-ghost {
+    padding: 9px 20px;
+    background: transparent;
+    color: #888;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    font-family: inherit;
+}
+
+.edit-btn-ghost:hover { background: #f5f0e8; color: #555; }
+
+.edit-btn-cancel {
+    margin-left: auto;
+}
