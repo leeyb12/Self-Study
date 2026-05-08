@@ -1,0 +1,11 @@
+/* about_me.css */
+section {
+  font-family: 'Poppins', sans-serif;
+  padding: 5rem 0;
+}
+section:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+section .title {
+  margin-bottom: 3rem;
+}
