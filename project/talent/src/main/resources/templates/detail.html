@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>재능 상세</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <img th:src="${service.imageUrl != null ? service.imageUrl : 'https://via.placeholder.com/800x400'}" class="img-fluid rounded mb-4" alt="재능 이미지">
+            <h1 th:text="${service.title}">제목</h1>
+            <hr>
+            <div class="lead" th:text="${service.description}" style="white-space: pre-wrap;">설명</div>
+        </div>
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-body">
+                    <h3 class="card-title text-primary mb-4" th:text="${#numbers.formatDecimal(service.price, 0, 'COMMA', 0, 'POINT')} + '원'">가격</h3>
+                    <form action="/apply" method="post">
+                        <input type="hidden" name="serviceId" th:value="${service.id}">
+                        <div class="mb-3">
+                            <label class="form-label">신청자 성함</label>
+                            <input type="text" name="applicantName" class="form-control" placeholder="성함을 입력하세요" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">지금 신청하기</button>
+                            <a href="/" class="btn btn-outline-secondary">목록으로</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

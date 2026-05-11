@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pknu26.talent.mapper.ServiceMapper">
+
+    <select id="findAllServices" resultType="TalentService">
+        SELECT * FROM SERVICES ORDER BY CREATED_AT DESC
+    </select>
+
+    <select id="findServiceById" resultType="TalentService">
+        SELECT * FROM SERVICES WHERE ID = #{id}
+    </select>
+
+    <insert id="insertService" parameterType="TalentService">
+        INSERT INTO SERVICES (TITLE, DESCRIPTION, PRICE, IMAGE_URL)
+        VALUES (#{title}, #{description}, #{price}, #{imageUrl})
+    </insert>
+
+    <insert id="insertApplication" parameterType="Application">
+        INSERT INTO APPLICATIONS (SERVICE_ID, APPLICANT_NAME, STATUS)
+        VALUES (#{serviceId}, #{applicantName}, 'PENDING')
+    </insert>
+
+</mapper>
