@@ -30,26 +30,26 @@ public class SongController {
         return ResponseEntity.ok(songService.getOne(id));
     }
 
-    @PostMapping
+   @PostMapping
     public ResponseEntity<?> upload(
-            @RequestParam String title,
-            @RequestParam String artist,
-            @RequestParam(required = false, defaultValue = "") String lyrics,
-            @RequestParam MultipartFile musicFile,
-            @RequestParam(required = false) MultipartFile imageFile,
+            @RequestParam("title")     String title,
+            @RequestParam("artist")    String artist,
+            @RequestParam(value = "lyrics", required = false, defaultValue = "") String lyrics,
+            @RequestParam("musicFile") MultipartFile musicFile,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
             @AuthenticationPrincipal UserDetails userDetails) throws IOException {
 
         songService.upload(title, artist, lyrics, musicFile, imageFile,
-                           userDetails.getUsername());
+                        userDetails.getUsername());
         return ResponseEntity.ok("업로드 완료");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
-            @PathVariable Long id,
-            @RequestParam String title,
-            @RequestParam String artist,
-            @RequestParam(required = false, defaultValue = "") String lyrics,
+            @PathVariable("id")    Long id,
+            @RequestParam("title")  String title,
+            @RequestParam("artist") String artist,
+            @RequestParam(value = "lyrics", required = false, defaultValue = "") String lyrics,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         songService.update(id, title, artist, lyrics, userDetails.getUsername());
@@ -58,9 +58,9 @@ public class SongController {
 
     @PutMapping("/{id}/image")
     public ResponseEntity<?> updateImage(
-            @PathVariable Long id,
-            @RequestParam MultipartFile imageFile,
-            @AuthenticationPrincipal UserDetails userDetails) throws IOException {
+            @PathVariable("id")        Long id,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            @AuthenticationPrincipal   UserDetails userDetails) throws IOException {
 
         return ResponseEntity.ok(
                 songService.updateImage(id, imageFile, userDetails.getUsername()));

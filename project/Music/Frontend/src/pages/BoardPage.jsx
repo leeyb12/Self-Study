@@ -1,12 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 
 export default function BoardPage() {
     const { isLoggedIn, username } = useAuth();
-    const navigate = useNavigate();
 
     const [posts,       setPosts]       = useState([]);
     const [selected,    setSelected]    = useState(null);
@@ -165,7 +163,6 @@ export default function BoardPage() {
             <div style={headerStyle}>
                 <span style={{ fontSize: '14px', fontWeight: 600 }}>게시판</span>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                    <button onClick={() => navigate('/')} style={ghostBtnStyle}>플레이어</button>
                     {isLoggedIn && (
                         <button onClick={() => { setWriting(!writing); setSelected(null); setEditing(false); setForm({ title: '', content: '' }); setFiles([]); setError(''); }} style={darkBtnStyle}>
                             {writing ? '취소' : '글쓰기'}

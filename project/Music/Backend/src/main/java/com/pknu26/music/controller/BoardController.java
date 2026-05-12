@@ -26,15 +26,15 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BoardDTO> getOne(@PathVariable Long id) {
+    public ResponseEntity<BoardDTO> getOne(@PathVariable("id") Long id) {
         return ResponseEntity.ok(boardService.getOne(id));
     }
 
     @PostMapping
     public ResponseEntity<BoardDTO> create(
-            @RequestParam String title,
-            @RequestParam String content,
-            @RequestParam(required = false) List<MultipartFile> files,
+            @RequestParam("title")   String title,
+            @RequestParam("content") String content,
+            @RequestParam(value = "files", required = false) List<MultipartFile> files,
             @AuthenticationPrincipal UserDetails userDetails) throws IOException {
         return ResponseEntity.ok(
                 boardService.create(title, content, files, userDetails.getUsername()));
@@ -42,10 +42,10 @@ public class BoardController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BoardDTO> update(
-            @PathVariable Long id,
-            @RequestParam String title,
-            @RequestParam String content,
-            @RequestParam(required = false) List<MultipartFile> files,
+            @PathVariable("id")      Long id,
+            @RequestParam("title")   String title,
+            @RequestParam("content") String content,
+            @RequestParam(value = "files", required = false) List<MultipartFile> files,
             @AuthenticationPrincipal UserDetails userDetails) throws IOException {
         return ResponseEntity.ok(
                 boardService.update(id, title, content, files, userDetails.getUsername()));
@@ -53,7 +53,7 @@ public class BoardController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @AuthenticationPrincipal UserDetails userDetails) {
         boardService.delete(id, userDetails.getUsername());
         return ResponseEntity.ok("삭제 완료");
@@ -61,21 +61,22 @@ public class BoardController {
 
     @DeleteMapping("/files/{fileId}")
     public ResponseEntity<?> deleteFile(
-            @PathVariable Long fileId,
+            @PathVariable("fileId") Long fileId,
             @AuthenticationPrincipal UserDetails userDetails) {
         boardService.deleteFile(fileId, userDetails.getUsername());
         return ResponseEntity.ok("파일 삭제 완료");
     }
 
     @GetMapping("/{id}/comments")
-    public ResponseEntity<List<CommentDTO>> getComments(@PathVariable Long id) {
+    public ResponseEntity<List<CommentDTO>> getComments(
+            @PathVariable("id") Long id) {
         return ResponseEntity.ok(boardService.getComments(id));
     }
 
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDTO> addComment(
-            @PathVariable Long id,
-            @RequestParam String content,
+            @PathVariable("id")      Long id,
+            @RequestParam("content") String content,
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(
                 boardService.addComment(id, content, userDetails.getUsername()));
@@ -83,8 +84,8 @@ public class BoardController {
 
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<?> deleteComment(
-            @PathVariable Long commentId,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @PathVariable("commentId") Long commentId,
+            @AuthenticationPrincipal   UserDetails userDetails) {
         boardService.deleteComment(commentId, userDetails.getUsername());
         return ResponseEntity.ok("댓글 삭제 완료");
     }

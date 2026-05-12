@@ -6,17 +6,14 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
 
     const initToken = () => {
-        const isNewSession = !sessionStorage.getItem('session_active');
-        if (isNewSession) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            sessionStorage.setItem('session_active', 'true');
-        }
-        return localStorage.getItem('token');
+        // 새로고침 또는 새 탭 → 항상 토큰 초기화
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        return null;
     };
 
     const [token,     setToken]     = useState(initToken);
-    const [username,  setUsername]  = useState(localStorage.getItem('username') ?? '익명');
+    const [username,  setUsername]  = useState('익명');
     const [authReady, setAuthReady] = useState(false);
 
     useEffect(() => {
@@ -33,8 +30,6 @@ export function AuthProvider({ children }) {
         const newToken = res.data.token;
         localStorage.setItem('token',    newToken);
         localStorage.setItem('username', id);
-        sessionStorage.setItem('session_active', 'true');
-        // axios 헤더 즉시 설정 — setToken 이전에 설정해야 fetchSongs가 토큰을 바로 사용
         axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
         setToken(newToken);
         setUsername(id);
@@ -43,7 +38,6 @@ export function AuthProvider({ children }) {
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
-        sessionStorage.removeItem('session_active');
         delete axios.defaults.headers.common['Authorization'];
         setToken(null);
         setUsername('익명');
