@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class ChatHandler extends TextWebSocketHandler {
 
+    // username → session 매핑
     private final Map<String, WebSocketSession> userSessions =
             new ConcurrentHashMap<>();
 
@@ -34,11 +35,13 @@ public class ChatHandler extends TextWebSocketHandler {
         ChatMessageDTO dto = objectMapper.readValue(
                 message.getPayload(), ChatMessageDTO.class);
 
-        dto.setTime(LocalTime.now().format(
-                DateTimeFormatter.ofPattern("HH:mm")));
+        dto.setTime(LocalTime.now()
+                .format(DateTimeFormatter.ofPattern("HH:mm")));
 
+        // 접속 등록
         if ("CONNECT".equals(dto.getType())) {
             userSessions.put(dto.getSender(), session);
+            log.info("유저 등록: {} (현재 {}명)", dto.getSender(), userSessions.size());
             broadcastUserList();
             return;
         }
@@ -46,9 +49,11 @@ public class ChatHandler extends TextWebSocketHandler {
         String json = objectMapper.writeValueAsString(dto);
 
         if ("PRIVATE".equals(dto.getType())) {
+            // 1:1 — 수신자 + 발신자에게만
             sendToUser(dto.getReceiver(), json);
             sendToUser(dto.getSender(),   json);
         } else {
+            // PUBLIC — 전체 브로드캐스트
             broadcast(json);
         }
     }
@@ -56,29 +61,44 @@ public class ChatHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session,
                                       CloseStatus status) throws Exception {
-        userSessions.entrySet()
-                .removeIf(e -> e.getValue().getId().equals(session.getId()));
-        broadcastUserList();
-        log.info("WebSocket 종료: {}", session.getId());
+        String removedUser = null;
+        for (Map.Entry<String, WebSocketSession> e : userSessions.entrySet()) {
+            if (e.getValue().getId().equals(session.getId())) {
+                removedUser = e.getKey();
+                break;
+            }
+        }
+        if (removedUser != null) {
+            userSessions.remove(removedUser);
+            log.info("유저 퇴장: {} (현재 {}명)", removedUser, userSessions.size());
+            broadcastUserList();
+        }
     }
 
     private void sendToUser(String username, String json) throws Exception {
         WebSocketSession target = userSessions.get(username);
         if (target != null && target.isOpen()) {
-            target.sendMessage(new TextMessage(json));
+            synchronized (target) {
+                target.sendMessage(new TextMessage(json));
+            }
         }
     }
 
     private void broadcast(String json) throws Exception {
         for (WebSocketSession s : userSessions.values()) {
-            if (s.isOpen()) s.sendMessage(new TextMessage(json));
+            if (s.isOpen()) {
+                synchronized (s) {
+                    s.sendMessage(new TextMessage(json));
+                }
+            }
         }
     }
 
     private void broadcastUserList() throws Exception {
+        String userList = String.join(",", userSessions.keySet());
         ChatMessageDTO dto = ChatMessageDTO.builder()
                 .type("USER_LIST")
-                .message(String.join(",", userSessions.keySet()))
+                .message(userList)
                 .time(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")))
                 .build();
         broadcast(objectMapper.writeValueAsString(dto));

@@ -50,7 +50,7 @@ export default function Navbar() {
                     {isLoggedIn ? (
                         <>
                             <span style={{ fontSize: '12px', color: '#bbb', padding: '0 4px' }}>
-                                {username}
+                                {username}님
                             </span>
                             <button className="nav-btn danger" onClick={handleLogout}>
                                 로그아웃
