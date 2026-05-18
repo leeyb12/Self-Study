@@ -30,6 +30,19 @@ public class BoardDTO {
         private String fileType;
     }
 
+    // 페이지 응답 DTO
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    public static class PageResponse {
+        private List<BoardDTO> content;
+        private int            page;
+        private int            totalPages;
+        private long           totalElements;
+        private boolean        hasNext;
+        private boolean        hasPrev;
+    }
+
     public static BoardDTO from(Board board) {
         List<FileDTO> files = board.getFiles().stream()
                 .map(f -> new FileDTO(

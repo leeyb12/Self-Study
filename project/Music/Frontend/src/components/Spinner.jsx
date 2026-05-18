@@ -16,7 +16,7 @@ const discStyle = {
     borderRadius: '50%',
     border: '2px solid #e0dbd2',
     borderTopColor: '#1a1a1a',
-    animation: 'spinSmall 0.8s linear infinite',
+    animation: 'spinSmall 0.5s linear infinite',
 };
 const textStyle = {
     fontSize: '12px', color: '#aaa',

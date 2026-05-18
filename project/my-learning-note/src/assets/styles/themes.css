@@ -1,0 +1,13 @@
+:root {
+  --bg: #0d0d0f;
+  --surface: #141417;
+  --text: #e8e6e0;
+  /* ... 나머지 다크모드 변수들 */
+}
+
+:root.light {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --text: #1a1814;
+  /* ... 나머지 라이트모드 변수들 */
+}

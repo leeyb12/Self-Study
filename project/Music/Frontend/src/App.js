@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import Navbar       from './components/Navbar';
-import PlayerPage   from './pages/PlayerPage';
-import LoginPage    from './pages/LoginPage';
-import BoardPage    from './pages/BoardPage';
+import Navbar      from './components/Navbar';
+import PlayerPage  from './pages/PlayerPage';
+import LoginPage   from './pages/LoginPage';
+import BoardPage   from './pages/BoardPage';
 import RegisterPage from './pages/RegisterPage';
 
 function PrivateRoute({ children }) {
@@ -24,7 +24,7 @@ function AppRoutes() {
                         <PlayerPage />
                     </PrivateRoute>
                 } />
-                <Route path="/board"    element={<BoardPage />} />
+                <Route path="/board"     element={<BoardPage />} />
                 <Route path="*"         element={<Navigate to="/login" />} />
             </Routes>
         </>

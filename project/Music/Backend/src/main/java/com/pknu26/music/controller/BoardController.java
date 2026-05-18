@@ -20,11 +20,6 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping
-    public ResponseEntity<List<BoardDTO>> getAll() {
-        return ResponseEntity.ok(boardService.getAll());
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<BoardDTO> getOne(@PathVariable("id") Long id) {
         return ResponseEntity.ok(boardService.getOne(id));
@@ -88,5 +83,10 @@ public class BoardController {
             @AuthenticationPrincipal   UserDetails userDetails) {
         boardService.deleteComment(commentId, userDetails.getUsername());
         return ResponseEntity.ok("댓글 삭제 완료");
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BoardDTO>> getAll() {
+        return ResponseEntity.ok(boardService.getAll());
     }
 }
