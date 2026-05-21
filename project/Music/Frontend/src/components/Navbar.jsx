@@ -5,8 +5,8 @@ import HelpModal from './HelpModal';
 
 export default function Navbar() {
     const { isLoggedIn, username, logout } = useAuth();
-    const navigate   = useNavigate();
-    const location   = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
     const [showHelp, setShowHelp] = useState(false);
 
     const handleLogout = () => {
@@ -32,12 +32,14 @@ export default function Navbar() {
                 >
                     플레이어
                 </button>
+
                 <button
                     className={`nav-btn ${location.pathname === '/board' ? 'active' : ''}`}
                     onClick={() => navigate('/board')}
                 >
                     게시판
                 </button>
+
                 <button
                     className="nav-btn"
                     onClick={() => setShowHelp(true)}

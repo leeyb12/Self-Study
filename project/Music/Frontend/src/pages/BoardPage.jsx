@@ -50,7 +50,12 @@ export default function BoardPage() {
     };
 
     // 파일 다운로드 처리
-    const handleDownload = (fileUrl, fileName) => {
+    const handleDownload = (fileUrl, fileName, fileType) => {
+        if (fileType?.includes('audio') && !isLoggedIn) {
+            alert('로그인 후 음악 파일을 다운로드할 수 있습니다.');
+            return;
+        }
+
         const link = document.createElement('a');
         link.href = fileUrl;
         link.setAttribute('download', fileName);
@@ -211,16 +216,36 @@ export default function BoardPage() {
                     <p style={{ fontSize: '14px', lineHeight: '1.8', whiteSpace: 'pre-wrap' }}>{selected.content}</p>
 
                     {/* 파일 리스트 및 다운로드 */}
-                    {selected.files?.map(f => (
-                        <div key={f.id} style={{ marginTop: '10px', padding: '10px', background: '#faf9f6', borderRadius: '4px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
-                                <span style={{ fontSize: '12px' }}>{f.fileName}</span>
-                                <button onClick={() => handleDownload(f.fileUrl, f.fileName)} style={{ ...ghostBtnStyle, padding: '2px 8px', fontSize: '11px' }}>📥 다운로드</button>
+                    {selected.files?.map(f => {
+                        const isImage = f.fileType?.includes('image');
+
+                        return (
+                            <div key={f.id} style={{ marginTop: '10px', padding: '10px', background: '#faf9f6', borderRadius: '4px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
+                                    {!isImage && (
+                                        <button
+                                            onClick={() => handleDownload(f.fileUrl, f.fileName, f.fileType)}
+                                            style={{ ...ghostBtnStyle, padding: '2px 8px', fontSize: '11px' }}
+                                        >
+                                            📥 다운로드
+                                        </button>
+                                    )}
+                                </div>
+
+                                {isImage ? (
+                                    <img src={f.fileUrl} style={{ maxWidth: '100%' }} alt="첨부" />
+                                ) : (
+                                    <audio controls src={f.fileUrl} style={{ width: '100%' }} />
+                                )}
+
+                                {isLoggedIn && selected.author === username && (
+                                    <button onClick={() => handleFileDelete(f.id)} style={inlineRemoveBtn}>
+                                        파일 삭제
+                                    </button>
+                                )}
                             </div>
-                            {f.fileType?.includes('image') ? <img src={f.fileUrl} style={{ maxWidth: '100%' }} alt="첨부" /> : <audio controls src={f.fileUrl} style={{ width: '100%' }} />}
-                            {isLoggedIn && selected.author === username && <button onClick={() => handleFileDelete(f.id)} style={inlineRemoveBtn}>파일 삭제</button>}
-                        </div>
-                    ))}
+                        );
+                    })}
 
                     <hr style={dividerStyle} />
                     {/* 댓글 UI (comments, handleCommentDelete 사용) */}

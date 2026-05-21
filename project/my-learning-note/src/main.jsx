@@ -1,10 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-import './assets/styles/main.css'; // 전역 스타일
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './LearningNotes.jsx'   // ← 이름만 바꿔주세요
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>
-);
+  </React.StrictMode>
+)
