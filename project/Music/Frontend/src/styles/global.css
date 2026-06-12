@@ -1,0 +1,412 @@
+:root {
+    --bg: #f5f0e8;
+    --surface: #ffffff;
+    --surface-alt: #faf9f6;
+    --surface-strong: #f1efe8;
+    --text: #1a1a1a;
+    --muted: #888;
+    --muted-strong: #999;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --border: #ede8df;
+    --border-soft: #e0dbd2;
+    --shadow: rgba(0, 0, 0, 0.06);
+    --action-bg: #1a1a1a;
+    --action-text: #f5f0e8;
+    --hover-surface: #f5f0e8;
+}
+
+body {
+    font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+body.dark {
+    --bg: #111111;
+    --surface: #181818;
+    --surface-alt: #222222;
+    --surface-strong: #1f1f1f;
+    --text: #f5f5f5;
+    --muted: #cccccc;
+    --muted-strong: #cccccc;
+    --border: #333333;
+    --border-soft: #2b2b2b;
+    --shadow: rgba(0, 0, 0, 0.24);
+    --action-bg: #f5f0e8;
+    --action-text: #1a1a1a;
+    --hover-surface: #2a2a2a;
+}
+
+
+/* =====================================================
+   ① 아날로그 & 레트로 감성 (4종)
+   ===================================================== */
+
+/* 🤍 무드 화이트 (Mood White)
+   컨셉: MUJI 스타일 미니멀, 벽걸이 CD 플레이어
+   UI 포인트: 뉴모피즘 — 기기가 화면 위에 둥둥 떠 있는 입체감 */
+body[data-theme="mood-white"] {
+    --bg: #f0ede8;
+    --surface: #f7f5f2;
+    --surface-alt: #ece9e4;
+    --surface-strong: #e4e0da;
+    --text: #1a1a1a;
+    --muted: #888;
+    --muted-strong: #999;
+    --border: #dedad4;
+    --border-soft: #d4d0ca;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --action-bg: #1a1a1a;
+    --action-text: #f7f5f2;
+    --hover-surface: #e8e4df;
+}
+
+/* 📻 레트로 붐박스 (Retro Boombox)
+   컨셉: 80~90년대 카세트 오디오 라디오 감성
+   UI 포인트: 둥근 다이얼(Knob) 볼륨, 격자 스피커 그릴 텍스처 */
+body[data-theme="retro-boombox"] {
+    --bg: #1e1e1e;
+    --surface: #2a2a2a;
+    --surface-alt: #242424;
+    --surface-strong: #333333;
+    --text: #f0f0f0;
+    --muted: #aaaaaa;
+    --muted-strong: #cccccc;
+    --border: #3a3a3a;
+    --border-soft: #444444;
+    --shadow: rgba(0, 0, 0, 0.4);
+    --action-bg: #ff8c00;
+    --action-text: #1a1a1a;
+    --hover-surface: #343434;
+}
+
+/* 🛸 Y2K 사이버 워크맨 (Cyber Walkman)
+   컨셉: 2000년대 초반 메탈릭 소니 CD 워크맨 감성
+   UI 포인트: 크롬 하이라이트, 픽셀 Monospace 폰트 */
+body[data-theme="cyber-walkman"] {
+    --bg: #c8dff0;
+    --surface: #daeaf8;
+    --surface-alt: #cfe3f5;
+    --surface-strong: #b8d2e8;
+    --text: #0b2133;
+    --muted: #3a6080;
+    --muted-strong: #2a5070;
+    --border: #a8c8e0;
+    --border-soft: #b8d4e8;
+    --shadow: rgba(10, 40, 70, 0.12);
+    --action-bg: #1a5fa0;
+    --action-text: #ffffff;
+    --hover-surface: #c0d8ec;
+}
+
+/* 🪵 미드센추리 모던 (Mid-Century Vintage)
+   컨셉: 브라운(Braun) 오디오, LP 턴테이블 클래식 원목 감성
+   UI 포인트: 나무 질감 테두리, 차분하고 고급스러운 폰트 */
+body[data-theme="mid-century"] {
+    --bg: #f0e8d8;
+    --surface: #faf3e8;
+    --surface-alt: #f0e4d0;
+    --surface-strong: #e0d0b8;
+    --text: #2a1f14;
+    --muted: #8a7060;
+    --muted-strong: #6e5a4a;
+    --border: #c8a87a;
+    --border-soft: #d4b888;
+    --shadow: rgba(42, 31, 20, 0.1);
+    --action-bg: #7a4b2f;
+    --action-text: #faf3e8;
+    --hover-surface: #e8dcc8;
+}
+
+
+/* =====================================================
+   ② 모던 & 트렌디 감성 (3종)
+   ===================================================== */
+
+/* 🖤 올 블랙 스튜디오 (All Black Studio)
+   컨셉: 하이엔드 레코딩 스튜디오 장비 느낌의 시크한 다크 모드
+   UI 포인트: 재생 중 이퀄라이저·재생 바만 네온 그린으로 글로우 */
+body[data-theme="all-black"] {
+    --bg: #080808;
+    --surface: #0f0f0f;
+    --surface-alt: #141414;
+    --surface-strong: #1a1a1a;
+    --text: #f7f7f7;
+    --muted: #888888;
+    --muted-strong: #aaaaaa;
+    --border: #1f1f1f;
+    --border-soft: #252525;
+    --shadow: rgba(0, 0, 0, 0.7);
+    --action-bg: #39ff14;
+    --action-text: #080808;
+    --hover-surface: #181818;
+}
+
+/* 🧪 네온 사이버펑크 (Cyberpunk)
+   컨셉: 화려한 야경과 미래 도시 느낌의 힙하고 강렬한 스타일
+   UI 포인트: box-shadow 네온사인 글로우(text-shadow), 미래지향 아이콘 */
+body[data-theme="cyberpunk"] {
+    --bg: #0b0b12;
+    --surface: #11101a;
+    --surface-alt: #14121d;
+    --surface-strong: #1b1723;
+    --text: #e6f0ff;
+    --muted: #9aaed1;
+    --muted-strong: #bfd6ff;
+    --border: #231f2a;
+    --border-soft: #2b2933;
+    --shadow: rgba(255, 45, 149, 0.18);
+    --action-bg: #ff2d95;
+    --action-text: #0b0b12;
+    --hover-surface: rgba(255, 45, 149, 0.12);
+    --neon: #ff2d95;
+    --neon-alt: #36ff8e;
+    --neon-glow: 0 0 18px rgba(255, 45, 149, 0.85), 0 0 34px rgba(54, 255, 142, 0.28);
+}
+
+body[data-theme="cyberpunk"] .navbar,
+body[data-theme="cyberpunk"] .card,
+body[data-theme="cyberpunk"] .theme-select,
+body[data-theme="cyberpunk"] .btn-dark,
+body[data-theme="cyberpunk"] .btn-ghost,
+body[data-theme="cyberpunk"] .input {
+    box-shadow: 0 0 20px rgba(255, 45, 149, 0.18), 0 0 40px rgba(54, 255, 142, 0.12);
+    border-color: rgba(255, 45, 149, 0.28);
+}
+
+body[data-theme="cyberpunk"] .navbar-logo {
+    text-shadow: var(--neon-glow);
+}
+
+body[data-theme="cyberpunk"] .navbar-logo::before {
+    content: "⟡";
+    margin-right: 8px;
+    color: var(--neon);
+    text-shadow: var(--neon-glow);
+}
+
+body[data-theme="cyberpunk"] .nav-btn {
+    color: #d3e1ff;
+}
+
+body[data-theme="cyberpunk"] .nav-btn.primary:hover,
+body[data-theme="cyberpunk"] .btn-dark:hover {
+    background: #e11b8a;
+}
+
+body[data-theme="cyberpunk"] .theme-select option {
+    background: #11101a;
+    color: var(--text);
+}
+
+/* 🧊 글래스모피즘 (Glassmorphism)
+   컨셉: 투명 CD 플레이어, macOS/iOS 반투명 유리 감성
+   UI 포인트: backdrop-filter: blur — 배경이 은은하게 비치는 유리판 */
+body[data-theme="glassmorphism"] {
+    --bg: #b8c8f8;
+    --surface: rgba(255, 255, 255, 0.55);
+    --surface-alt: rgba(255, 255, 255, 0.40);
+    --surface-strong: rgba(255, 255, 255, 0.70);
+    --text: #1a1a2e;
+    --muted: #5a6080;
+    --muted-strong: #7a80a0;
+    --border: rgba(255, 255, 255, 0.45);
+    --border-soft: rgba(255, 255, 255, 0.30);
+    --shadow: rgba(80, 80, 160, 0.12);
+    --action-bg: rgba(120, 100, 220, 0.75);
+    --action-text: #ffffff;
+    --hover-surface: rgba(255, 255, 255, 0.20);
+}
+
+
+/* =====================================================
+   ③ 파스텔 & 무드 감성 (3종)
+   ===================================================== */
+
+/* 🌸 하이틴 핑크 (High-Teen Pink)
+   컨셉: 2000년대 하이틴 영화 주인공 방 아기자기한 인테리어 소품
+   UI 포인트: border-radius 아주 둥글게, 하트·별 아이콘 포인트 */
+body[data-theme="high-teen"] {
+    --bg: #fff0f6;
+    --surface: #fff7fb;
+    --surface-alt: #ffe8f4;
+    --surface-strong: #ffd3ec;
+    --text: #2b0b18;
+    --muted: #c0709a;
+    --muted-strong: #a05070;
+    --border: #ffcce8;
+    --border-soft: #ffd8ee;
+    --shadow: rgba(255, 100, 170, 0.08);
+    --action-bg: #ff66b2;
+    --action-text: #ffffff;
+    --hover-surface: #ffeaf6;
+}
+
+/* 🌊 오션 리프레시 (Ocean Refresh)
+   컨셉: 청량한 이온음료, 시원한 여름 바다를 연상시키는 테마
+   UI 포인트: Progress Bar에 잔잔한 파도 웨이브 애니메이션 */
+body[data-theme="ocean-refresh"] {
+    --bg: #e0f4fa;
+    --surface: #f0fbff;
+    --surface-alt: #daf3fc;
+    --surface-strong: #c4eaf8;
+    --text: #052a34;
+    --muted: #3a7a88;
+    --muted-strong: #5a9aaa;
+    --border: #a8dff0;
+    --border-soft: #c0eaf8;
+    --shadow: rgba(6, 40, 50, 0.08);
+    --action-bg: #007a91;
+    --action-text: #ffffff;
+    --hover-surface: #cceeff;
+}
+
+/* 🌆 시티팝 노을 (City Pop Sunset)
+   컨셉: 보라→오렌지 선셋 그라데이션 하늘 아래 드라이브 무드
+   UI 포인트: 배경을 그라데이션으로, 플레이어는 실루엣처럼 얹기 */
+body[data-theme="city-pop"] {
+    --bg: #1a0a2e;
+    --surface: #2a1040;
+    --surface-alt: #3a1850;
+    --surface-strong: #220c38;
+    --text: #ffe8d0;
+    --muted: #d09090;
+    --muted-strong: #e8b0a0;
+    --border: #6a2a50;
+    --border-soft: #5a2040;
+    --shadow: rgba(200, 50, 80, 0.2);
+    --action-bg: #ff7a59;
+    --action-text: #1a0a2e;
+    --hover-surface: #340f4a;
+}
+
+
+/* =====================================================
+   공통 컴포넌트 스타일 (변경 없음)
+   ===================================================== */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button { font-family: inherit; cursor: pointer; }
+input, textarea { font-family: inherit; }
+
+.theme-select {
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 6px;
+    font: inherit;
+}
+
+.theme-select option {
+    color: var(--text);
+    background: var(--surface);
+}
+
+.navbar {
+    width: 100%;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar-logo {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.navbar-logo span { color: var(--muted); font-weight: 400; }
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-btn {
+    padding: 6px 14px;
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.nav-btn:hover  { background: var(--hover-surface); color: var(--text); }
+.nav-btn.active { color: var(--text); font-weight: 500; }
+.nav-btn.primary { background: var(--action-bg); color: var(--action-text); margin-left: 8px; }
+.nav-btn.primary:hover { background: #333; }
+.nav-btn.danger { color: var(--danger); }
+.nav-btn.danger:hover { background: rgba(192, 57, 43, 0.08); }
+
+.page-wrapper {
+    min-height: calc(100vh - 52px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px 80px;
+}
+
+.card {
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: 2px;
+    font-size: 13px;
+    background: var(--surface-alt);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input:focus { border-color: var(--muted); }
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    border: none;
+    transition: background 0.15s;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.btn-dark  { background: var(--action-bg); color: var(--action-text); }
+.btn-dark:hover { background: #333; }
+.btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--hover-surface); color: var(--text); }
+.btn-dashed { background: transparent; color: var(--muted); border: 1px dashed #ccc; width: 100%; }
+.btn-dashed:hover { border-color: var(--muted); color: var(--text); }
+
+.error-text { font-size: 12px; color: var(--danger); }
+.empty-text { text-align: center; color: var(--muted); font-size: 12px; padding: 40px 0; letter-spacing: 0.06em; }
+.divider    { border: none; border-top: 1px solid #f0ebe2; margin: 16px 0; }

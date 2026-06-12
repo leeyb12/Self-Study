@@ -1,0 +1,57 @@
+.edit-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+}
+
+.edit-modal {
+    background: var(--surface);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    padding: 32px;
+    width: 480px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.edit-header   { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.edit-title    { font-size: 15px; font-weight: 500; color: var(--text); margin: 0 0 4px; }
+.edit-subtitle { font-size: 12px; color: var(--muted-strong); margin: 0; }
+.edit-close    { background: transparent; border: none; font-size: 14px; color: var(--muted-strong); cursor: pointer; padding: 0; line-height: 1; }
+.edit-close:hover { color: var(--muted); }
+.edit-divider  { border: none; border-top: 1px solid var(--surface-strong); margin: 0 0 20px; }
+.edit-error    { font-size: 12px; color: var(--danger); margin: 0 0 12px; }
+.edit-interval-label { font-size: 11px; color: var(--muted-strong); letter-spacing: 0.06em; }
+
+.edit-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: 2px;
+    font-size: 13px;
+    background: var(--surface-alt);
+    outline: none;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.9;
+    box-sizing: border-box;
+    color: var(--text);
+}
+
+.edit-textarea:focus       { border-color: var(--muted-strong); }
+.edit-textarea::placeholder { color: var(--muted); }
+
+.edit-buttons { display: flex; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--surface-strong); align-items: center; }
+
+.edit-btn-dark  { padding: 9px 24px; background: var(--action-bg); color: var(--action-text); border: none; border-radius: 2px; font-size: 12px; cursor: pointer; letter-spacing: 0.06em; font-family: inherit; }
+.edit-btn-dark:hover    { background: var(--muted-strong); }
+.edit-btn-dark:disabled { background: var(--muted); cursor: not-allowed; }
+.edit-btn-ghost  { padding: 9px 20px; background: transparent; color: var(--muted); border: 1px solid var(--border-soft); border-radius: 2px; font-size: 12px; cursor: pointer; letter-spacing: 0.06em; font-family: inherit; }
+.edit-btn-ghost:hover { background: var(--hover-surface); color: var(--muted-strong); }
+.edit-btn-cancel { margin-left: auto; }

@@ -1,0 +1,1293 @@
+/* =====================================================
+   마퀴 공통 시스템
+   ===================================================== */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glass-ring-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* 마퀴 래퍼 공통 */
+.marquee-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.marquee-wrap.is-short {
+  justify-content: center;
+} /* 짧은 제목: 중앙 */
+.marquee-wrap.is-long {
+  justify-content: flex-start;
+} /* 긴 제목: 왼쪽 시작 */
+
+/* 마퀴 텍스트 공통 */
+.marquee-text {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.marquee-text.marquee-active {
+  animation: marquee-scroll 10s linear infinite;
+  padding-right: 48px; /* 끝에 여백을 줘서 자연스럽게 이어짐 */
+}
+
+/* ── 플레이어별 마퀴 래퍼 크기 정의 ── */
+
+/* 벽걸이: 인라인 스타일이지만 래퍼 높이만 CSS로 제어 */
+.wall-title-wrap {
+  height: 24px;
+  margin: 12px 0 4px;
+  max-width: 240px;
+}
+.wall-title-text {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* 워크맨 LCD */
+.walkman-title-wrap {
+  height: 16px;
+  max-width: 100%;
+}
+
+/* 붐박스 LCD */
+.boombox-title-wrap {
+  height: 16px;
+  max-width: 100%;
+}
+
+/* 턴테이블 패널 */
+.tt-title-wrap {
+  height: 20px;
+  margin-bottom: 4px;
+}
+
+/* 글래스 */
+.glass-title-wrap {
+  height: 20px;
+  margin-bottom: 4px;
+}
+
+/* =====================================================
+   디자인 선택 탭
+   ===================================================== */
+.design-selector-container {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 115%;
+}
+
+.design-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.design-tab:hover {
+  background: var(--hover-surface);
+}
+.design-tab.active {
+  background: var(--surface);
+  box-shadow: 0 1px 4px var(--shadow);
+}
+.design-tab__label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+.design-tab__desc {
+  font-size: 10px;
+  color: var(--muted);
+}
+.design-tab.active .design-tab__label {
+  color: var(--action-bg);
+}
+
+.player-card-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 440px;
+  width: 100%;
+}
+
+.album-now-playing {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* =====================================================
+   1. 벽걸이형 (wall) — MUJI 뉴모피즘
+   ===================================================== */
+.pd-wall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+.pd-wall__body {
+  position: relative;
+  background: var(--surface);
+  border-radius: 32px;
+  border: 1px solid var(--border);
+  padding: 40px 30px 24px 30px;
+  width: 340px;
+  box-shadow:
+    0 15px 35px var(--shadow),
+    inset 0 2px 4px var(--surface-alt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pd-wall__hook {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 16px;
+  border: 3px solid var(--border-soft);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+}
+.pd-wall__platter {
+  width: 210px;
+  height: 210px;
+  background: var(--surface-alt);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 4px 10px var(--shadow);
+}
+.pd-wall__disc {
+  position: relative;
+  width: 196px;
+  height: 196px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 6px 15px var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pd-wall__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pd-wall__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--border-soft),
+    var(--surface-strong)
+  );
+  color: var(--action-bg);
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pd-wall__hole {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--surface-alt);
+  border: 4px solid var(--surface);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px var(--shadow);
+}
+.pd-wall__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(255, 255, 255, 0.2) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+.pd-wall__artist {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.pd-wall__progress {
+  width: 100%;
+  height: 5px;
+  background: var(--border-soft);
+  border-radius: 3px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+.pd-wall__progress-fill {
+  height: 100%;
+  background: var(--action-bg);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+.pd-wall__time {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.pd-wall__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+  width: 100%;
+}
+.pd-wall__btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 6px;
+}
+.pd-wall__btn--main {
+  background: var(--action-bg);
+  color: var(--action-text);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pd-wall__grille {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 14px;
+}
+.pd-wall__grille-line {
+  width: 3px;
+  height: 12px;
+  background: var(--border-soft);
+  border-radius: 1.5px;
+}
+.pd-wall__string-wrap {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+.pd-wall__string-line {
+  width: 2px;
+  background: var(--border);
+  transition: height 0.15s ease-out;
+}
+.pd-wall__string-handle {
+  width: 12px;
+  height: 12px;
+  background: var(--action-bg);
+  border-radius: 50%;
+}
+
+/* =====================================================
+   2. CD 워크맨 (walkman)
+   ===================================================== */
+.pd-walkman {
+  --wm-lcd-bg-color: var(--surface-strong);
+  --wm-lcd-text-color: var(--text);
+  --wm-accent-color: var(--action-bg);
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+[data-theme="cyber-walkman"] .pd-walkman {
+  --wm-lcd-bg-color: #8fb8a0;
+  --wm-lcd-text-color: #1a3a28;
+  --wm-accent-color: #2b6fb3;
+}
+
+.pd-walkman__lcd {
+  width: 230px;
+  background: var(--wm-lcd-bg-color);
+  border-radius: 8px 8px 0 0;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-bottom: none;
+}
+.pd-walkman__lcd-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* lcd-title은 marquee-text로 렌더되므로 폰트 스타일만 */
+.pd-walkman__lcd-title {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--wm-lcd-text-color);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.pd-walkman__lcd-time {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--wm-lcd-text-color);
+  opacity: 0.8;
+}
+
+.pd-walkman__body {
+  width: 600px;
+  background: linear-gradient(
+    135deg,
+    var(--surface) 0%,
+    var(--surface-alt) 100%
+  );
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 6px 20px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.pd-walkman__disc-area {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--border) 0%,
+    var(--surface-strong) 50%,
+    var(--border) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 2px 5px var(--shadow);
+}
+.pd-walkman__disc {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+.pd-walkman__disc.spinning {
+  animation: spin 4s linear infinite;
+}
+.pd-walkman__disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pd-walkman__disc-label {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    var(--surface-strong),
+    var(--border-soft)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: monospace;
+}
+.pd-walkman__disc-hole {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  z-index: 3;
+}
+.pd-walkman__disc-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pd-walkman__progress {
+  width: 100%;
+  height: 5px;
+  background: var(--border-soft);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.pd-walkman__progress-fill {
+  height: 100%;
+  background: var(--wm-accent-color);
+  border-radius: 4px;
+  transition: width 0.3s linear;
+}
+.pd-walkman__controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.pd-wbtn {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    transform 0.1s;
+}
+.pd-wbtn:hover {
+  background: var(--hover-surface);
+  transform: translateY(-1px);
+}
+.pd-wbtn:active {
+  transform: translateY(1px);
+}
+.pd-wbtn.active {
+  color: var(--action-bg);
+  border-color: var(--action-bg);
+}
+.pd-wbtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  transform: none;
+}
+.pd-wbtn--play {
+  padding: 8px 14px;
+  font-size: 13px;
+  background: var(--action-bg);
+  color: var(--action-text);
+  border-color: transparent;
+}
+
+.pd-walkman__info {
+  text-align: center;
+}
+.pd-walkman__artist {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  letter-spacing: 0.06em;
+}
+.pd-walkman__jack {
+  width: 8px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 0 0 4px 4px;
+  margin-top: -2px;
+}
+
+/* =====================================================
+   3. 붐박스 (boombox)
+   ===================================================== */
+.pd-boombox {
+  --bb-display-bg: var(--surface-strong);
+  --bb-display-text: var(--text);
+  --bb-display-glow: var(--action-bg);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.design-boombox .pd-boombox {
+  --bb-display-bg: #1a2a1a;
+  --bb-display-text: #5adf5a;
+  --bb-display-glow: rgba(90, 223, 90, 0.4);
+}
+
+.pd-boombox__handle {
+  width: 150px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  background: var(--surface-alt);
+}
+.pd-boombox__body {
+  width: 150%;
+  background: var(--surface);
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.pd-boombox__speaker {
+  width: 100px;
+  flex-shrink: 0;
+  background: var(--surface-alt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 10px;
+}
+.pd-boombox__speaker:first-child {
+  border-right: 2px solid var(--border);
+}
+.pd-boombox__speaker:last-child {
+  border-left: 2px solid var(--border);
+}
+
+.pd-boombox__grille {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  width: 60px;
+}
+.pd-boombox__grille span {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--border-soft);
+}
+.pd-boombox__woofer {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--surface-strong) 30%,
+    var(--border) 70%,
+    var(--surface-alt) 100%
+  );
+  border: 2px solid var(--border);
+}
+
+.pd-boombox__center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 14px;
+  min-width: 0;
+}
+
+.pd-boombox__display {
+  width: 100%;
+  background: var(--bb-display-bg);
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  padding: 8px;
+  overflow: hidden;
+}
+.pd-boombox__display-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pd-boombox__track-label {
+  font-family: monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+.pd-boombox__track-num {
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bb-display-text);
+  line-height: 1;
+  text-shadow: 0 0 6px var(--bb-display-glow);
+}
+/* display-title은 marquee-text가 담당 — 폰트만 지정 */
+.pd-boombox__display-title {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--bb-display-text);
+}
+.pd-boombox__display-time {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.pd-boombox__cassette {
+  width: 100%;
+  height: 48px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+.pd-boombox__reel {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px dashed var(--border-soft);
+  background: var(--surface-alt);
+}
+.pd-boombox__reel.spinning {
+  animation: reel-spin 1.5s linear infinite;
+}
+
+.pd-boombox__progress {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-alt);
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid var(--border-soft);
+}
+.pd-boombox__progress-fill {
+  height: 100%;
+  background: var(--action-bg);
+  border-radius: 3px;
+  transition: width 0.3s linear;
+}
+.pd-boombox__controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pd-bbtn {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 11px;
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    transform 0.1s;
+}
+.pd-bbtn:hover {
+  background: var(--hover-surface);
+}
+.pd-bbtn:active {
+  transform: scale(0.96);
+}
+.pd-bbtn.active {
+  color: var(--action-bg);
+  border-color: var(--action-bg);
+}
+.pd-bbtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.pd-bbtn--play {
+  padding: 6px 12px;
+  background: var(--action-bg);
+  color: var(--action-text);
+  border-color: transparent;
+}
+
+.pd-boombox__knobs {
+  display: flex;
+  gap: 12px;
+}
+.pd-boombox__knob {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+}
+.pd-boombox__knob-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  margin: 4px auto 0;
+}
+.pd-boombox__feet {
+  display: flex;
+  gap: 160px;
+}
+.pd-boombox__feet span {
+  width: 16px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 0 0 4px 4px;
+}
+
+/* =====================================================
+   4. 턴테이블 (turntable) 
+   ===================================================== */
+.pd-tt {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px; /* 가장자리 여유 확보 */
+}
+
+.pd-tt__body {
+  display: flex;
+  justify-content: space-between; /* 좌(회전판) 우(컨트롤) 분리 */
+  align-items: center;
+  gap: 60px;
+  background: #f4f1ea;
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid #dcd7ce;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 800px;
+  height: fit-content;
+  margin: 0 auto;
+}
+
+/* 회전판 영역 */
+.pd-tt__platter-area {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e4db;
+  border-radius: 50%;
+  border: 8px solid #dcd7ce;
+}
+
+.pd-tt__record {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.pd-tt__record.spinning {
+  animation: spin 2.5s linear infinite;
+}
+
+.pd-tt__label {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #b71c1c;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 톤암 위치 재배치 (오른쪽 가장자리로) */
+.pd-tt__tonearm-wrap {
+  position: absolute;
+  top: 20px;
+  right: -50px; 
+  width: 100px;
+  height: 200px;
+  transform-origin: 50% 0%;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 5;
+}
+
+.pd-tt__tonearm-wrap.playing {
+  transform: rotate(25deg);
+}
+
+.pd-tt__tonearm {
+  width: 4px;
+  height: 140px;
+  background: #ccc;
+  margin: 0 auto;
+}
+
+/* 우측 컨트롤 패널 */
+.pd-tt__panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.pd-tt__info {
+  border-bottom: 2px solid #dcd7ce;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+.pd-tt__title { font-size: 18px; font-weight: 800; color: #333; margin: 0; }
+.pd-tt__artist { font-size: 14px; color: #666; margin: 0; }
+
+.pd-tt__progress {
+  width: 100%;
+  height: 8px;
+  background: #dcd7ce;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pd-tt__progress-fill {
+  height: 100%;
+  background: #444;
+  border-radius: 4px;
+}
+
+.pd-tt__time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666;
+}
+
+.pd-tt__controls {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  align-items: center;
+}
+
+.pd-ttbtn {
+  background: #e8e4db;
+  border: 1px solid #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-tt__speed-knobs {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+/* =====================================================
+   5. 글래스 (glass)
+   ===================================================== */
+.pd-glass {
+  width: 600px;
+  position: relative;
+}
+.pd-glass__orb {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--action-bg);
+  opacity: 0.25;
+  filter: blur(50px);
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.pd-glass__panel {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 32px var(--shadow);
+}
+.pd-glass__cover {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.pd-glass__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pd-glass__cover-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: var(--muted);
+}
+.pd-glass__cover-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.4s;
+}
+.pd-glass__cover-ring.active {
+  border-color: var(--action-bg);
+  animation: glass-ring-pulse 2s ease-in-out infinite;
+}
+
+.pd-glass__info {
+  text-align: center;
+  width: 100%;
+}
+
+/* pd-glass__title은 marquee-text 안에서 렌더 */
+.pd-glass__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+.pd-glass__artist {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.pd-glass__progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+.pd-glass__progress-fill {
+  height: 100%;
+  background: var(--action-bg);
+  border-radius: 4px;
+  transition: width 0.3s linear;
+}
+.pd-glass__progress-dot {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--action-bg);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px var(--action-bg);
+  transition: left 0.3s linear;
+}
+.pd-glass__time {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: -4px;
+}
+.pd-glass__controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.pd-gbtn {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+.pd-gbtn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  transform: scale(1.05);
+}
+.pd-gbtn.active {
+  color: var(--action-bg);
+  border-color: var(--action-bg);
+}
+.pd-gbtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.pd-gbtn--play {
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  background: var(--action-bg);
+  color: var(--action-text);
+  border: none;
+}
+.pd-gbtn--play:hover {
+  filter: brightness(1.1);
+}
+
+/* =====================================================
+   기존 레이아웃
+   ===================================================== */
+.player-page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+.player-layout {
+  display: flex;
+  height: calc(100vh - 52px);
+  overflow: hidden;
+}
+
+.player-side-panel {
+  width: 400px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 16px 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.panel-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.sort-box {
+  display: flex;
+  gap: 4px;
+}
+
+.side-song-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+.side-song-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.12s;
+  gap: 8px;
+}
+.side-song-item:hover {
+  background: var(--hover-surface);
+}
+.side-song-item.active {
+  background: var(--surface-strong);
+}
+
+.song-info-mini {
+  flex: 1;
+  min-width: 0;
+}
+.song-name {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.song-artist-mini {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  border-radius: 2px;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    color 0.12s;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+}
+.action-btn:hover {
+  background: var(--hover-surface);
+  color: var(--text);
+}
+.action-btn.active {
+  color: var(--action-bg);
+  border-color: var(--action-bg);
+}
+.delete-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.player-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;
+  align-items: center;
+}
+
+.empty-text {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 24px 0;
+  letter-spacing: 0.06em;
+}
+
+/* CSS 파일에 추가 */
+.lyrics-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* 부모의 높이를 꽉 채움 */
+    width: 400px;
+    padding: 20px;
+    background-color: var(--surface);
+    overflow: hidden; /* 내부 스크롤을 쓰기 위해 밖은 숨김 */
+}
+
+.lyrics-panel-body {
+    flex: 1; /* 남은 공간을 전부 차지 */
+    overflow-y: auto;
+    padding-bottom: 40%; /* 하단 여백을 충분히 주어 가사가 중앙에 오게 함 */
+}
+
+.design-selector-container, .design-tab {
+    background: transparent !important; /* 배경 투명 강제 */
+    border: none !important;           /* 테두리 제거 */
+    box-shadow: none !important;       /* 그림자 제거 */
+}
+
+.design-selector-container button {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-left: none !important; /* L자 모양 제거 */
+    border-top: none !important;
+    border-right: none !important;
+}
+
+.album-now-playing {
+    display: none !important;
+}
