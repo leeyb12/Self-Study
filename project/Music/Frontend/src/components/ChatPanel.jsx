@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export default function ChatPanel({ isOpen, onClose }) {
-    const { isLoggedIn, username } = useAuth();
+    const { isLoggedIn, username, token } = useAuth();
     const wsRef     = useRef(null);
     const bottomRef = useRef(null);
 
@@ -14,9 +14,9 @@ export default function ChatPanel({ isOpen, onClose }) {
     const [unread,       setUnread]       = useState({});
 
     useEffect(() => {
-        if (!isOpen || !isLoggedIn) return;
+        if (!isOpen || !isLoggedIn || !token) return;
 
-        const ws = new WebSocket('ws://localhost:8080/ws/chat');
+        const ws = new WebSocket(`ws://localhost:8080/ws/chat?token=${encodeURIComponent(token)}`);
         wsRef.current = ws;
 
         ws.onopen = () => {
@@ -81,7 +81,7 @@ export default function ChatPanel({ isOpen, onClose }) {
         ws.onerror = () => setConnected(false);
 
         return () => ws.close();
-    }, [isOpen, isLoggedIn, username]);
+    }, [isOpen, isLoggedIn, username, token]);
 
     // 탭 전환 시 스크롤 + 미읽음 초기화
     useEffect(() => {

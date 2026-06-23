@@ -17,8 +17,9 @@
 7. [디렉터리 구조](#디렉터리-구조)
 8. [설치 및 실행](#설치-및-실행)
 9. [주요 기능 소개](#주요-기능-소개)
-10. [이미지 자산 위치](#이미지-자산-위치)
-11. [개발자 참고](#개발자-참고)
+10. [구현 화면](#구현-화면)
+11. [이미지 자산 위치](#이미지-자산-위치)
+12. [개발자 참고](#개발자-참고)
 
 ---
 
@@ -283,7 +284,7 @@
 | Method | Endpoint | 인증 | 설명 |
 |--------|----------|------|------|
 | GET | `/api/songs` | 필요 | 내 음악 목록 조회 |
-| GET | `/api/songs/{id}` | 필요 | 음악 단건 조회 |
+| GET | `/api/songs/{id}` | 필요 (소유자) | 음악 단건 조회 |
 | POST | `/api/songs` | 필요 | 음악 업로드 (multipart) |
 | PUT | `/api/songs/{id}` | 필요 (소유자) | 음악 메타데이터 수정 |
 | PUT | `/api/songs/{id}/image` | 필요 (소유자) | 커버 이미지 수정 |
@@ -317,6 +318,9 @@
 ---
 
 ### WebSocket (`/ws/chat`)
+
+연결 시 JWT 토큰을 쿼리 파라미터로 전달해야 합니다: `ws://localhost:8080/ws/chat?token=<JWT>`
+핸드셰이크 단계에서 `JwtHandshakeInterceptor`가 토큰을 검증하고, 이후 메시지의 발신자(`sender`)는 클라이언트 값이 아닌 **검증된 세션의 사용자명**을 신뢰합니다. (신원 위조 방지)
 
 | 메시지 타입 | 방향 | 설명 |
 |------------|------|------|
@@ -388,9 +392,9 @@ Music/
 │   └── src/main/java/com/pknu26/music/
 │       ├── MusicApplication.java         # 진입점
 │       ├── config/
-│       │   ├── SecurityConfig.java       # Spring Security + JWT 설정
-│       │   ├── WebConfig.java            # CORS + 정적 파일 서빙
-│       │   ├── WebSocketConfig.java      # WebSocket 엔드포인트 설정
+│       │   ├── SecurityConfig.java       # Spring Security + JWT + CORS 설정
+│       │   ├── WebConfig.java            # 정적 파일 서빙 (CORS는 SecurityConfig)
+│       │   ├── WebSocketConfig.java      # WebSocket 엔드포인트 + 핸드셰이크 인터셉터
 │       │   ├── PasswordEncoderConfig.java
 │       │   └── GlobalExceptionHandler.java
 │       ├── controller/
@@ -414,8 +418,9 @@ Music/
 │       │   ├── Comment.java
 │       │   └── BoardFile.java
 │       ├── security/
-│       │   ├── JwtTokenProvider.java     # JWT 생성 / 검증
-│       │   └── JwtFilter.java            # 요청당 JWT 필터
+│       │   ├── JwtTokenProvider.java         # JWT 생성 / 검증
+│       │   ├── JwtFilter.java                # 요청당 JWT 필터
+│       │   └── JwtHandshakeInterceptor.java  # WebSocket 핸드셰이크 토큰 검증
 │       ├── handler/
 │       │   └── ChatHandler.java          # WebSocket 채팅 핸들러
 │       └── dto/
@@ -441,9 +446,9 @@ Music/
 │       ├── components/
 │       │   ├── Navbar.jsx                # 네비게이션 바 (테마/디자인 선택)
 │       │   ├── UploadForm.jsx            # 음악 업로드 모달
-│       │   ├── LyricsModal.jsx           # 가사 편집 모달
+│       │   ├── LyricsModal.jsx           # 가사 표시 모달
+│       │   ├── LyricsEditModal.jsx       # 가사 편집 모달
 │       │   ├── LyricsSidePanel.jsx       # 가사 싱크 패널
-│       │   ├── ChatPanel.jsx             # 실시간 채팅
 │       │   ├── DesignSelector.jsx        # 플레이어 디자인 선택
 │       │   ├── SongInfoModal.jsx         # 곡 정보 / 수정 모달
 │       │   ├── HelpModal.jsx             # 도움말 모달
@@ -568,21 +573,38 @@ npm start
 
 ---
 
-## 이미지 자산 위치
+## 구현 화면
 
-전체 페이지에서 사용할 정적 이미지는 아래 경로에 추가하세요.
+### 로그인 / 회원가입
 
-- `Frontend/public/images/`
+![로그인 화면](./docs/screenshots/image.png) <br />
+![회원가입 화면](./docs/screenshots/image-1.png)
 
-React 컴포넌트에서 참조 방법:
+### 음악 플레이어
 
-```jsx
-<img src="/images/music.png" alt="Music" />
-```
+| 디자인 | 화면 |
+|--------|------|
+| Wall (미니멀) | ![wall](./docs/screenshots/image-2.png) |
+| Walkman (Y2K) | ![walkman](./docs/screenshots/image-3.png) |
+| Boombox (레트로) | ![boombox](./docs/screenshots/image-4.png) |
+| Turntable (미드센추리) | ![turntable](./docs/screenshots/image-5.png) |
+| Glass (글래스모피즘) | ![glass](./docs/screenshots/image-6.png) |
 
-`public/images/`에 넣으면 앱의 모든 페이지에서 `/images/<파일명>`으로 접근 가능합니다.
+### 가사 싱크 패널
 
-컴포넌트별 모듈식 이미지가 필요한 경우에는 `Frontend/src/assets/images/`를 만들고 `import` 방식으로 사용합니다.
+![가사 싱크](./docs/screenshots/image-7.png)
+
+### 앨범 보관함
+
+![앨범 보관함](./docs/screenshots/image-8.png)
+
+### 게시판 (목록 / 작성 / 댓글)
+
+![게시판](./docs/screenshots/image-9.png)
+
+### 테마 전환
+
+![테마](./docs/screenshots/image-10.png)
 
 ---
 
@@ -595,3 +617,5 @@ React 컴포넌트에서 참조 방법:
 - 테마 상태는 `Frontend/src/context/ThemeContext.jsx`에서 CSS 변수(`data-theme`)로 관리됩니다.
 - 페이지 스타일은 `Frontend/src/styles/global.css` 및 컴포넌트별 CSS 파일에서 관리됩니다.
 - 예외 처리는 `Backend/src/main/java/com/pknu26/music/config/GlobalExceptionHandler.java`에서 중앙 집중식으로 처리합니다.
+- DB 접속 정보와 `jwt.secret`은 `application.properties`에서 환경변수로 주입할 수 있습니다. (`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET` — 미설정 시 기본값 사용) 운영 환경에서는 환경변수로 덮어쓰는 것을 권장합니다.
+- CORS는 `SecurityConfig`의 `CorsConfigurationSource` 한 곳에서 관리합니다. (`WebConfig`는 정적 파일 서빙 전용)

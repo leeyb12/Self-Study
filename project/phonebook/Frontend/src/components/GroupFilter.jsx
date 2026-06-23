@@ -13,7 +13,7 @@ export default function GroupFilter({ groups, selected, onSelect, onManage }) {
     <Stack direction="row" spacing={1} flexWrap="wrap" alignItems="center" sx={{ mb: 2 }}>
       {items.map((item) => (
         <Chip
-          key={item.id}
+          key={item.id ?? 'all'}
           label={item.label}
           icon={item.icon}
           onClick={() => onSelect(item.id)}

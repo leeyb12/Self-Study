@@ -35,13 +35,21 @@ public class ChatHandler extends TextWebSocketHandler {
         ChatMessageDTO dto = objectMapper.readValue(
                 message.getPayload(), ChatMessageDTO.class);
 
+        // 신원은 핸드셰이크에서 검증된 세션 username 만 신뢰한다 (클라이언트 sender 무시)
+        String username = (String) session.getAttributes().get("username");
+        if (username == null) {
+            session.close();
+            return;
+        }
+        dto.setSender(username);
+
         dto.setTime(LocalTime.now()
                 .format(DateTimeFormatter.ofPattern("HH:mm")));
 
         // 접속 등록
         if ("CONNECT".equals(dto.getType())) {
-            userSessions.put(dto.getSender(), session);
-            log.info("유저 등록: {} (현재 {}명)", dto.getSender(), userSessions.size());
+            userSessions.put(username, session);
+            log.info("유저 등록: {} (현재 {}명)", username, userSessions.size());
             broadcastUserList();
             return;
         }

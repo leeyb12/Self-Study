@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import AddIcon    from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './context/auth-context';
 import LoginPage   from './components/LoginPage';
 import SearchBar   from './components/SearchBar';
 import GroupFilter from './components/GroupFilter';

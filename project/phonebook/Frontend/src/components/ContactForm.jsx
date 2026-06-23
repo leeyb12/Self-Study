@@ -92,7 +92,6 @@ export default function ContactForm({ initial, groups, onSubmit, onCancel }) {
               }
             >
               <MenuItem value=""><em>그룹 없음</em></MenuItem>
-              <MenuItem value=""><em>가족</em></MenuItem>
               {groups.map((g) => (
                 <MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>
               ))}

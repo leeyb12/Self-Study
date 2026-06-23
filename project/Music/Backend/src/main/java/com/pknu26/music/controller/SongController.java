@@ -26,8 +26,10 @@ public class SongController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SongResponse> getOne(@PathVariable Long id) {
-        return ResponseEntity.ok(songService.getOne(id));
+    public ResponseEntity<SongResponse> getOne(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(songService.getOne(id, userDetails.getUsername()));
     }
 
    @PostMapping

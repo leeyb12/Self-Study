@@ -30,26 +30,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
  
         String header = request.getHeader("Authorization");
 
-        System.out.println("DEBUG: [요청 경로] " + request.getRequestURI());
-        System.out.println("DEBUG: [인증 헤더] " + header);
- 
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
             if (tokenProvider.validateToken(token)) {
                 String username = tokenProvider.getUsername(token);
-                System.out.println("DEBUG: [인증 성공] 사용자: " + username);
                 UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(
                         username, null,
                         List.of(new SimpleGrantedAuthority("ROLE_USER"))
                     );
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }else {
-            System.out.println("DEBUG: [인증 실패] 유효하지 않은 토큰");
+            }
         }
-    } else {
-        System.out.println("DEBUG: [인증 실패] 헤더 없음");
-    }
-    chain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
 }

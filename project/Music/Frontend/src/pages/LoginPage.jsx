@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 export default function LoginPage() {
     const { login, isLoggedIn } = useAuth();
@@ -10,8 +10,7 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
 
     if (isLoggedIn) {
-        navigate('/');
-        return null;
+        return <Navigate to="/" replace />;
     }
 
     const handleSubmit = async () => {

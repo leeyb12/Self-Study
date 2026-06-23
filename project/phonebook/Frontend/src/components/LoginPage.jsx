@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { login, signup } from '../api/authApi';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/auth-context';
 
 export default function LoginPage() {
   const { saveAuth } = useAuth();

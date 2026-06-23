@@ -33,6 +33,8 @@ public class SongService {
         User uploader = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("유저 없음"));
 
+        new File(STORAGE_PATH).mkdirs();
+
         String musicExt      = getExt(musicFile.getOriginalFilename());
         String musicFileName = UUID.randomUUID().toString() + musicExt;
         String musicPath     = STORAGE_PATH + musicFileName;
@@ -113,9 +115,14 @@ public class SongService {
                 .collect(Collectors.toList());
     }
 
-    public SongResponse getOne(Long id) {
+    public SongResponse getOne(Long id, String username) {
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("곡 없음: " + id));
+
+        if (song.getUploader() == null
+                || !song.getUploader().getUsername().equals(username)) {
+            throw new SecurityException("조회 권한 없음");
+        }
         return new SongResponse(song);
     }
 

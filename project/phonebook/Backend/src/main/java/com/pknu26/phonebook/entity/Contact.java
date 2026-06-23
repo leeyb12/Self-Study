@@ -58,6 +58,10 @@ public class Contact {
  
     // 관계 / 기타
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GROUP_ID")
     private ContactGroup group;
  

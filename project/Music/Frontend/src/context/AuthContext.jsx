@@ -1,21 +1,15 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
 
-    const initToken = () => {
-        // 새로고침 또는 새 탭 → 항상 토큰 초기화
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        return null;
-    };
-
-    const [token,     setToken]     = useState(initToken);
-    const [username,  setUsername]  = useState('익명');
+    const [token,     setToken]     = useState(() => localStorage.getItem('token'));
+    const [username,  setUsername]  = useState(() => localStorage.getItem('username') || '익명');
     const [authReady, setAuthReady] = useState(false);
 
+    // 토큰 변경 시 axios 기본 헤더 동기화
     useEffect(() => {
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -35,13 +29,27 @@ export function AuthProvider({ children }) {
         setUsername(id);
     };
 
-    const logout = () => {
+    const logout = useCallback(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         delete axios.defaults.headers.common['Authorization'];
         setToken(null);
         setUsername('익명');
-    };
+    }, []);
+
+    // 401 응답 시 자동 로그아웃 (토큰 만료 등)
+    useEffect(() => {
+        const interceptorId = axios.interceptors.response.use(
+            res => res,
+            err => {
+                if (err.response?.status === 401) {
+                    logout();
+                }
+                return Promise.reject(err);
+            }
+        );
+        return () => axios.interceptors.response.eject(interceptorId);
+    }, [logout]);
 
     return (
         <AuthContext.Provider value={{
