@@ -27,7 +27,7 @@
 모든 프로젝트가 **Spring Boot 4.1.0 (JDK 21) + React 19** 구성을 공유하며, JWT 기반 인증을 사용합니다. 각 프로젝트는 `Backend/`(Gradle), `Frontend/`(Vite 또는 CRA) 디렉터리로 구성됩니다. (DB는 프로젝트별로 Oracle XE 또는 MariaDB를 사용합니다.)
 
 ### Music — 음악 게시판 & 플레이어
-풀스택 음악 관리 및 커뮤니티 플랫폼. 회원 인증, 음악 업로드/재생, 게시판, 실시간 채팅(WebSocket)을 제공합니다.
+풀스택 음악 관리 및 커뮤니티 플랫폼. 회원 인증, 음악 업로드/재생, 게시판을 제공합니다.
 
 - **Backend**: Spring Boot, Spring Security, JPA, WebSocket
 - **Frontend**: React 19 (Create React App)
