@@ -24,7 +24,7 @@
 
 ## 풀스택 프로젝트 (`project/`)
 
-세 프로젝트 모두 **Spring Boot 4.1.0 (JDK 21) + React 19 + Oracle Database** 구성을 공유하며, JWT 기반 인증을 사용합니다. 각 프로젝트는 `Backend/`(Gradle), `Frontend/`(Vite 또는 CRA) 디렉터리로 구성됩니다.
+모든 프로젝트가 **Spring Boot 4.1.0 (JDK 21) + React 19** 구성을 공유하며, JWT 기반 인증을 사용합니다. 각 프로젝트는 `Backend/`(Gradle), `Frontend/`(Vite 또는 CRA) 디렉터리로 구성됩니다. (DB는 프로젝트별로 Oracle XE 또는 MariaDB를 사용합니다.)
 
 ### Music — 음악 게시판 & 플레이어
 풀스택 음악 관리 및 커뮤니티 플랫폼. 회원 인증, 음악 업로드/재생, 게시판, 실시간 채팅(WebSocket)을 제공합니다.
@@ -48,6 +48,14 @@
 - **Frontend**: React 19 + Vite, MUI(@mui/material), Emotion
 - **DB**: Oracle XE
 
+### Note — AI 노트 애플리케이션
+로컬 LLM(Ollama)을 활용한 노트 작성·관리 앱. 마크다운 노트, 폴더 분류, 파일 첨부, 휴지통과 함께 AI 요약·번역·교정·이어쓰기·채팅을 제공합니다.
+
+- **Backend**: Spring Boot, Spring Security, JPA, JWT, Apache PDFBox(PDF 텍스트 추출)
+- **Frontend**: React 19 + Vite, TypeScript, marked, DOMPurify
+- **DB**: MariaDB · **AI**: Ollama 로컬 LLM(gemma)
+- 자세한 내용: [project/Note/README.md](project/Note/README.md)
+
 ---
 
 ## 기술 스택 요약
@@ -55,12 +63,12 @@
 | 구분 | 기술 |
 |------|------|
 | 언어 | Python, JavaScript, Java 21 |
-| 프론트엔드 | HTML/CSS, React 19, Vite, MUI, Zustand, Recharts |
+| 프론트엔드 | HTML/CSS, React 19, Vite, TypeScript, MUI, Zustand, Recharts |
 | 백엔드 | Spring Boot 4.1.0, Spring Security, Spring Data JPA, Spring Batch |
-| 데이터베이스 | Oracle Database (XE) |
+| 데이터베이스 | Oracle Database (XE), MariaDB |
 | 인증 | JWT |
 | 빌드 도구 | Gradle, npm/Vite |
-| 머신러닝 | scikit-learn / 딥러닝 (혼공 머신러닝+딥러닝, Jupyter Notebook) |
+| AI / 머신러닝 | Ollama 로컬 LLM(Note 프로젝트), scikit-learn / 딥러닝 (혼공 머신러닝+딥러닝, Jupyter Notebook) |
 
 ---
 
