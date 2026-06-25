@@ -80,6 +80,49 @@
   color: var(--muted);
 }
 
+/* ---- 시계 / 날짜 / 날씨 위젯 ---- */
+.status-widget {
+  margin-top: auto;
+  padding: 0.9rem 0.7rem 0.3rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.status-time {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.status-date {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.1rem;
+}
+
+.status-weather {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.status-weather-icon {
+  font-size: 1.1rem;
+}
+
+.status-temp {
+  font-weight: 600;
+}
+
+.status-weather-label {
+  color: var(--muted);
+}
+
 /* ---- 폴더 네비게이션 ---- */
 .folder-nav {
   display: flex;

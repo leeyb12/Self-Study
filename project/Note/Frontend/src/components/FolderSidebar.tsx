@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Folder, FolderFilter } from '../types'
 import ThemeToggle from './ThemeToggle'
+import StatusWidget from './StatusWidget'
 
 interface Props {
   email: string
@@ -135,6 +136,8 @@ export default function FolderSidebar({
           <p className="muted folder-empty">폴더가 없습니다.</p>
         )}
       </nav>
+
+      <StatusWidget />
     </aside>
   )
 }

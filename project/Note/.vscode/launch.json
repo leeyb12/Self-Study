@@ -9,6 +9,16 @@
             "projectName": "Backend",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NoteApplication<note-Backend>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.pknu26.note.NoteApplication",
+            "projectName": "note-Backend",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

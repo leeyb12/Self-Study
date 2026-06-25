@@ -34,7 +34,7 @@ public class NoteController {
 
     @GetMapping
     public List<NoteResponse> list(@AuthenticationPrincipal Long userId,
-                                   @RequestParam(required = false) Long folderId) {
+                                   @RequestParam(value = "folderId", required = false) Long folderId) {
         // folderId 미지정=전체, 0=미분류, 그 외=해당 폴더
         return noteService.findAll(userId, folderId);
     }
@@ -45,7 +45,7 @@ public class NoteController {
     }
 
     @GetMapping("/{id}")
-    public NoteResponse get(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    public NoteResponse get(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id) {
         return noteService.findOne(userId, id);
     }
 
@@ -56,14 +56,14 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public NoteResponse update(@AuthenticationPrincipal Long userId, @PathVariable Long id,
+    public NoteResponse update(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id,
                                @Valid @RequestBody NoteRequest request) {
         return noteService.update(userId, id, request);
     }
 
     /** 휴지통으로 이동(소프트 삭제). */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id) {
         noteService.delete(userId, id);
         return ResponseEntity.noContent().build();
     }
@@ -77,21 +77,21 @@ public class NoteController {
 
     /** 휴지통에서 복원. */
     @PostMapping("/{id}/restore")
-    public NoteResponse restore(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    public NoteResponse restore(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id) {
         return noteService.restore(userId, id);
     }
 
     /** 완전 삭제. */
     @DeleteMapping("/{id}/permanent")
     public ResponseEntity<Void> deletePermanent(@AuthenticationPrincipal Long userId,
-                                                @PathVariable Long id) {
+                                                @PathVariable("id") Long id) {
         noteService.deletePermanent(userId, id);
         return ResponseEntity.noContent().build();
     }
 
     /** 노트 본문 + 첨부파일을 로컬 LLM(Ollama)으로 요약한다. */
     @PostMapping("/{id}/summarize")
-    public SummaryResponse summarize(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    public SummaryResponse summarize(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id) {
         return summaryService.summarize(userId, id);
     }
 }

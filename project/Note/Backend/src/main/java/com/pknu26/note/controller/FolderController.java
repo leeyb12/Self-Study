@@ -39,13 +39,13 @@ public class FolderController {
     }
 
     @PutMapping("/{id}")
-    public FolderResponse rename(@AuthenticationPrincipal Long userId, @PathVariable Long id,
+    public FolderResponse rename(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id,
                                  @Valid @RequestBody FolderRequest request) {
         return folderService.rename(userId, id, request);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id) {
         folderService.delete(userId, id);
         return ResponseEntity.noContent().build();
     }

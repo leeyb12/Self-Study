@@ -37,13 +37,13 @@ public class AttachmentController {
 
     @GetMapping("/api/notes/{noteId}/attachments")
     public List<AttachmentResponse> list(@AuthenticationPrincipal Long userId,
-                                         @PathVariable Long noteId) {
+                                         @PathVariable("noteId") Long noteId) {
         return attachmentService.list(userId, noteId);
     }
 
     @PostMapping("/api/notes/{noteId}/attachments")
     public ResponseEntity<AttachmentResponse> upload(@AuthenticationPrincipal Long userId,
-                                                     @PathVariable Long noteId,
+                                                     @PathVariable("noteId") Long noteId,
                                                      @RequestParam("file") MultipartFile file) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(attachmentService.upload(userId, noteId, file));
@@ -51,7 +51,7 @@ public class AttachmentController {
 
     @GetMapping("/api/attachments/{id}/download")
     public ResponseEntity<Resource> download(@AuthenticationPrincipal Long userId,
-                                             @PathVariable Long id) {
+                                             @PathVariable("id") Long id) {
         Attachment attachment = attachmentService.getOwned(userId, id);
         Path path = storage.resolve(attachment.getStoredName());
         if (!Files.exists(path)) {
@@ -70,7 +70,7 @@ public class AttachmentController {
     }
 
     @DeleteMapping("/api/attachments/{id}")
-    public ResponseEntity<Void> delete(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal Long userId, @PathVariable("id") Long id) {
         attachmentService.delete(userId, id);
         return ResponseEntity.noContent().build();
     }

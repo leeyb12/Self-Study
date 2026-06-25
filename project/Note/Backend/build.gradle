@@ -13,6 +13,11 @@ java {
 	}
 }
 
+// 컨트롤러의 @PathVariable/@RequestParam 이름 추론을 위해 파라미터 이름을 보존한다.
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs.add('-parameters')
+}
+
 repositories {
 	mavenCentral()
 }
