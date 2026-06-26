@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>프로젝트 기술서 - AI Note</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: "맑은 고딕", "Malgun Gothic", sans-serif;
+    background: #f3f3f3;
+    margin: 0;
+    padding: 30px;
+    color: #1a1a1a;
+  }
+  .sheet {
+    width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 28px 34px 40px;
+    border: 1px solid #000;
+  }
+  .doc-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    padding: 12px 0;
+    border: 1px solid #000;
+    margin-bottom: 18px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 10px 12px;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  th.label {
+    width: 90px;
+    background: #d9e1f2;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 700;
+    color: #1f3864;
+  }
+  td p { margin: 0 0 4px; }
+  td ul { margin: 0; padding-left: 18px; }
+  td li { margin: 2px 0; }
+  .muted { color: #444; }
+  .tech-group { margin-bottom: 6px; }
+  .tech-group b { color: #1f3864; }
+  ol.feat { margin: 2px 0 0; padding-left: 20px; }
+  ol.feat li { margin: 3px 0; }
+  .sub { margin-top: 10px; }
+  .sub > b { color: #1f3864; }
+  .grid-cell { width: 50%; text-align: center; vertical-align: top; padding: 8px; }
+  .grid-cell img {
+    width: 100%;
+    max-height: 190px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    background: #fafafa;
+  }
+  .grid-cell .cap { display: block; margin-top: 6px; font-size: 12px; font-weight: 600; }
+  .grid-cell .desc { display: block; font-size: 11px; color: #555; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .sheet { border: none; width: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="doc-title">프로젝트 기술서</div>
+
+    <table>
+      <tr>
+        <th class="label">프로젝트명</th>
+        <td colspan="3">AI Note &nbsp;(AI 노트 작성 · 관리 애플리케이션)</td>
+      </tr>
+
+      <tr>
+        <th class="label">개발 의도</th>
+        <td colspan="3">
+          로컬 LLM(Ollama)을 활용해 마크다운 노트 작성 · 폴더 정리 · 파일 첨부와 함께
+          AI 요약 · 번역 · 교정 · 이어쓰기 · 채팅을 지원하는 풀스택 노트 플랫폼 조성
+        </td>
+      </tr>
+
+      <tr>
+        <th class="label">활용기술</th>
+        <td colspan="3">
+          <div class="tech-group"><b>- Frontend :</b> React 19, TypeScript, Vite, marked(마크다운), DOMPurify(XSS 방지)</div>
+          <div class="tech-group"><b>- Backend :</b> Spring Boot 4.1, Spring Data JPA, Spring Security, JWT(JJWT), Bean Validation, Apache PDFBox, Lombok</div>
+          <div class="tech-group"><b>- Database :</b> MariaDB</div>
+          <div class="tech-group"><b>- AI :</b> Ollama 로컬 LLM (기본 모델 gemma)</div>
+          <div class="tech-group"><b>- Tool :</b> Visual Studio Code, Gradle, Git</div>
+        </td>
+      </tr>
+
+      <tr>
+        <th class="label">내용</th>
+        <td colspan="3">
+          <p>▶ 개발 기간 : 2025.06.13 ~ 06.25 (13일)</p>
+          <p>▶ 팀 구성 : 1명 (개인 프로젝트 · 프론트엔드 / 백엔드 단독 개발)</p>
+          <p>▶ 기능 구성</p>
+          <ol class="feat">
+            <li>회원가입 / 로그인 &nbsp;(JWT 인증, Spring Security)</li>
+            <li>마크다운 노트 작성 · 조회 · 수정 · 삭제(CRUD) 및 폴더별 분류</li>
+            <li>노트별 파일 첨부 · 다운로드 &nbsp;(최대 25MB) / PDF 뷰어 · 텍스트 추출</li>
+            <li>휴지통 &nbsp;(소프트 삭제 · 복원 · 영구 삭제)</li>
+            <li>AI 요약 / 번역 / 교정 / 이어쓰기</li>
+            <li>AI 채팅 &nbsp;(Ollama LLM 대화) 및 다크 / 라이트 테마</li>
+          </ol>
+
+          <div class="sub">
+            <b>▶ 세부 구현</b>
+            <ul>
+              <li>Spring Security + JWT 필터 기반 인증 / 인가, 리소스 소유자만 노트 · 첨부파일 접근 가능</li>
+              <li>OllamaClient로 로컬 LLM 연동, 노트 본문 · PDF 내용을 요약 / 번역 / 교정 / 이어쓰기 / 채팅에 활용</li>
+              <li>첨부파일은 서버 로컬 스토리지에 저장, Apache PDFBox로 PDF 텍스트 자동 추출</li>
+              <li>소프트 삭제(deleted_at) 기반 휴지통 — 복원 및 영구 삭제, 휴지통 비우기 지원</li>
+              <li>Controller → Service → Repository 계층 분리, GlobalExceptionHandler 중앙 예외 처리</li>
+              <li>marked로 마크다운 렌더링 후 DOMPurify로 XSS 차단, 테마는 localStorage로 유지</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th class="label" rowspan="3">기능</th>
+        <td class="grid-cell">
+          <img src="./screenshots/login.png" alt="로그인 / 회원가입" />
+          <span class="cap">로그인 / 회원가입</span>
+          <span class="desc">JWT 인증 기반 회원 관리</span>
+        </td>
+        <td class="grid-cell">
+          <img src="./screenshots/note-editor.png" alt="노트 작성" />
+          <span class="cap">마크다운 노트 작성</span>
+          <span class="desc">실시간 미리보기 · 폴더 분류</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="grid-cell">
+          <img src="./screenshots/ai-tools.png" alt="AI 도구" />
+          <span class="cap">AI 요약 / 번역 / 교정</span>
+          <span class="desc">Ollama 로컬 LLM 연동</span>
+        </td>
+        <td class="grid-cell">
+          <img src="./screenshots/ai-chat.png" alt="AI 채팅" />
+          <span class="cap">AI 채팅</span>
+          <span class="desc">LLM과의 대화형 채팅</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="grid-cell">
+          <img src="./screenshots/pdf-viewer.png" alt="PDF 뷰어" />
+          <span class="cap">첨부파일 / PDF 뷰어</span>
+          <span class="desc">PDF 텍스트 추출 · 다운로드</span>
+        </td>
+        <td class="grid-cell">
+          <img src="./screenshots/trash.png" alt="휴지통" />
+          <span class="cap">휴지통</span>
+          <span class="desc">소프트 삭제 · 복원 · 영구 삭제</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
