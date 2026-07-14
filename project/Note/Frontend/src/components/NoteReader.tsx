@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api/client'
-import type { Attachment, Folder, Note } from '../types'
+import type { Attachment, Folder, Note, Page } from '../types'
 import { renderMarkdown } from '../lib/markdown'
 import PdfViewer from './PdfViewer'
 
@@ -26,6 +26,8 @@ function isPdf(a: Attachment): boolean {
 }
 
 export default function NoteReader({ note, folders, onEdit, onDelete, onClose }: Props) {
+  const [pages, setPages] = useState<Page[]>([])
+  const [index, setIndex] = useState(0)
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const [viewerAtt, setViewerAtt] = useState<Attachment | null>(null)
 
@@ -33,17 +35,19 @@ export default function NoteReader({ note, folders, onEdit, onDelete, onClose }:
     ? folders.find((f) => f.id === note.folderId)?.name
     : null
 
-  const loadAttachments = useCallback(async (id: number) => {
+  const load = useCallback(async (id: number) => {
     try {
-      setAttachments(await api.listAttachments(id))
+      const [p, a] = await Promise.all([api.listPages(id), api.listAttachments(id)])
+      setPages(p)
+      setAttachments(a)
     } catch {
       /* 무시 */
     }
   }, [])
 
   useEffect(() => {
-    loadAttachments(note.id)
-  }, [note.id, loadAttachments])
+    load(note.id)
+  }, [note.id, load])
 
   function openAttachment(a: Attachment) {
     if (isPdf(a)) setViewerAtt(a)
@@ -51,8 +55,10 @@ export default function NoteReader({ note, folders, onEdit, onDelete, onClose }:
   }
 
   async function handleDelete() {
-    if (confirm('이 노트를 삭제할까요?')) await onDelete()
+    if (confirm('이 노트를 휴지통으로 옮길까요?')) await onDelete()
   }
+
+  const current = pages[index]
 
   return (
     <div className="editor-screen">
@@ -74,16 +80,35 @@ export default function NoteReader({ note, folders, onEdit, onDelete, onClose }:
       <div className="editor-body reader-body">
         <h1 className="reader-title">{note.title || '제목 없음'}</h1>
         <p className="muted reader-meta">
-          최종 수정 {new Date(note.updatedAt).toLocaleString()}
+          최종 수정 {new Date(note.updatedAt).toLocaleString()} · 총 {note.pageCount}페이지
         </p>
 
-        {note.content?.trim() ? (
+        {pages.length > 1 && (
+          <div className="page-bar">
+            <div className="page-nav">
+              <button onClick={() => setIndex((i) => Math.max(0, i - 1))} disabled={index === 0}>
+                ◀
+              </button>
+              <span className="page-indicator">
+                {current?.pageNo ?? 1} / {pages.length}
+              </span>
+              <button
+                onClick={() => setIndex((i) => Math.min(pages.length - 1, i + 1))}
+                disabled={index >= pages.length - 1}
+              >
+                ▶
+              </button>
+            </div>
+          </div>
+        )}
+
+        {current?.content?.trim() ? (
           <div
-            className="markdown-body reader-content"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(note.content) }}
+            className={`markdown-body reader-content paper-${note.paper}`}
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(current.content) }}
           />
         ) : (
-          <p className="muted">내용이 없습니다.</p>
+          <p className="muted">이 페이지는 비어 있습니다.</p>
         )}
 
         {attachments.length > 0 && (

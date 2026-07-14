@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   initialState,
   legalMoves,
@@ -8,6 +8,8 @@ import {
   chooseAiMove,
 } from './chessEngine.js'
 import Difficulty from '../components/Difficulty.jsx'
+import MatchRecord from '../components/MatchRecord.jsx'
+import { loadRecord, saveRecord } from '../utils/matchStore.js'
 
 const DIFFICULTIES = [
   { label: '쉬움', value: 2 },
@@ -27,6 +29,15 @@ function Chess() {
   const [message, setMessage] = useState('당신(백) 차례')
   const [over, setOver] = useState(false)
   const [depth, setDepth] = useState(3) // AI 탐색 깊이(난이도)
+  const [record, setRecord] = useState(() => loadRecord('chess'))
+
+  const recordOutcome = useCallback((outcome) => {
+    setRecord((prev) => {
+      const next = { ...prev, [outcome]: prev[outcome] + 1 }
+      saveRecord('chess', next)
+      return next
+    })
+  }, [])
 
   // 선택한 기물의 이동 가능 칸
   const targets =
@@ -36,25 +47,30 @@ function Chess() {
         )
       : []
 
-  function finishAfter(ns, mover) {
-    // mover가 둔 뒤, 상대 차례의 상태를 판정
-    const next = mover === 'w' ? 'b' : 'w'
-    const st = getStatus(ns, next)
-    if (st === 'checkmate') {
-      setOver(true)
-      setMessage(mover === 'w' ? '🎉 체크메이트! 당신 승리' : '체크메이트 · AI 승리 😢')
-      return
-    }
-    if (st === 'stalemate') {
-      setOver(true)
-      setMessage('스테일메이트 · 무승부')
-      return
-    }
-    const check = isInCheck(ns, next)
-    if (next === 'w') setMessage(check ? '체크! 당신(백) 차례' : '당신(백) 차례')
-    else setMessage(check ? '체크! AI 생각 중…' : 'AI 생각 중…')
-    setTurn(next)
-  }
+  const finishAfter = useCallback(
+    (ns, mover) => {
+      // mover가 둔 뒤, 상대 차례의 상태를 판정
+      const next = mover === 'w' ? 'b' : 'w'
+      const st = getStatus(ns, next)
+      if (st === 'checkmate') {
+        setOver(true)
+        setMessage(mover === 'w' ? '🎉 체크메이트! 당신 승리' : '체크메이트 · AI 승리 😢')
+        recordOutcome(mover === 'w' ? 'win' : 'lose')
+        return
+      }
+      if (st === 'stalemate') {
+        setOver(true)
+        setMessage('스테일메이트 · 무승부')
+        recordOutcome('draw')
+        return
+      }
+      const check = isInCheck(ns, next)
+      if (next === 'w') setMessage(check ? '체크! 당신(백) 차례' : '당신(백) 차례')
+      else setMessage(check ? '체크! AI 생각 중…' : 'AI 생각 중…')
+      setTurn(next)
+    },
+    [recordOutcome],
+  )
 
   // AI 차례
   useEffect(() => {
@@ -67,7 +83,7 @@ function Chess() {
       finishAfter(ns, 'b')
     }, 300)
     return () => clearTimeout(timer)
-  }, [turn, over, state, depth])
+  }, [turn, over, state, depth, finishAfter])
 
   function handleClick(r, c) {
     if (over || turn !== 'w') return
@@ -129,6 +145,7 @@ function Chess() {
         )}
       </div>
       <p className="game-info">프로모션은 자동으로 퀸으로 승격됩니다</p>
+      <MatchRecord record={record} />
       <Difficulty value={depth} onChange={setDepth} options={DIFFICULTIES} />
       <button type="button" className="game-reset" onClick={reset}>
         새 게임

@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import MatchRecord from '../components/MatchRecord.jsx'
+import { loadRecord, saveRecord } from '../utils/matchStore.js'
 
 // 플레이어 red(r): 아래쪽에서 위로(-r). AI black(b): 위에서 아래로(+r).
 // 어두운 칸((r+c)%2===1)만 사용. 킹은 양방향 이동/캡처.
@@ -98,6 +100,15 @@ function Checkers() {
   const [selected, setSelected] = useState(null)
   const [message, setMessage] = useState('당신(빨강) 차례')
   const [over, setOver] = useState(false)
+  const [record, setRecord] = useState(() => loadRecord('checkers'))
+
+  const recordOutcome = useCallback((outcome) => {
+    setRecord((prev) => {
+      const next = { ...prev, [outcome]: prev[outcome] + 1 }
+      saveRecord('checkers', next)
+      return next
+    })
+  }, [])
 
   const playerMoves = turn === RED && !over ? genMoves(board, RED) : []
   // 선택한 기물에서 시작하는 이동의 도착 칸
@@ -107,16 +118,20 @@ function Checkers() {
   const targetSet = new Set(targets.map((m) => `${m.path.at(-1)[0]},${m.path.at(-1)[1]}`))
   const movableSet = new Set(playerMoves.map((m) => `${m.path[0][0]},${m.path[0][1]}`))
 
-  function finishAfter(nb, mover) {
-    const next = mover === RED ? BLACK : RED
-    if (countPieces(nb, next) === 0 || genMoves(nb, next).length === 0) {
-      setOver(true)
-      setMessage(mover === RED ? '🎉 당신 승리!' : 'AI 승리 😢')
-      return
-    }
-    setTurn(next)
-    setMessage(next === RED ? '당신(빨강) 차례' : 'AI 생각 중…')
-  }
+  const finishAfter = useCallback(
+    (nb, mover) => {
+      const next = mover === RED ? BLACK : RED
+      if (countPieces(nb, next) === 0 || genMoves(nb, next).length === 0) {
+        setOver(true)
+        setMessage(mover === RED ? '🎉 당신 승리!' : 'AI 승리 😢')
+        recordOutcome(mover === RED ? 'win' : 'lose')
+        return
+      }
+      setTurn(next)
+      setMessage(next === RED ? '당신(빨강) 차례' : 'AI 생각 중…')
+    },
+    [recordOutcome],
+  )
 
   // AI 차례
   useEffect(() => {
@@ -133,7 +148,7 @@ function Checkers() {
       finishAfter(nb, BLACK)
     }, 400)
     return () => clearTimeout(timer)
-  }, [turn, over, board])
+  }, [turn, over, board, finishAfter])
 
   function handleClick(r, c) {
     if (over || turn !== RED) return
@@ -200,6 +215,7 @@ function Checkers() {
         )}
       </div>
       <p className="game-info">캡처가 가능하면 반드시 잡아야 합니다</p>
+      <MatchRecord record={record} />
       <button type="button" className="game-reset" onClick={reset}>
         새 게임
       </button>

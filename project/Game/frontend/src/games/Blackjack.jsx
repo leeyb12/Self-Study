@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import MatchRecord from '../components/MatchRecord.jsx'
+import { loadRecord, saveRecord } from '../utils/matchStore.js'
 
 const SUITS = ['♠', '♥', '♦', '♣']
 const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -48,6 +50,15 @@ function Blackjack() {
   const [dealer, setDealer] = useState([])
   const [phase, setPhase] = useState('idle') // idle | player | done
   const [result, setResult] = useState('')
+  const [record, setRecord] = useState(() => loadRecord('blackjack'))
+
+  function recordOutcome(outcome) {
+    setRecord((prev) => {
+      const next = { ...prev, [outcome]: prev[outcome] + 1 }
+      saveRecord('blackjack', next)
+      return next
+    })
+  }
 
   function deal() {
     const d = buildDeck()
@@ -72,6 +83,7 @@ function Blackjack() {
     if (handValue(p) > 21) {
       setPhase('done')
       setResult('버스트! 딜러 승리 💥')
+      recordOutcome('lose')
     }
   }
 
@@ -92,11 +104,22 @@ function Blackjack() {
 
     const pv = handValue(p)
     const dv = handValue(dealerHand)
-    if (playerBlackjack) setResult('블랙잭! 🎉 승리')
-    else if (dv > 21) setResult('딜러 버스트! 🎉 승리')
-    else if (pv > dv) setResult('🎉 승리!')
-    else if (pv < dv) setResult('딜러 승리 😢')
-    else setResult('무승부')
+    if (playerBlackjack) {
+      setResult('블랙잭! 🎉 승리')
+      recordOutcome('win')
+    } else if (dv > 21) {
+      setResult('딜러 버스트! 🎉 승리')
+      recordOutcome('win')
+    } else if (pv > dv) {
+      setResult('🎉 승리!')
+      recordOutcome('win')
+    } else if (pv < dv) {
+      setResult('딜러 승리 😢')
+      recordOutcome('lose')
+    } else {
+      setResult('무승부')
+      recordOutcome('draw')
+    }
   }
 
   const dealerShown = phase === 'player'
@@ -148,6 +171,7 @@ function Blackjack() {
               다시 하기
             </button>
           )}
+          <MatchRecord record={record} />
         </>
       )}
     </div>

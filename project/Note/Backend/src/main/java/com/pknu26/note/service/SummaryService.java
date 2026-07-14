@@ -14,14 +14,16 @@ public class SummaryService {
 
     private final NoteRepository noteRepository;
     private final AttachmentService attachmentService;
+    private final PageService pageService;
     private final OllamaClient ollamaClient;
     private final int maxInputChars;
 
     public SummaryService(NoteRepository noteRepository, AttachmentService attachmentService,
-                          OllamaClient ollamaClient,
+                          PageService pageService, OllamaClient ollamaClient,
                           @Value("${ollama.max-input-chars}") int maxInputChars) {
         this.noteRepository = noteRepository;
         this.attachmentService = attachmentService;
+        this.pageService = pageService;
         this.ollamaClient = ollamaClient;
         this.maxInputChars = maxInputChars;
     }
@@ -32,10 +34,8 @@ public class SummaryService {
                 .orElseThrow(() -> ApiException.notFound("노트를 찾을 수 없습니다."));
 
         StringBuilder source = new StringBuilder();
-        source.append("# 제목: ").append(note.getTitle()).append("\n\n");
-        if (note.getContent() != null && !note.getContent().isBlank()) {
-            source.append("## 본문\n").append(note.getContent());
-        }
+        source.append("# 제목: ").append(note.getTitle()).append("\n");
+        source.append(pageService.collectContent(noteId));
         source.append(attachmentService.collectExtractedText(noteId));
 
         String material = source.toString().strip();

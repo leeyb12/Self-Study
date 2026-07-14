@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { streamStory } from '../api/ai.js'
+import { streamEscape } from '../api/ai.js'
 import { parseNarrative } from '../utils/narrative.js'
 
 const MAX_CONTEXT = 2000
 
-function TextAdventure() {
-  const [display, setDisplay] = useState('') // 스트리밍 중인 본문
-  const [node, setNode] = useState(null) // { choices, ended } (완료 후)
+function EscapeRoom() {
+  const [display, setDisplay] = useState('')
+  const [node, setNode] = useState(null) // { choices, ended(=escaped) }
   const [context, setContext] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -20,7 +20,7 @@ function TextAdventure() {
     setNode(null)
     setDisplay('')
     try {
-      const full = await streamStory(prevContext, action, (text) =>
+      const full = await streamEscape(prevContext, action, (text) =>
         setDisplay(parseNarrative(text).narration),
       )
       const parsed = parseNarrative(full)
@@ -49,11 +49,9 @@ function TextAdventure() {
   if (!started) {
     return (
       <div className="game">
-        <p className="game-message">🤖 AI가 진행하는 텍스트 어드벤처</p>
-        <p className="game-info">선택지를 고르거나 원하는 행동을 직접 입력할 수 있습니다.</p>
-        <button type="button" className="game-reset" onClick={start}>
-          모험 시작
-        </button>
+        <p className="game-message">🔒 AI 방탈출</p>
+        <p className="game-info">단서를 찾아 잠긴 방을 탈출하세요. 직접 행동을 입력할 수 있습니다.</p>
+        <button type="button" className="game-reset" onClick={start}>입장</button>
       </div>
     )
   }
@@ -75,8 +73,8 @@ function TextAdventure() {
         node && (
           node.ended ? (
             <>
-              <p className="game-message">— 이야기 끝 —</p>
-              <button type="button" className="game-reset" onClick={start}>새 모험</button>
+              <p className="game-message">🎉 탈출 성공!</p>
+              <button type="button" className="game-reset" onClick={start}>새 방</button>
             </>
           ) : (
             <>
@@ -96,7 +94,7 @@ function TextAdventure() {
                 <input
                   type="text"
                   value={input}
-                  placeholder="직접 행동 입력…"
+                  placeholder="직접 행동 입력… (예: 서랍을 연다)"
                   onChange={(e) => setInput(e.target.value)}
                 />
                 <button type="submit" disabled={input.trim() === ''}>행동</button>
@@ -109,4 +107,4 @@ function TextAdventure() {
   )
 }
 
-export default TextAdventure
+export default EscapeRoom

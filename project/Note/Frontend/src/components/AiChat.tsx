@@ -5,6 +5,8 @@ import { renderMarkdown } from '../lib/markdown'
 
 interface Props {
   onClose: () => void
+  /** LLM 이 노트/폴더를 생성했을 때 목록을 새로고침하도록 알린다. */
+  onActionPerformed?: (action: 'create_note' | 'create_folder') => void
 }
 
 const HISTORY_KEY = 'note.chatHistory'
@@ -18,7 +20,7 @@ function loadHistory(): ChatMsg[] {
   }
 }
 
-export default function AiChat({ onClose }: Props) {
+export default function AiChat({ onClose, onActionPerformed }: Props) {
   const [messages, setMessages] = useState<ChatMsg[]>(loadHistory)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -53,6 +55,8 @@ export default function AiChat({ onClose }: Props) {
     try {
       const res = await api.aiChat(next)
       setMessages([...next, { role: 'assistant', content: res.reply }])
+      // 노트/폴더가 실제로 생성됐으면 목록을 갱신한다.
+      if (res.action) onActionPerformed?.(res.action)
     } catch (err) {
       setError(err instanceof Error ? err.message : '응답에 실패했습니다.')
     } finally {
@@ -89,7 +93,13 @@ export default function AiChat({ onClose }: Props) {
 
         <div className="chat-body" ref={scrollRef}>
           {messages.length === 0 && !loading && (
-            <p className="muted chat-empty">무엇이든 물어보세요. (Enter 전송, Shift+Enter 줄바꿈)</p>
+            <p className="muted chat-empty">
+              무엇이든 물어보세요.
+              <br />
+              “회의록 노트 만들어 줘”, “업무 폴더 만들어 줘”처럼 시키면 실제로 만들어 줍니다.
+              <br />
+              (Enter 전송, Shift+Enter 줄바꿈)
+            </p>
           )}
           {messages.map((m, i) => (
             <div key={i} className={`chat-msg ${m.role}`}>

@@ -58,9 +58,9 @@ export default function TrashGrid({
 
       <div className="note-grid">
         {notes.map((note) => (
-          <div key={note.id} className="note-card trash-card">
-            <h3 className="card-title">{note.title || '제목 없음'}</h3>
-            <p className="card-preview">{note.content || '내용 없음'}</p>
+          <div key={note.id} className={`book-card cover-${note.cover} trash-card`}>
+            <span className="book-spine" />
+            <h3 className="book-title">{note.title || '제목 없음'}</h3>
             <div className="trash-actions">
               <button onClick={() => onRestore(note.id)}>↩ 복원</button>
               <button className="danger" onClick={() => handlePermanent(note)}>

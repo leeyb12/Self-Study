@@ -10,6 +10,7 @@ import type {
   AiToolResult,
   ChatMsg,
   ChatReply,
+  Page,
 } from '../types'
 
 const TOKEN_KEY = 'note.accessToken'
@@ -34,8 +35,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     },
   })
 
-  if (res.status === 401) {
+  // 401(인증 만료) / 403(권한 없음) 모두 세션이 끊긴 상태로 보고 로그인 화면으로 되돌린다.
+  if (res.status === 401 || res.status === 403) {
     setToken(null)
+    window.location.reload()
     throw new Error('인증이 만료되었습니다. 다시 로그인해 주세요.')
   }
 
@@ -97,6 +100,21 @@ export const api = {
 
   deleteNote: (id: number) =>
     request<void>(`/notes/${id}`, { method: 'DELETE' }),
+
+  // ---- 페이지 ----
+  listPages: (noteId: number) => request<Page[]>(`/notes/${noteId}/pages`),
+
+  addPage: (noteId: number) =>
+    request<Page>(`/notes/${noteId}/pages`, { method: 'POST' }),
+
+  updatePage: (pageId: number, content: string) =>
+    request<Page>(`/pages/${pageId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ content }),
+    }),
+
+  deletePage: (pageId: number) =>
+    request<void>(`/pages/${pageId}`, { method: 'DELETE' }),
 
   // ---- 휴지통 ----
   listTrash: () => request<Note[]>('/notes/trash'),

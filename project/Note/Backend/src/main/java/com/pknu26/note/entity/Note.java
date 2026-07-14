@@ -35,8 +35,13 @@ public class Note {
     @Column(nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    /** 책 표지 프리셋 키 (classic, navy, forest, crimson, craft, mint). */
+    @Column(nullable = false)
+    private String cover;
+
+    /** 종이 스타일 프리셋 키 (plain, lined, grid, dotted). */
+    @Column(nullable = false)
+    private String paper;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -51,17 +56,19 @@ public class Note {
     private LocalDateTime deletedAt;
 
     @Builder
-    private Note(Long userId, Long folderId, String title, String content) {
+    private Note(Long userId, Long folderId, String title, String cover, String paper) {
         this.userId = userId;
         this.folderId = folderId;
         this.title = title;
-        this.content = content;
+        this.cover = cover;
+        this.paper = paper;
     }
 
-    public void update(Long folderId, String title, String content) {
+    public void update(Long folderId, String title, String cover, String paper) {
         this.folderId = folderId;
         this.title = title;
-        this.content = content;
+        this.cover = cover;
+        this.paper = paper;
     }
 
     public void moveToTrash() {

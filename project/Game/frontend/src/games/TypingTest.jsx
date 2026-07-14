@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import ScorePanel from '../components/ScorePanel.jsx'
+import { generateTyping } from '../api/ai.js'
 
 const SENTENCES = [
   'The quick brown fox jumps over the lazy dog',
@@ -18,7 +19,33 @@ function TypingTest() {
   const [startedAt, setStartedAt] = useState(null)
   const [result, setResult] = useState(null)
   const [round, setRound] = useState(0)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [aiError, setAiError] = useState(null)
   const inputRef = useRef(null)
+
+  function newTarget(text) {
+    setTarget(text)
+    setInput('')
+    setStartedAt(null)
+    setResult(null)
+    setRound((r) => r + 1)
+    inputRef.current?.focus()
+  }
+
+  async function loadAi() {
+    setAiLoading(true)
+    setAiError(null)
+    try {
+      const res = await generateTyping('normal')
+      const sentence = (res.sentence || '').trim()
+      if (!sentence) throw new Error('문장을 생성하지 못했습니다')
+      newTarget(sentence)
+    } catch (e) {
+      setAiError(e.message)
+    } finally {
+      setAiLoading(false)
+    }
+  }
 
   function handleChange(e) {
     const value = e.target.value
@@ -38,12 +65,7 @@ function TypingTest() {
   }
 
   function reset() {
-    setTarget(pickSentence())
-    setInput('')
-    setStartedAt(null)
-    setResult(null)
-    setRound((r) => r + 1)
-    inputRef.current?.focus()
+    newTarget(pickSentence())
   }
 
   return (
@@ -77,9 +99,15 @@ function TypingTest() {
         </p>
       )}
 
-      <button type="button" className="game-reset" onClick={reset}>
-        새 문장
-      </button>
+      {aiError && <p className="score-error">{aiError}</p>}
+      <div className="game-controls">
+        <button type="button" className="game-reset" onClick={reset} disabled={aiLoading}>
+          새 문장
+        </button>
+        <button type="button" onClick={loadAi} disabled={aiLoading}>
+          {aiLoading ? '🤖 생성 중…' : '🤖 AI 문장'}
+        </button>
+      </div>
       <ScorePanel
         key={round}
         gameId="typing"

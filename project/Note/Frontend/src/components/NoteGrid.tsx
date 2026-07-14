@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react'
-import type { Folder, Note } from '../types'
+import type { Note } from '../types'
 
 interface Props {
   notes: Note[]
-  folders: Folder[]
   loading: boolean
   error: string | null
   title: string
@@ -16,7 +15,6 @@ interface Props {
 
 export default function NoteGrid({
   notes,
-  folders,
   loading,
   error,
   title,
@@ -29,9 +27,6 @@ export default function NoteGrid({
   const uploadInputRef = useRef<HTMLInputElement>(null)
   const [selectMode, setSelectMode] = useState(false)
   const [selected, setSelected] = useState<Set<number>>(new Set())
-
-  const folderName = (id: number | null) =>
-    id == null ? null : folders.find((f) => f.id === id)?.name
 
   function handleUploadChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -123,14 +118,11 @@ export default function NoteGrid({
 
       <div className="note-grid">
         {notes.map((note) => {
-          const name = folderName(note.folderId)
           const isSelected = selected.has(note.id)
           return (
             <button
               key={note.id}
-              className={`note-card ${selectMode ? 'selectable' : ''} ${
-                isSelected ? 'selected' : ''
-              }`}
+              className={`book-card cover-${note.cover} ${isSelected ? 'selected' : ''}`}
               onClick={() => handleCardClick(note)}
             >
               {selectMode && (
@@ -138,14 +130,8 @@ export default function NoteGrid({
                   {isSelected ? '✓' : ''}
                 </span>
               )}
-              <h3 className="card-title">{note.title || '제목 없음'}</h3>
-              <p className="card-preview">{note.content || '내용 없음'}</p>
-              <div className="card-footer">
-                {name && <span className="card-folder">📁 {name}</span>}
-                <span className="card-date">
-                  {new Date(note.updatedAt).toLocaleDateString()}
-                </span>
-              </div>
+              <span className="book-spine" />
+              <h3 className="book-title">{note.title || '제목 없음'}</h3>
             </button>
           )
         })}

@@ -540,12 +540,15 @@
 .tetris-pad {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .tetris-pad button,
 .pac-pad button {
-  width: 48px;
+  min-width: 48px;
   height: 44px;
-  font-size: 18px;
+  padding: 0 10px;
+  font-size: 16px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg);
@@ -553,6 +556,29 @@
   cursor: pointer;
   touch-action: manipulation;
   user-select: none;
+}
+
+/* ---- 테트리스 홀드 ---- */
+.tetris-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tetris-hold-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.tetris-hold-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.tetris-hold {
+  border: 1px solid var(--border);
+  border-radius: 6px;
 }
 .pac-pad {
   display: flex;
@@ -795,6 +821,62 @@
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
+}
+
+/* ---- 전적 표시 ---- */
+.match-record {
+  font-size: 13px;
+  color: var(--text);
+}
+.match-record b {
+  color: var(--text-h);
+}
+
+/* ---- AI 텍스트 게임 공통 ---- */
+.ai-log {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  text-align: left;
+}
+.qa-line,
+.hint-line {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-h);
+  margin: 0;
+  padding: 6px 10px;
+  background: var(--code-bg);
+  border-radius: 6px;
+}
+.chain-word {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 15px;
+}
+.chain-word.me {
+  background: var(--accent-bg);
+  color: var(--text-h);
+  border: 1px solid var(--accent-border);
+}
+.chain-word.ai {
+  background: var(--code-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+/* 스트리밍 커서 */
+.stream-caret {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% { opacity: 0; }
 }
 
 /* ---- 3D 미로 ---- */

@@ -46,6 +46,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith(BEARER_PREFIX)) {
             return header.substring(BEARER_PREFIX.length());
         }
+        // <img src="..."> 처럼 헤더를 붙일 수 없는 GET 요청에 한해 쿼리 파라미터도 허용한다.
+        // (POST 등에서 getParameter 를 호출하면 multipart 본문을 소비할 수 있으므로 GET 으로 제한)
+        if ("GET".equalsIgnoreCase(request.getMethod())) {
+            String queryToken = request.getParameter("token");
+            if (queryToken != null && !queryToken.isBlank()) {
+                return queryToken;
+            }
+        }
         return null;
     }
 }

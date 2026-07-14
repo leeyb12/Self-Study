@@ -15,6 +15,11 @@ const CELL = 20
 const W = COLS * CELL
 const H = ROWS * CELL
 
+const HOLD_GRID = 4
+const HOLD_CELL = 18
+const HOLD_W = HOLD_GRID * HOLD_CELL
+const HOLD_H = HOLD_GRID * HOLD_CELL
+
 const SHAPES = {
   I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
   O: [[1, 1], [1, 1]],
@@ -58,14 +63,36 @@ function collision(board, matrix, px, py) {
   return false
 }
 
-// 새 조각을 g에 세팅. 놓을 공간이 없으면 false(게임 오버).
-function spawn(g) {
-  const key = KEYS[Math.floor(Math.random() * KEYS.length)]
+// 지정한 종류의 조각을 g에 세팅. 놓을 공간이 없으면 false(게임 오버).
+function spawnFrom(g, key) {
+  g.currentKey = key
   g.matrix = SHAPES[key].map((row) => row.slice())
   g.color = COLORS[key]
   g.px = Math.floor((COLS - g.matrix[0].length) / 2)
   g.py = 0
   return !collision(g.board, g.matrix, g.px, g.py)
+}
+
+// 무작위 새 조각.
+function spawn(g) {
+  return spawnFrom(g, KEYS[Math.floor(Math.random() * KEYS.length)])
+}
+
+// 홀드: 현재 조각을 보관하거나 보관된 조각과 교체(조각당 1회).
+function holdPiece(g) {
+  if (g.holdUsed) return
+  const cur = g.currentKey
+  let ok
+  if (g.hold == null) {
+    g.hold = cur
+    ok = spawn(g)
+  } else {
+    const swap = g.hold
+    g.hold = cur
+    ok = spawnFrom(g, swap)
+  }
+  g.holdUsed = true
+  return ok
 }
 
 function tryMove(g, dx, dy) {
@@ -95,6 +122,7 @@ function emptyBoard() {
 
 function Tetris() {
   const canvasRef = useRef(null)
+  const holdCanvasRef = useRef(null)
   const gRef = useRef(null)
   const inputRef = useRef([]) // 대기 중인 입력 큐
   const statusRef = useRef('ready')
@@ -122,6 +150,9 @@ function Tetris() {
       color: null,
       px: 0,
       py: 0,
+      currentKey: null,
+      hold: null, // 보관된 조각 종류
+      holdUsed: false, // 이번 조각에서 홀드를 이미 썼는지
     }
     spawn(g)
     gRef.current = g
@@ -161,7 +192,9 @@ function Tetris() {
       setLevel(g.level)
     }
 
-    if (!spawn(g)) setStatus('over')
+    const ok = spawn(g)
+    g.holdUsed = false // 새 조각이 나왔으니 홀드 다시 가능
+    if (!ok) setStatus('over')
   }
 
   function hardDrop(g) {
@@ -182,7 +215,9 @@ function Tetris() {
       else if (action === 'right') tryMove(g, 1, 0)
       else if (action === 'soft') tryMove(g, 0, 1)
       else if (action === 'rotate') tryRotate(g)
-      else if (action === 'hard') {
+      else if (action === 'hold') {
+        if (holdPiece(g) === false) return // 홀드 직후 게임오버면 중단
+      } else if (action === 'hard') {
         hardDrop(g)
         return
       }
@@ -215,6 +250,30 @@ function Tetris() {
         if (v) drawCell(ctx, g.px + c, g.py + r, g.color)
       }),
     )
+
+    drawHold()
+  }
+
+  function drawHold() {
+    const canvas = holdCanvasRef.current
+    const g = gRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = '#0f1117'
+    ctx.fillRect(0, 0, HOLD_W, HOLD_H)
+    if (!g || !g.hold) return
+    const shape = SHAPES[g.hold]
+    const color = COLORS[g.hold]
+    const offX = Math.floor((HOLD_GRID - shape[0].length) / 2)
+    const offY = Math.floor((HOLD_GRID - shape.length) / 2)
+    shape.forEach((row, r) =>
+      row.forEach((v, c) => {
+        if (v) {
+          ctx.fillStyle = color
+          ctx.fillRect((offX + c) * HOLD_CELL, (offY + r) * HOLD_CELL, HOLD_CELL - 1, HOLD_CELL - 1)
+        }
+      }),
+    )
   }
 
   function drawCell(ctx, x, y, color) {
@@ -234,7 +293,11 @@ function Tetris() {
     }
     const onKey = (e) => {
       if (statusRef.current !== 'playing') return
-      const action = map[e.key] || (e.key === ' ' || e.code === 'Space' ? 'hard' : null)
+      let action = map[e.key]
+      if (!action) {
+        if (e.key === ' ' || e.code === 'Space') action = 'hard'
+        else if (e.key === 'c' || e.key === 'C' || e.key === 'Shift') action = 'hold'
+      }
       if (!action) return
       e.preventDefault()
       inputRef.current.push(action)
@@ -255,6 +318,14 @@ function Tetris() {
       ctx.font = '18px system-ui'
       ctx.textAlign = 'center'
       ctx.fillText(status === 'over' ? '💥 게임 오버' : '테트리스', W / 2, H / 2)
+
+      // 홀드 미리보기도 비운다
+      const hold = holdCanvasRef.current
+      if (hold) {
+        const hctx = hold.getContext('2d')
+        hctx.fillStyle = '#0f1117'
+        hctx.fillRect(0, 0, HOLD_W, HOLD_H)
+      }
     }
   }, [status])
 
@@ -267,7 +338,13 @@ function Tetris() {
       <p className="game-message">
         점수 {score} · 라인 {lines} · Lv {level}
       </p>
-      <canvas ref={canvasRef} width={W} height={H} className="canvas-game" />
+      <div className="tetris-layout">
+        <canvas ref={canvasRef} width={W} height={H} className="canvas-game" />
+        <div className="tetris-hold-box">
+          <span className="tetris-hold-label">HOLD</span>
+          <canvas ref={holdCanvasRef} width={HOLD_W} height={HOLD_H} className="tetris-hold" />
+        </div>
+      </div>
 
       <div className="tetris-pad">
         <button type="button" onClick={() => push('left')}>◀</button>
@@ -275,9 +352,10 @@ function Tetris() {
         <button type="button" onClick={() => push('right')}>▶</button>
         <button type="button" onClick={() => push('soft')}>▼</button>
         <button type="button" onClick={() => push('hard')}>⤓</button>
+        <button type="button" onClick={() => push('hold')}>HOLD</button>
       </div>
 
-      <p className="game-info">← → 이동 · ↑ 회전 · ↓ 소프트드롭 · Space 하드드롭</p>
+      <p className="game-info">← → 이동 · ↑ 회전 · ↓ 소프트드롭 · Space 하드드롭 · C 홀드</p>
       <Difficulty
         value={startInterval}
         onChange={setStartInterval}

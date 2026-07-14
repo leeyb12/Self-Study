@@ -123,7 +123,7 @@ export default function NoteWorkspace({ email, onLogout }: Props) {
     const folderId = typeof filter === 'number' ? filter : null
     setError(null)
     try {
-      const note = await api.createNote({ title, content: '', folderId })
+      const note = await api.createNote({ title, folderId, cover: 'classic', paper: 'plain' })
       for (const file of list) {
         await api.uploadAttachment(note.id, file)
       }
@@ -187,7 +187,6 @@ export default function NoteWorkspace({ email, onLogout }: Props) {
         ) : (
           <NoteGrid
             notes={notes}
-            folders={folders}
             loading={loading}
             error={error}
             title={filterTitle(filter, folders)}
@@ -199,7 +198,15 @@ export default function NoteWorkspace({ email, onLogout }: Props) {
           />
         )}
       </main>
-      {chatOpen && <AiChat onClose={() => setChatOpen(false)} />}
+      {chatOpen && (
+        <AiChat
+          onClose={() => setChatOpen(false)}
+          onActionPerformed={(action) => {
+            if (action === 'create_folder') loadFolders()
+            loadNotes(filter)
+          }}
+        />
+      )}
     </div>
   )
 }

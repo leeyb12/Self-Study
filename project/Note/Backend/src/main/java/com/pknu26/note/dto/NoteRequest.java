@@ -5,8 +5,10 @@ import jakarta.validation.constraints.Size;
 
 public record NoteRequest(
         @NotBlank @Size(max = 255) String title,
-        String content,
         // null 이면 미분류
-        Long folderId
+        Long folderId,
+        // null 이면 기본값(classic / plain)
+        String cover,
+        String paper
 ) {
 }

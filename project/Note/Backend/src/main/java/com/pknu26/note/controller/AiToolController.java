@@ -6,6 +6,7 @@ import com.pknu26.note.dto.ChatRequest;
 import com.pknu26.note.dto.ChatResponse;
 import com.pknu26.note.service.AiToolService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,8 @@ public class AiToolController {
     }
 
     @PostMapping("/chat")
-    public ChatResponse chat(@Valid @RequestBody ChatRequest request) {
-        return aiToolService.chat(request);
+    public ChatResponse chat(@AuthenticationPrincipal Long userId,
+                             @Valid @RequestBody ChatRequest request) {
+        return aiToolService.chat(userId, request);
     }
 }

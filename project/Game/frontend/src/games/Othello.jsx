@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import Difficulty from '../components/Difficulty.jsx'
+import MatchRecord from '../components/MatchRecord.jsx'
+import { loadRecord, saveRecord } from '../utils/matchStore.js'
 
 const SIZE = 8
 
@@ -123,11 +125,23 @@ function resolveTurn(board, nextPlayer) {
   }
 }
 
+// 종료된 보드에서 승패를 판정해 전적에 반영(플레이어는 흑=b). setRecord는 안정적 setter.
+function recordResult(board, setRecord) {
+  const { b, w } = countDiscs(board)
+  const outcome = b > w ? 'win' : b < w ? 'lose' : 'draw'
+  setRecord((prev) => {
+    const next = { ...prev, [outcome]: prev[outcome] + 1 }
+    saveRecord('othello', next)
+    return next
+  })
+}
+
 function Othello() {
   const [board, setBoard] = useState(initialBoard)
   const [turn, setTurn] = useState(BLACK)
   const [message, setMessage] = useState('당신(흑) 차례')
   const [difficulty, setDifficulty] = useState('normal')
+  const [record, setRecord] = useState(() => loadRecord('othello'))
 
   const { b, w } = countDiscs(board)
   const playerMoves = legalMoves(board, BLACK)
@@ -146,6 +160,7 @@ function Othello() {
       const s = resolveTurn(nextBoard, BLACK)
       setTurn(s.turn)
       setMessage(s.message)
+      if (s.turn === 'over') recordResult(nextBoard, setRecord)
     }, 500)
     return () => clearTimeout(timer)
   }, [turn, board, difficulty])
@@ -159,6 +174,7 @@ function Othello() {
     const s = resolveTurn(next, WHITE)
     setTurn(s.turn)
     setMessage(s.message)
+    if (s.turn === 'over') recordResult(next, setRecord)
   }
 
   function reset() {
@@ -191,6 +207,7 @@ function Othello() {
           )),
         )}
       </div>
+      <MatchRecord record={record} />
       <Difficulty value={difficulty} onChange={setDifficulty} options={OTHELLO_DIFF} />
       <button type="button" className="game-reset" onClick={reset}>
         다시 하기
