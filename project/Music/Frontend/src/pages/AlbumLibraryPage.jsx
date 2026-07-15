@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const DEFAULT_COVER_URL = `${process.env.PUBLIC_URL || ''}/images/music.png`;
-
 export default function AlbumLibraryPage() {
     const { username, isLoggedIn } = useAuth();
     const navigate = useNavigate();
@@ -16,7 +14,7 @@ export default function AlbumLibraryPage() {
     const [albums, setAlbums] = useState([]);
     const [availableSongs, setAvailableSongs] = useState([]);
     const [selectedSongIds, setSelectedSongIds] = useState([]);
-    const [form, setForm] = useState({ title: '', description: '', coverUrl: DEFAULT_COVER_URL });
+    const [form, setForm] = useState({ title: '', description: '', coverUrl: '/images/music.png' });
     const [error, setError] = useState('');
     const [loadingSongs, setLoadingSongs] = useState(true);
 
@@ -78,14 +76,14 @@ export default function AlbumLibraryPage() {
                 id: Date.now(),
                 title: form.title.trim(),
                 description: form.description.trim(),
-                coverUrl: form.coverUrl.trim() || DEFAULT_COVER_URL,
+                coverUrl: form.coverUrl.trim() || '/images/music.png',
                 songIds: selectedSongIds,
                 createdAt: new Date().toLocaleDateString('ko-KR'),
             },
             ...prev,
         ]);
 
-        setForm({ title: '', description: '', coverUrl: DEFAULT_COVER_URL });
+        setForm({ title: '', description: '', coverUrl: '/images/music.png' });
         setSelectedSongIds([]);
         setError('');
     };
@@ -191,10 +189,10 @@ export default function AlbumLibraryPage() {
                                 <article key={album.id} style={{ background: 'var(--surface)', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: '0 12px 28px rgba(0,0,0,0.05)' }}>
                                     <div style={{ width: '100%', aspectRatio: '1 / 1', background: 'var(--surface-strong)' }}>
                                         <img
-                                            src={album.coverUrl || DEFAULT_COVER_URL}
+                                            src={album.coverUrl || '/images/music.png'}
                                             alt={album.title}
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            onError={(e) => { e.target.src = DEFAULT_COVER_URL; }}
+                                            onError={(e) => { e.target.src = '/images/music.png'; }}
                                         />
                                     </div>
                                     <div style={{ padding: '18px', display: 'grid', gap: '10px' }}>

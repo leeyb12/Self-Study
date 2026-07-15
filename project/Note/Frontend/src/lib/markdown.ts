@@ -1,6 +1,6 @@
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import { apiUrl, getToken } from '../api/client'
+import { getToken } from '../api/client'
 
 marked.setOptions({
   breaks: true, // 줄바꿈을 <br> 로
@@ -17,7 +17,7 @@ function authorizeAttachmentImages(html: string): string {
   if (!token) return html
   return html.replace(
     /src="(\/api\/attachments\/\d+\/download)"/g,
-    (_match, url: string) => `src="${apiUrl(url)}?token=${encodeURIComponent(token)}"`,
+    (_match, url: string) => `src="${url}?token=${encodeURIComponent(token)}"`,
   )
 }
 

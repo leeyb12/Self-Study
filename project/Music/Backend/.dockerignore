@@ -1,7 +1,0 @@
-.gradle
-build
-bin
-node_modules
-music_storage
-*.log
-.vscode
