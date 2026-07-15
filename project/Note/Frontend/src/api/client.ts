@@ -14,6 +14,11 @@ import type {
 } from '../types'
 
 const TOKEN_KEY = 'note.accessToken'
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/$/, '')
+
+export function apiUrl(path: string): string {
+  return `${API_BASE_URL}${path}`
+}
 
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY)
@@ -26,7 +31,7 @@ export function setToken(token: string | null) {
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = getToken()
-  const res = await fetch(`/api${path}`, {
+  const res = await fetch(apiUrl(`/api${path}`), {
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -139,7 +144,7 @@ export const api = {
     const form = new FormData()
     form.append('file', file)
     // FormData 사용 시 Content-Type 은 브라우저가 boundary 와 함께 자동 설정한다.
-    const res = await fetch(`/api/notes/${noteId}/attachments`, {
+    const res = await fetch(apiUrl(`/api/notes/${noteId}/attachments`), {
       method: 'POST',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
       body: form,
@@ -163,7 +168,7 @@ export const api = {
   // 토큰이 필요하므로 fetch 로 받아 blob URL 을 반환한다. (호출 측에서 revoke)
   attachmentObjectUrl: async (id: number): Promise<string> => {
     const token = getToken()
-    const res = await fetch(`/api/attachments/${id}/download`, {
+    const res = await fetch(apiUrl(`/api/attachments/${id}/download`), {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     })
     if (!res.ok) throw new Error('파일을 불러올 수 없습니다.')

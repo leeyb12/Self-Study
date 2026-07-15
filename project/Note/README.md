@@ -105,6 +105,16 @@ Note/
 
 MariaDB와 Ollama 같은 로컬 의존성이 필요한 통합 테스트는 GitHub 러너에서 바로 실패할 수 있어, 현재 CI는 테스트 대신 패키징 가능한지 확인하는 `assemble`을 사용합니다.
 
+### GitHub Pages 배포
+
+`.github/workflows/music-note-pages.yml`에서 Note Frontend를 GitHub Pages의 `/Note/` 경로로 배포합니다. GitHub 저장소의 `Settings > Pages`에서 Source를 `GitHub Actions`로 설정한 뒤, Actions 탭에서 `Deploy Music and Note to GitHub Pages`를 실행하면 됩니다.
+
+API 서버는 GitHub Pages에서 실행할 수 없으므로 Spring Boot Backend는 별도 서버에 배포해야 합니다. 배포된 백엔드 주소는 저장소 `Settings > Secrets and variables > Actions > Variables`에 아래 이름으로 등록합니다.
+
+| 변수 | 예시 | 설명 |
+|------|------|------|
+| `NOTE_API_BASE_URL` | `https://note-api.example.com` | `/api` 요청을 보낼 백엔드 기본 주소 |
+
 ### 사전 준비
 1. **MariaDB** 실행 후 데이터베이스/계정 생성
    - DB명: `notes_app`, 사용자: `note` / 비밀번호: `1234` (기본값, 변경 권장)

@@ -1,0 +1,97 @@
+name: Deploy Music and Note to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'project/Music/Frontend/**'
+      - 'project/Note/Frontend/**'
+      - '.github/workflows/music-note-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Pages artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build Music frontend
+        working-directory: project/Music/Frontend
+        env:
+          PUBLIC_URL: ./
+          REACT_APP_API_BASE_URL: ${{ vars.MUSIC_API_BASE_URL }}
+          REACT_APP_WS_BASE_URL: ${{ vars.MUSIC_WS_BASE_URL }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build Note frontend
+        working-directory: project/Note/Frontend
+        env:
+          VITE_API_BASE_URL: ${{ vars.NOTE_API_BASE_URL }}
+        run: |
+          npm ci
+          npm run build -- --base=./
+
+      - name: Compose Pages site
+        run: |
+          mkdir -p pages/Music pages/Note
+          cp -R project/Music/Frontend/build/. pages/Music/
+          cp -R project/Note/Frontend/dist/. pages/Note/
+          cat > pages/index.html <<'HTML'
+          <!doctype html>
+          <html lang="ko">
+            <head>
+              <meta charset="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <title>Self-Study Projects</title>
+              <style>
+                body { font-family: system-ui, sans-serif; margin: 40px; line-height: 1.6; }
+                a { display: block; margin: 12px 0; font-size: 20px; }
+              </style>
+            </head>
+            <body>
+              <h1>Self-Study Projects</h1>
+              <a href="./Music/">Music</a>
+              <a href="./Note/">Note</a>
+            </body>
+          </html>
+          HTML
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

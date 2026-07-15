@@ -1,6 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
+function chatUrl(token) {
+    const explicitUrl = process.env.REACT_APP_WS_BASE_URL?.replace(/\/$/, '');
+    if (explicitUrl) {
+        return `${explicitUrl}/ws/chat?token=${encodeURIComponent(token)}`;
+    }
+
+    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL?.replace(/\/$/, '');
+    if (apiBaseUrl) {
+        return `${apiBaseUrl.replace(/^http/, 'ws')}/ws/chat?token=${encodeURIComponent(token)}`;
+    }
+
+    return `ws://localhost:8080/ws/chat?token=${encodeURIComponent(token)}`;
+}
+
 export default function ChatPanel({ isOpen, onClose }) {
     const { isLoggedIn, username, token } = useAuth();
     const wsRef     = useRef(null);
@@ -16,7 +30,7 @@ export default function ChatPanel({ isOpen, onClose }) {
     useEffect(() => {
         if (!isOpen || !isLoggedIn || !token) return;
 
-        const ws = new WebSocket(`ws://localhost:8080/ws/chat?token=${encodeURIComponent(token)}`);
+        const ws = new WebSocket(chatUrl(token));
         wsRef.current = ws;
 
         ws.onopen = () => {

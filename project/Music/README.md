@@ -479,6 +479,17 @@ Music/
 
 로컬 Oracle DB가 필요한 Spring Boot 컨텍스트 테스트는 GitHub 러너에서 바로 실패할 수 있어, 현재 CI는 테스트 대신 패키징 가능한지 확인하는 `assemble`을 사용합니다.
 
+### GitHub Pages 배포
+
+`.github/workflows/music-note-pages.yml`에서 Music Frontend를 GitHub Pages의 `/Music/` 경로로 배포합니다. GitHub 저장소의 `Settings > Pages`에서 Source를 `GitHub Actions`로 설정한 뒤, Actions 탭에서 `Deploy Music and Note to GitHub Pages`를 실행하면 됩니다.
+
+API 서버는 GitHub Pages에서 실행할 수 없으므로 Spring Boot Backend는 별도 서버에 배포해야 합니다. 배포된 백엔드 주소는 저장소 `Settings > Secrets and variables > Actions > Variables`에 아래 이름으로 등록합니다.
+
+| 변수 | 예시 | 설명 |
+|------|------|------|
+| `MUSIC_API_BASE_URL` | `https://music-api.example.com` | `/api`, `/music`, `/board-files` 요청을 보낼 백엔드 기본 주소 |
+| `MUSIC_WS_BASE_URL` | `wss://music-api.example.com` | 채팅 WebSocket 주소. 생략하면 `MUSIC_API_BASE_URL`에서 자동 추론 |
+
 ### 0. 사전 요구사항
 
 - JDK 21 설치 및 `JAVA_HOME` 환경변수 설정
