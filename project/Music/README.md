@@ -473,6 +473,12 @@ Music/
 
 ## 설치 및 실행
 
+### GitHub Actions
+
+`.github/workflows/music-note-ci.yml`에서 Music 프로젝트의 Backend `assemble`과 Frontend `npm run build`를 자동 실행합니다. `project/Music/**` 변경이 push 또는 pull request로 올라오면 해당 워크플로가 동작합니다.
+
+로컬 Oracle DB가 필요한 Spring Boot 컨텍스트 테스트는 GitHub 러너에서 바로 실패할 수 있어, 현재 CI는 테스트 대신 패키징 가능한지 확인하는 `assemble`을 사용합니다.
+
 ### 0. 사전 요구사항
 
 - JDK 21 설치 및 `JAVA_HOME` 환경변수 설정

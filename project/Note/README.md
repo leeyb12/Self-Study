@@ -99,6 +99,12 @@ Note/
 
 ## 실행 방법
 
+### GitHub Actions
+
+`.github/workflows/music-note-ci.yml`에서 Note 프로젝트의 Backend `assemble`과 Frontend `npm run build`를 자동 실행합니다. `project/Note/**` 변경이 push 또는 pull request로 올라오면 해당 워크플로가 동작합니다.
+
+MariaDB와 Ollama 같은 로컬 의존성이 필요한 통합 테스트는 GitHub 러너에서 바로 실패할 수 있어, 현재 CI는 테스트 대신 패키징 가능한지 확인하는 `assemble`을 사용합니다.
+
 ### 사전 준비
 1. **MariaDB** 실행 후 데이터베이스/계정 생성
    - DB명: `notes_app`, 사용자: `note` / 비밀번호: `1234` (기본값, 변경 권장)

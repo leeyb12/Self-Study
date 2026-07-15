@@ -71,7 +71,7 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 │  ├─ Day 23 조건문 활용/
 │  ├─ Day 24 조건문 활용, 반복문 활용, 이차원 리스트(배열)/
 │  └─ Day 25 이차원 리스트(배열)/
-└─ python2/
+└─ python 01/
 ```
 
 #### Day별 풀이 수
