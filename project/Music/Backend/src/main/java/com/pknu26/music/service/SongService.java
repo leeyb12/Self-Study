@@ -6,6 +6,7 @@ import com.pknu26.music.entity.User;
 import com.pknu26.music.repository.SongRepository;
 import com.pknu26.music.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,7 +27,8 @@ public class SongService {
     private final SongRepository songRepository;
     private final UserRepository userRepository;
 
-    private static final String STORAGE_PATH = "C:/music_storage/";
+    @Value("${app.music.storage-dir}")
+    private String storagePath;
 
     public void upload(String title, String artist, String lyrics,
                        MultipartFile musicFile, MultipartFile imageFile,
@@ -33,18 +37,18 @@ public class SongService {
         User uploader = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("유저 없음"));
 
-        new File(STORAGE_PATH).mkdirs();
+        new File(storagePath).mkdirs();
 
         String musicExt      = getExt(musicFile.getOriginalFilename());
         String musicFileName = UUID.randomUUID().toString() + musicExt;
-        String musicPath     = STORAGE_PATH + musicFileName;
+        String musicPath     = resolveStoragePath(musicFileName);
         musicFile.transferTo(new File(musicPath));
 
         String imagePath = null;
         if (imageFile != null && !imageFile.isEmpty()) {
             String imageExt      = getExt(imageFile.getOriginalFilename());
             String imageFileName = UUID.randomUUID().toString() + imageExt;
-            imagePath = STORAGE_PATH + imageFileName;
+            imagePath = resolveStoragePath(imageFileName);
             imageFile.transferTo(new File(imagePath));
         }
 
@@ -84,7 +88,7 @@ public class SongService {
 
         String imageExt      = getExt(imageFile.getOriginalFilename());
         String imageFileName = UUID.randomUUID().toString() + imageExt;
-        String imagePath     = STORAGE_PATH + imageFileName;
+        String imagePath     = resolveStoragePath(imageFileName);
         imageFile.transferTo(new File(imagePath));
 
         song.updateImage(imagePath);
@@ -135,5 +139,10 @@ public class SongService {
         if (path == null) return;
         File file = new File(path);
         if (file.exists()) file.delete();
+    }
+
+    private String resolveStoragePath(String fileName) {
+        Path base = Paths.get(storagePath).toAbsolutePath().normalize();
+        return base.resolve(fileName).toString();
     }
 }

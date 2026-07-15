@@ -5,6 +5,7 @@ import com.pknu26.music.dto.CommentDTO;
 import com.pknu26.music.entity.*;
 import com.pknu26.music.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,7 +32,8 @@ public class BoardService {
     private final CommentRepository   commentRepository;
     private final UserRepository      userRepository;
 
-    private static final String STORAGE_PATH = "C:/music_storage/board/";
+    @Value("${app.music.storage-dir}")
+    private String storagePath;
 
     public List<BoardDTO> getAll() {
         return boardRepository.findAllByOrderByCreatedAtDesc()
@@ -165,11 +169,12 @@ public class BoardService {
     }
 
     private void saveFile(Board board, MultipartFile file) throws IOException {
-        new File(STORAGE_PATH).mkdirs();
+        File boardDir = new File(resolveBoardDir());
+        boardDir.mkdirs();
 
         String ext      = getExt(file.getOriginalFilename());
         String fileName = UUID.randomUUID().toString() + ext;
-        String path     = STORAGE_PATH + fileName;
+        String path     = boardDir.toPath().resolve(fileName).toString();
         file.transferTo(new File(path));
 
         String type = file.getContentType() != null
@@ -192,5 +197,10 @@ public class BoardService {
         if (path == null) return;
         File f = new File(path);
         if (f.exists()) f.delete();
+    }
+
+    private String resolveBoardDir() {
+        Path base = Paths.get(storagePath).toAbsolutePath().normalize();
+        return base.resolve("board").toString();
     }
 }

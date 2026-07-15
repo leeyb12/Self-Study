@@ -490,6 +490,8 @@ API 서버는 GitHub Pages에서 실행할 수 없으므로 Spring Boot Backend�
 | `MUSIC_API_BASE_URL` | `https://music-api.example.com` | `/api`, `/music`, `/board-files` 요청을 보낼 백엔드 기본 주소 |
 | `MUSIC_WS_BASE_URL` | `wss://music-api.example.com` | 채팅 WebSocket 주소. 생략하면 `MUSIC_API_BASE_URL`에서 자동 추론 |
 
+Oracle을 유지한 Backend 배포 절차는 [DEPLOYMENT.md](DEPLOYMENT.md)를 확인합니다.
+
 ### 0. 사전 요구사항
 
 - JDK 21 설치 및 `JAVA_HOME` 환경변수 설정

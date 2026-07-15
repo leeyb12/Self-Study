@@ -53,9 +53,11 @@ jobs:
 
       - name: Compose Pages site
         run: |
-          mkdir -p pages/Music pages/Note
+          mkdir -p pages/Music pages/Note pages/assets
           cp -R project/Music/Frontend/build/. pages/Music/
           cp -R project/Note/Frontend/dist/. pages/Note/
+          cp project/Music/Frontend/public/images/music.png pages/assets/music.png
+          cp project/Note/Frontend/src/assets/hero.png pages/assets/note-hero.png
           cat > pages/index.html <<'HTML'
           <!doctype html>
           <html lang="ko">
@@ -64,14 +66,290 @@ jobs:
               <meta name="viewport" content="width=device-width, initial-scale=1" />
               <title>Self-Study Projects</title>
               <style>
-                body { font-family: system-ui, sans-serif; margin: 40px; line-height: 1.6; }
-                a { display: block; margin: 12px 0; font-size: 20px; }
+                :root {
+                  color-scheme: light;
+                  --ink: #18202f;
+                  --muted: #687286;
+                  --line: #d9dfeb;
+                  --paper: #f7f9fc;
+                  --music: #7c3454;
+                  --note: #25605b;
+                  --action: #233b78;
+                }
+
+                * {
+                  box-sizing: border-box;
+                }
+
+                body {
+                  margin: 0;
+                  min-height: 100vh;
+                  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                  color: var(--ink);
+                  background:
+                    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(247,249,252,0.98)),
+                    url("./assets/note-hero.png") center / cover fixed;
+                }
+
+                .shell {
+                  width: min(1120px, calc(100% - 32px));
+                  margin: 0 auto;
+                  padding: 52px 0 40px;
+                }
+
+                header {
+                  display: grid;
+                  grid-template-columns: 1fr auto;
+                  gap: 24px;
+                  align-items: end;
+                  margin-bottom: 32px;
+                }
+
+                h1 {
+                  margin: 0;
+                  font-size: clamp(36px, 6vw, 72px);
+                  line-height: 0.95;
+                  letter-spacing: 0;
+                }
+
+                .lead {
+                  max-width: 680px;
+                  margin: 18px 0 0;
+                  color: var(--muted);
+                  font-size: 18px;
+                  line-height: 1.7;
+                }
+
+                .status {
+                  min-width: 220px;
+                  border: 1px solid var(--line);
+                  background: rgba(255,255,255,0.84);
+                  padding: 18px;
+                  border-radius: 8px;
+                  box-shadow: 0 18px 50px rgba(24, 32, 47, 0.08);
+                }
+
+                .status strong {
+                  display: block;
+                  margin-bottom: 4px;
+                  font-size: 14px;
+                }
+
+                .status span {
+                  color: var(--muted);
+                  font-size: 13px;
+                }
+
+                .grid {
+                  display: grid;
+                  grid-template-columns: repeat(2, minmax(0, 1fr));
+                  gap: 18px;
+                }
+
+                .project {
+                  min-height: 420px;
+                  display: grid;
+                  grid-template-rows: 190px 1fr;
+                  overflow: hidden;
+                  border: 1px solid var(--line);
+                  border-radius: 8px;
+                  background: rgba(255,255,255,0.9);
+                  box-shadow: 0 24px 70px rgba(24, 32, 47, 0.12);
+                  text-decoration: none;
+                  color: inherit;
+                  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+                }
+
+                .project:hover {
+                  transform: translateY(-4px);
+                  box-shadow: 0 30px 90px rgba(24, 32, 47, 0.18);
+                  border-color: #aeb8ca;
+                }
+
+                .media {
+                  position: relative;
+                  display: grid;
+                  place-items: center;
+                  overflow: hidden;
+                  background: var(--paper);
+                }
+
+                .media img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                }
+
+                .media.music img {
+                  width: 118px;
+                  height: 118px;
+                  object-fit: contain;
+                }
+
+                .media.music {
+                  background: linear-gradient(135deg, #f5edf1, #f8fafc 62%, #eef2f7);
+                }
+
+                .content {
+                  padding: 24px;
+                  display: grid;
+                  gap: 18px;
+                  align-content: space-between;
+                }
+
+                .title-row {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 16px;
+                }
+
+                h2 {
+                  margin: 0;
+                  font-size: 30px;
+                  letter-spacing: 0;
+                }
+
+                .tag {
+                  color: #fff;
+                  background: var(--action);
+                  border-radius: 999px;
+                  padding: 7px 11px;
+                  font-size: 12px;
+                  font-weight: 700;
+                }
+
+                .music-card .tag {
+                  background: var(--music);
+                }
+
+                .note-card .tag {
+                  background: var(--note);
+                }
+
+                p {
+                  margin: 0;
+                  color: var(--muted);
+                  line-height: 1.7;
+                }
+
+                .meta {
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 8px;
+                }
+
+                .meta span {
+                  border: 1px solid var(--line);
+                  border-radius: 999px;
+                  padding: 7px 10px;
+                  color: #3f485a;
+                  font-size: 12px;
+                  background: rgba(255,255,255,0.7);
+                }
+
+                .open {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: fit-content;
+                  min-height: 42px;
+                  padding: 0 16px;
+                  border-radius: 6px;
+                  background: #18202f;
+                  color: #fff;
+                  font-weight: 700;
+                }
+
+                footer {
+                  margin-top: 28px;
+                  color: var(--muted);
+                  font-size: 13px;
+                }
+
+                @media (max-width: 760px) {
+                  .shell {
+                    width: min(100% - 24px, 560px);
+                    padding-top: 32px;
+                  }
+
+                  header,
+                  .grid {
+                    grid-template-columns: 1fr;
+                  }
+
+                  .status {
+                    min-width: 0;
+                  }
+
+                  .project {
+                    min-height: 0;
+                    grid-template-rows: 160px 1fr;
+                  }
+                }
               </style>
             </head>
             <body>
-              <h1>Self-Study Projects</h1>
-              <a href="./Music/">Music</a>
-              <a href="./Note/">Note</a>
+              <main class="shell">
+                <header>
+                  <div>
+                    <h1>Self-Study Projects</h1>
+                    <p class="lead">학습 과정에서 만든 Music과 Note 프로젝트를 한 곳에서 실행해 볼 수 있는 배포 페이지입니다.</p>
+                  </div>
+                  <aside class="status">
+                    <strong>GitHub Pages</strong>
+                    <span>Frontend 배포 완료. API 기능은 연결된 Backend 서버 상태를 따릅니다.</span>
+                  </aside>
+                </header>
+
+                <section class="grid" aria-label="배포 프로젝트">
+                  <a class="project music-card" href="./Music/">
+                    <div class="media music">
+                      <img src="./assets/music.png" alt="Music 프로젝트 아이콘" />
+                    </div>
+                    <div class="content">
+                      <div>
+                        <div class="title-row">
+                          <h2>Music</h2>
+                          <span class="tag">Player</span>
+                        </div>
+                        <p>음악 업로드, 재생, 앨범 보관함, 게시판과 채팅을 다루는 풀스택 음악 프로젝트입니다.</p>
+                      </div>
+                      <div class="meta">
+                        <span>React</span>
+                        <span>Spring Boot</span>
+                        <span>Oracle</span>
+                        <span>WebSocket</span>
+                      </div>
+                      <span class="open">Music 열기</span>
+                    </div>
+                  </a>
+
+                  <a class="project note-card" href="./Note/">
+                    <div class="media">
+                      <img src="./assets/note-hero.png" alt="Note 프로젝트 미리보기" />
+                    </div>
+                    <div class="content">
+                      <div>
+                        <div class="title-row">
+                          <h2>Note</h2>
+                          <span class="tag">Workspace</span>
+                        </div>
+                        <p>마크다운 노트, 폴더, 첨부파일, 페이지 단위 편집과 AI 도구를 실험하는 노트 프로젝트입니다.</p>
+                      </div>
+                      <div class="meta">
+                        <span>React</span>
+                        <span>TypeScript</span>
+                        <span>MariaDB</span>
+                        <span>Ollama</span>
+                      </div>
+                      <span class="open">Note 열기</span>
+                    </div>
+                  </a>
+                </section>
+
+                <footer>Backend URL은 GitHub Actions Variables로 연결합니다.</footer>
+              </main>
             </body>
           </html>
           HTML

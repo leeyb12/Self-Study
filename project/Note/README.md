@@ -115,6 +115,8 @@ API 서버는 GitHub Pages에서 실행할 수 없으므로 Spring Boot Backend�
 |------|------|------|
 | `NOTE_API_BASE_URL` | `https://note-api.example.com` | `/api` 요청을 보낼 백엔드 기본 주소 |
 
+Backend와 MariaDB 배포 절차는 [DEPLOYMENT.md](DEPLOYMENT.md)를 확인합니다.
+
 ### 사전 준비
 1. **MariaDB** 실행 후 데이터베이스/계정 생성
    - DB명: `notes_app`, 사용자: `note` / 비밀번호: `1234` (기본값, 변경 권장)
