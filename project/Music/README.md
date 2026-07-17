@@ -473,25 +473,6 @@ Music/
 
 ## 설치 및 실행
 
-### GitHub Actions
-
-`.github/workflows/music-note-ci.yml`에서 Music 프로젝트의 Backend `assemble`과 Frontend `npm run build`를 자동 실행합니다. `project/Music/**` 변경이 push 또는 pull request로 올라오면 해당 워크플로가 동작합니다.
-
-로컬 Oracle DB가 필요한 Spring Boot 컨텍스트 테스트는 GitHub 러너에서 바로 실패할 수 있어, 현재 CI는 테스트 대신 패키징 가능한지 확인하는 `assemble`을 사용합니다.
-
-### GitHub Pages 배포
-
-`.github/workflows/music-note-pages.yml`에서 Music Frontend를 GitHub Pages의 `/Music/` 경로로 배포합니다. GitHub 저장소의 `Settings > Pages`에서 Source를 `GitHub Actions`로 설정한 뒤, Actions 탭에서 `Deploy Music and Note to GitHub Pages`를 실행하면 됩니다.
-
-API 서버는 GitHub Pages에서 실행할 수 없으므로 Spring Boot Backend는 별도 서버에 배포해야 합니다. 배포된 백엔드 주소는 저장소 `Settings > Secrets and variables > Actions > Variables`에 아래 이름으로 등록합니다.
-
-| 변수 | 예시 | 설명 |
-|------|------|------|
-| `MUSIC_API_BASE_URL` | `https://music-api.example.com` | `/api`, `/music`, `/board-files` 요청을 보낼 백엔드 기본 주소 |
-| `MUSIC_WS_BASE_URL` | `wss://music-api.example.com` | 채팅 WebSocket 주소. 생략하면 `MUSIC_API_BASE_URL`에서 자동 추론 |
-
-Oracle을 유지한 Backend 배포 절차는 [DEPLOYMENT.md](DEPLOYMENT.md)를 확인합니다.
-
 ### 0. 사전 요구사항
 
 - JDK 21 설치 및 `JAVA_HOME` 환경변수 설정
@@ -594,6 +575,8 @@ npm start
 
 ## 구현 화면
 
+스크린샷은 `docs/screenshots/` 폴더에 저장하고, 아래 이미지 경로를 README에서 관리합니다.
+
 ### 로그인 / 회원가입
 
 ![로그인 화면](./docs/screenshots/image.png) <br />
@@ -624,6 +607,23 @@ npm start
 ### 테마 전환
 
 ![테마](./docs/screenshots/image-10.png)
+
+### 테마별 화면
+
+테마별 스크린샷은 `docs/screenshots/themes/` 폴더에 저장합니다. 파일을 추가한 뒤 아래 경로에 맞추면 README에서 바로 확인할 수 있습니다.
+
+| 테마 | 컨셉 | 이미지 |
+|------|------|------|
+| Mood White | MUJI 스타일 미니멀 | ![Mood White](./docs/screenshots/themes/mood-white.png) |
+| Retro Boombox | 80~90년대 레트로 | ![Retro Boombox](./docs/screenshots/themes/retro-boombox.png) |
+| Cyber Walkman | Y2K 메탈릭 | ![Cyber Walkman](./docs/screenshots/themes/cyber-walkman.png) |
+| Mid-Century | Braun / 우드 | ![Mid-Century](./docs/screenshots/themes/mid-century.png) |
+| All Black Studio | 네온 그린 액센트 | ![All Black Studio](./docs/screenshots/themes/all-black-studio.png) |
+| Cyberpunk | 핑크 / 시안 네온 | ![Cyberpunk](./docs/screenshots/themes/cyberpunk.png) |
+| Glassmorphism | 프로스트 글래스 | ![Glassmorphism](./docs/screenshots/themes/glassmorphism.png) |
+| High-Teen Pink | 귀여운 핑크 | ![High-Teen Pink](./docs/screenshots/themes/high-teen-pink.png) |
+| Ocean Refresh | 아쿠아 / 블루 | ![Ocean Refresh](./docs/screenshots/themes/ocean-refresh.png) |
+| City Pop Sunset | 오렌지 / 퍼플 | ![City Pop Sunset](./docs/screenshots/themes/city-pop-sunset.png) |
 
 ---
 

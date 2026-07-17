@@ -39,7 +39,7 @@ public class BoardService {
     }
 
     public BoardDTO.PageResponse getPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, Board::getCreatedAt));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<BoardDTO> boardPage = boardRepository.findAll(pageable)
                 .map(BoardDTO::from);
 

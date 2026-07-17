@@ -99,24 +99,6 @@ Note/
 
 ## 실행 방법
 
-### GitHub Actions
-
-`.github/workflows/music-note-ci.yml`에서 Note 프로젝트의 Backend `assemble`과 Frontend `npm run build`를 자동 실행합니다. `project/Note/**` 변경이 push 또는 pull request로 올라오면 해당 워크플로가 동작합니다.
-
-MariaDB와 Ollama 같은 로컬 의존성이 필요한 통합 테스트는 GitHub 러너에서 바로 실패할 수 있어, 현재 CI는 테스트 대신 패키징 가능한지 확인하는 `assemble`을 사용합니다.
-
-### GitHub Pages 배포
-
-`.github/workflows/music-note-pages.yml`에서 Note Frontend를 GitHub Pages의 `/Note/` 경로로 배포합니다. GitHub 저장소의 `Settings > Pages`에서 Source를 `GitHub Actions`로 설정한 뒤, Actions 탭에서 `Deploy Music and Note to GitHub Pages`를 실행하면 됩니다.
-
-API 서버는 GitHub Pages에서 실행할 수 없으므로 Spring Boot Backend는 별도 서버에 배포해야 합니다. 배포된 백엔드 주소는 저장소 `Settings > Secrets and variables > Actions > Variables`에 아래 이름으로 등록합니다.
-
-| 변수 | 예시 | 설명 |
-|------|------|------|
-| `NOTE_API_BASE_URL` | `https://note-api.example.com` | `/api` 요청을 보낼 백엔드 기본 주소 |
-
-Backend와 MariaDB 배포 절차는 [DEPLOYMENT.md](DEPLOYMENT.md)를 확인합니다.
-
 ### 사전 준비
 1. **MariaDB** 실행 후 데이터베이스/계정 생성
    - DB명: `notes_app`, 사용자: `note` / 비밀번호: `1234` (기본값, 변경 권장)
@@ -135,6 +117,42 @@ cd Frontend
 npm install
 npm run dev              # http://localhost:5173
 ```
+
+---
+
+## 구현 화면
+
+스크린샷은 `docs/screenshots/` 폴더에 저장합니다. 파일을 추가한 뒤 아래 경로에 맞추면 README에서 바로 확인할 수 있습니다.
+
+### 로그인 / 회원가입
+
+![로그인 화면](./docs/screenshots/login.png)
+![회원가입 화면](./docs/screenshots/signup.png)
+
+### 노트 목록 / 폴더
+
+![노트 목록 화면](./docs/screenshots/note-list.png)
+
+### 노트 작성 / 편집
+
+![노트 편집 화면](./docs/screenshots/editor.png)
+
+### AI 기능
+
+| 기능 | 이미지 |
+|------|------|
+| AI 요약 | ![AI 요약 화면](./docs/screenshots/ai-summary.png) |
+| AI 도구 | ![AI 도구 화면](./docs/screenshots/ai-tools.png) |
+| AI 채팅 | ![AI 채팅 화면](./docs/screenshots/ai-chat.png) |
+
+### 첨부파일 / PDF
+
+![첨부파일 화면](./docs/screenshots/attachments.png)
+![PDF 뷰어 화면](./docs/screenshots/pdf-viewer.png)
+
+### 휴지통
+
+![휴지통 화면](./docs/screenshots/trash.png)
 
 ---
 

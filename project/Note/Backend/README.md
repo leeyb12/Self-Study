@@ -19,5 +19,3 @@ cd project\Note\Backend
 ```
 
 Ollama, DB, 업로드 경로 설정은 `src/main/resources/application.properties`를 확인합니다.
-
-Docker 배포가 필요하면 상위 폴더의 `DEPLOYMENT.md`를 확인합니다.
