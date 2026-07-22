@@ -141,14 +141,12 @@ npm run dev              # http://localhost:5173
 
 | 기능 | 이미지 |
 |------|------|
-| AI 요약 | ![AI 요약 화면](./docs/screenshots/ai-summary.png) |
-| AI 도구 | ![AI 도구 화면](./docs/screenshots/ai-tools.png) |
-| AI 채팅 | ![AI 채팅 화면](./docs/screenshots/ai-chat.png) |
+| AI 요약, 도구 | ![AI 도구 화면](./docs/screenshots/ai-tools.png) |
+| AI 채팅 | ![AI 채팅 화면](./docs/screenshots/ai-chating.png) |
 
-### 첨부파일 / PDF
+### 첨부파일
 
 ![첨부파일 화면](./docs/screenshots/attachments.png)
-![PDF 뷰어 화면](./docs/screenshots/pdf-viewer.png)
 
 ### 휴지통
 
