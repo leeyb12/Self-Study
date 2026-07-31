@@ -1,10 +1,10 @@
 # Self-Study
 
-개인 학습 과정에서 작성한 강의 실습, 코딩테스트 풀이, CS 정리 노트, Java/Spring/React 프로젝트를 모아 둔 저장소입니다.
+개인 학습 과정에서 작성한 강의 실습, 코딩테스트 풀이, CS 정리 노트, Java/C#/Spring/React 프로젝트를 모아 둔 저장소입니다.
 
-Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프로젝트까지 학습 흐름별로 정리하고 있습니다. 단순히 파일을 보관하는 용도보다, 어떤 주제를 어느 단계까지 학습했는지 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
+Python 문제 풀이부터 HTML/CSS/JavaScript, Java, C#, CS 이론, 풀스택 프로젝트까지 학습 흐름별로 정리하고 있습니다. 단순히 파일을 보관하는 용도보다, 어떤 주제를 어느 단계까지 학습했는지 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
 
-> 기준일: 2026-07-23  
+> 기준일: 2026-07-26  
 > Python 코딩테스트 풀이: Day 01-25 진행 중, 총 124개 Python 풀이 파일 확인
 
 ---
@@ -13,11 +13,11 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 
 | 폴더 | 주제 | 현재 내용 |
 | --- | --- | --- |
-| `000/` | Python 코딩테스트 | `python 00`에 Day 01-25 풀이 정리, `python2`는 추후 학습용 |
+| `000/` | Python 코딩테스트 | `python 00`에 Day 01-25 풀이 정리, `python 01`은 추가 학습용 |
 | `001/` | 웹 기초 | HTML/CSS/JavaScript 단계별 실습, 미니 프로젝트, WCBCafe 예제 |
 | `002/` | 혼공 시리즈 | Python, 데이터 분석, 머신러닝/딥러닝, JavaScript 교재 실습 |
 | `003/` | Java | `ThisIsJava` 교재 기반 Java 문법 실습 |
-| `004/` | CS / SQL 이론 | 컴퓨터 구조, 운영체제, 네트워크, 디자인 패턴, SQL, 컴퓨터 과학 정리 |
+| `004/` | CS / SQL / C# 이론 | 컴퓨터 구조, 운영체제, 네트워크, 디자인 패턴, SQL, C#, 컴퓨터 과학 정리 |
 | `005/` | 예비 공간 | 추후 학습 자료 보관용 |
 | `006/` | 예비 공간 | 추후 학습 자료 보관용 |
 | `007/` | 예비 공간 | 추후 학습 자료 보관용 |
@@ -31,8 +31,8 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 | --- | --- | --- |
 | Python 기초 문제 | 출력, 연산, 조건문, 반복문, 문자열, 리스트, 함수, 2차원 리스트 | 진행 중 |
 | 웹 기초 | HTML/CSS/JavaScript 실습과 미니 프로젝트 | 정리 중 |
-| 교재 실습 | 혼공 시리즈, ThisIsJava 예제 | 진행 중 |
-| CS 이론 | 네트워크, 운영체제, 컴퓨터 구조, 디자인 패턴 정리 | 진행 중 |
+| 교재 실습 | 혼공 시리즈, ThisIsJava, 이것이 C#이다 예제 | 진행 중 |
+| CS / DB 이론 | 네트워크, 운영체제, 컴퓨터 구조, 디자인 패턴, SQL 정리 | 진행 중 |
 | 풀스택 프로젝트 | 음악, 쇼핑몰, 연락처, 노트, 게임, 기타 백엔드 실습 프로젝트 | 구현 및 개선 중 |
 
 ---
@@ -154,7 +154,7 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 - 문자열 비교
 - 배열 생성과 사용
 
-### `004/` CS 이론 노트
+### `004/` CS / SQL / C# 이론 노트
 
 면접과 전공 기초 학습을 위한 Markdown 정리 노트입니다.
 
@@ -164,6 +164,7 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 ├─ 면접을 위한 CS 전공지식 노트/
 ├─ 소프트웨어 세상을 여는 컴퓨터 과학/
 ├─ 쉽게 배우는 데이터 통신과 컴퓨터 네트워크/
+├─ 이것이 C#이다/
 └─ 혼자 공부하는 컴퓨터 구조 + 운영체제/
 ```
 
@@ -173,6 +174,7 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 - 네트워크와 HTTP
 - 운영체제와 메모리
 - SQL과 데이터베이스 기초
+- C# 문법과 객체지향 프로그래밍
 - 컴퓨터 구조와 데이터 표현
 - 명령어 구조, CPU 동작 원리, CPU 성능 향상 기법
 - 데이터 통신과 네트워크 기초
@@ -296,7 +298,7 @@ gyeongnam/
 
 | 구분 | 기술 |
 | --- | --- |
-| Language | Python, JavaScript, TypeScript, Java |
+| Language | Python, JavaScript, TypeScript, Java, C# |
 | Frontend | HTML, CSS, React 19, Vite, Create React App, MUI, Zustand, Recharts, Three.js |
 | Backend | Spring Boot, Spring Security, Spring Data JPA, Spring Batch, WebSocket |
 | Database | Oracle XE, MariaDB |
@@ -376,7 +378,7 @@ npm run dev
 학습을 추가한 뒤 README를 갱신할 때 확인할 항목입니다.
 
 - `000/python 00`의 최신 Day 번호와 풀이 파일 수
-- 새로 추가된 학습 폴더 또는 교재 폴더
+- 새로 추가된 학습 폴더 또는 교재 폴더 (`004/이것이 C#이다` 등)
 - 프로젝트별 새 기능, 화면, 도메인
 - 실행 방법 변경 여부
 - DB, 환경 변수, 포트 변경 여부
