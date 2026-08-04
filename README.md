@@ -4,7 +4,7 @@
 
 Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프로젝트까지 학습 흐름별로 정리하고 있습니다. 단순히 파일을 보관하는 용도보다, 어떤 주제를 어느 단계까지 학습했는지 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
 
-> 기준일: 2026-08-02  
+> 기준일: 2026-08-04  
 > Python 코딩테스트 풀이: Day 01-25 진행 중, 총 124개 Python 풀이 파일 확인
 
 ---
@@ -135,7 +135,7 @@ Python 문제 풀이부터 HTML/CSS/JavaScript, Java, CS 이론, 풀스택 프�
 - JavaScript 문법 실습
 - 데이터 분석 실습
 - Jupyter Notebook 기반 머신러닝/딥러닝 실습
-- `WordNote.md`, `word*.md` 형태의 개념 및 단어 정리
+- `wordnote.md`와 이미지 파일을 활용한 개념 및 단어 정리
 
 ### `003/` Java
 

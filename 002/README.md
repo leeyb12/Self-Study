@@ -18,7 +18,7 @@
 - JavaScript 기본 문법과 브라우저 예제
 - 데이터 분석과 머신러닝 기초
 - Jupyter Notebook 기반 실습
-- `WordNote.md`, `word*.md` 형태의 개념/단어 정리
+- `wordnote.md`와 이미지 파일을 활용한 개념/단어 정리
 
 ## 실행 방법
 
