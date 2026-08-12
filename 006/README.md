@@ -12,7 +12,13 @@
 │  ├─ ch01.ipynb
 │  ├─ ch02.ipynb
 │  ├─ ch03.ipynb
-│  └─ ch04.ipynb
+│  ├─ ch04.ipynb
+│  ├─ ch04a.ipynb
+│  ├─ ch05.ipynb
+│  ├─ ch06.ipynb
+│  ├─ ch06a.ipynb
+│  ├─ ch07.ipynb
+│  └─ ch08.ipynb
 └─ README.md
 ```
 
@@ -24,6 +30,12 @@
 | `ch02.ipynb` | 분류 알고리즘과 기초 모델 실습 |
 | `ch03.ipynb` | 사이킷런 기반 분류 모델과 평가 |
 | `ch04.ipynb` | 데이터 전처리와 특성 처리 |
+| `ch04a.ipynb` | ch04 보충 실습 |
+| `ch05.ipynb` | 차원 축소와 특성 추출 |
+| `ch06.ipynb` | 모델 평가와 하이퍼파라미터 튜닝 |
+| `ch06a.ipynb` | ch06 보충 실습 |
+| `ch07.ipynb` | 앙상블 학습 |
+| `ch08.ipynb` | 텍스트 데이터 처리와 감성 분석 기초 |
 
 ## 정리 기준
 
