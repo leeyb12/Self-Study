@@ -1,4 +1,4 @@
-# Self-Study
+ # Self-Study
 
 개인 학습 과정에서 작성한 강의 실습, 코딩테스트 풀이, CS 정리 노트, Java/Spring/React 프로젝트를 모아 둔 저장소입니다.
 
