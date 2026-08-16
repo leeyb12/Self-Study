@@ -18,7 +18,8 @@
 │  ├─ ch06.ipynb
 │  ├─ ch06a.ipynb
 │  ├─ ch07.ipynb
-│  └─ ch08.ipynb
+│  ├─ ch08.ipynb
+│  └─ ch08a.ipynb
 └─ README.md
 ```
 
@@ -36,6 +37,7 @@
 | `ch06a.ipynb` | ch06 보충 실습 |
 | `ch07.ipynb` | 앙상블 학습 |
 | `ch08.ipynb` | 텍스트 데이터 처리와 감성 분석 기초 |
+| `ch08a.ipynb` | ch08 보충 실습 |
 
 ## 정리 기준
 
