@@ -13,12 +13,17 @@ HTML/CSS 중심의 웹 기초 교재 예제와 웹 페이지 제작 실습을 �
 │  ├─ 02장/
 │  ├─ 03장/
 │  └─ 04장/
-└─ 러닝스쿨! 한 권으로 끝내는 HTML + CSS 웹 디자인 입문/
-   └─ WCBCafe/
-      ├─ css/
-      ├─ images/
-      ├─ contact.html
-      └─ index.html
+├─ 러닝스쿨! 한 권으로 끝내는 HTML + CSS 웹 디자인 입문/
+│  └─ WCBCafe/
+│     ├─ css/
+│     ├─ images/
+│     ├─ contact.html
+│     └─ index.html
+└─ 최신 표준 HTML5+CSS3 디자인/
+   ├─ 1-3/
+   ├─ 2-1/
+   ├─ 2-2/
+   └─ 2-3/
 ```
 
 ## 학습 내용
@@ -28,6 +33,7 @@ HTML/CSS 중심의 웹 기초 교재 예제와 웹 페이지 제작 실습을 �
 | `HTML5 웹프로그래밍 입문/` | HTML 문서 구조, CSS/JavaScript 연결, 텍스트와 링크 태그 실습 |
 | `HTML+CSS 실전입문서/` | 장별 `index.html` 예제를 통한 HTML/CSS 기본 구성 실습 |
 | `러닝스쿨! 한 권으로 끝내는 HTML + CSS 웹 디자인 입문/` | WCBCafe 페이지 제작, CSS 분리, 이미지 자산 활용 실습 |
+| `최신 표준 HTML5+CSS3 디자인/` | HTML5/CSS3 레이아웃, 이미지 자산, 장별 웹 페이지 예제 |
 
 ## 정리 기준
 
