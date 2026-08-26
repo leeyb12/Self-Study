@@ -1,30 +1,50 @@
-# 008 - Spring 실습 정리
+# 008 - Spring Boot / React 교재 실습
 
-Spring Boot 실습 자료를 정리하기 위한 폴더입니다.
+`실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발` 교재의 장별 예제를 정리하는 폴더입니다.
 
-현재는 `README.md`만 있으며, 이후 Spring 실습 프로젝트나 개념 정리 파일을 추가할 때 실제 구조에 맞춰 갱신합니다.
+Spring Boot 프로젝트 생성, Gradle 실행, 백엔드 구조, React 연동 흐름을 장별 실습으로 따라갑니다.
 
-## 추천 폴더 구조
+## 폴더 구조
 
 ```text
 008/
-├─ spring-basic/
-├─ spring-board/
-├─ spring-security/
+├─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
+│  ├─ Chapter 01/
+│  │  ├─ gradle/
+│  │  ├─ src/
+│  │  ├─ build.gradle
+│  │  ├─ gradlew
+│  │  └─ gradlew.bat
+│  ├─ Chapter 02/
+│  │  └─ README.md
+│  └─ Chapter 03/
+│     ├─ gradle/
+│     ├─ src/
+│     ├─ build.gradle
+│     ├─ gradlew
+│     └─ gradlew.bat
 └─ README.md
 ```
 
-## 정리하면 좋은 내용
+## 학습 내용
 
-| 주제 | 내용 |
+| 폴더 | 내용 |
 | --- | --- |
-| Spring 기본 | 프로젝트 구조, Controller, Service, Repository |
-| 게시판 실습 | 게시글, 댓글, 파일 첨부, 페이징 |
-| DB 연동 | MyBatis, JPA, SQL Mapper, 트랜잭션 |
-| 인증/인가 | Spring Security, 세션, JWT |
+| `Chapter 01/` | Spring Boot 프로젝트 생성과 기본 실행 구조 |
+| `Chapter 02/` | 교재 개념/실습 내용 README 정리 |
+| `Chapter 03/` | Spring Boot 애플리케이션 확장 실습 |
+
+## 실행 방법
+
+장별 Spring Boot 프로젝트 폴더에서 실행합니다.
+
+```powershell
+cd "008\실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발\Chapter 03"
+.\gradlew.bat bootRun
+```
 
 ## 정리 기준
 
-- Spring 실습 프로젝트는 주제별 하위 폴더로 분리합니다.
+- 장별 실습은 `Chapter NN/` 폴더로 구분합니다.
 - `build/`, `.gradle/`, `bin/` 같은 생성물은 Git 관리 대상에서 제외하는 것을 권장합니다.
-- 기능이 추가되면 패키지 구조, 설정 파일, 실행 방법을 README에 함께 기록합니다.
+- 기능이 추가되면 실행 방법, 패키지 구조, 설정 파일 변경점을 README에 함께 기록합니다.

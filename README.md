@@ -21,7 +21,7 @@
 | `005/` | 웹 교재 실습 | HTML5, HTML+CSS, 웹 디자인 교재 예제 |
 | `006/` | 머신러닝 교재 실습 | `머신 러닝 교과서 3판` Jupyter Notebook 실습 |
 | `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, `모던 자바스크립트 프로그래밍의 정석` 예제와 책형 뷰어 |
-| `008/` | Spring 실습 정리 | Spring Boot 실습 자료를 정리하기 위한 공간 |
+| `008/` | Spring Boot / React 교재 실습 | `실전! 스프링 부트 3 & 리액트` 장별 예제 |
 | `009/` | Python 교재 실습 | `점프투파이썬`, `초보자를 위한 파이썬 300제` 예제 |
 | `project/` | 풀스택 프로젝트 | Spring Boot + React 기반 개인 프로젝트 모음 |
 
@@ -67,7 +67,7 @@ Self-Study/
 │  ├─ Do it! 자바스크립트 입문/
 │  └─ 모던 자바스크립트 프로그래밍의 정석/
 ├─ 008/
-│  └─ README.md
+│  └─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
 ├─ 009/
 │  ├─ 점프투파이썬/
 │  └─ 초보자를 위한 파이썬 300제/
@@ -128,9 +128,19 @@ HTML/CSS 중심의 웹 기초 교재 예제, 장별 `index.html`, CSS 파일, �
 
 `모던 자바스크립트 프로그래밍의 정석`은 01~07장과 18장 예제가 들어 있으며, `index.html`은 예제를 실제 책처럼 볼 수 있는 학습 뷰어입니다. 왼쪽에는 코드, 오른쪽에는 실행 화면을 표시하고, 브라우저 위치 권한을 허용하면 현재 위치와 날씨 정보를 읽어옵니다.
 
-### `008/` Spring 실습 정리
+### `008/` Spring Boot / React 교재 실습
 
-Spring Boot 실습 자료를 정리하기 위한 공간입니다. 현재는 `README.md`만 있으며, 이후 Spring 실습 프로젝트나 개념 정리 파일을 추가할 때 구조를 갱신합니다.
+`실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발` 교재의 장별 예제를 정리합니다.
+
+```text
+008/
+└─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
+   ├─ Chapter 01/
+   ├─ Chapter 02/
+   └─ Chapter 03/
+```
+
+Chapter 01과 Chapter 03은 Gradle 기반 Spring Boot 프로젝트 구조를 포함하고, Chapter 02는 별도 README로 개념/실습 내용을 정리합니다.
 
 ### `009/` Python 교재 실습
 
@@ -231,6 +241,13 @@ cd project\Game\backend
 .\gradlew.bat bootRun
 ```
 
+`008` Spring Boot 교재 실습은 장별 폴더에서 실행합니다.
+
+```powershell
+cd "008\실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발\Chapter 03"
+.\gradlew.bat bootRun
+```
+
 ### React Frontend
 
 Vite 프로젝트:
@@ -285,7 +302,7 @@ python -m http.server 8765 --bind 127.0.0.1
 - `000/python 00`의 최신 Day 번호와 풀이 파일 수
 - 새로 추가된 교재 폴더와 장 번호
 - `007` JavaScript 책형 뷰어에 추가할 예제 목록
-- `008` Spring 실습 자료 추가 여부
+- `008` Spring Boot / React 교재 실습 Chapter 추가 여부
 - `009` Python 교재 실습 문제 번호와 Notebook 범위
 - 프로젝트별 새 기능, 화면, 도메인
 - DB, 환경 변수, 포트 변경 여부
