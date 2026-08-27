@@ -4,7 +4,7 @@
 
 학습 주제별로 `000`부터 `009`까지 번호 폴더를 나누고, 실제 애플리케이션 구현물은 `project` 폴더에 따로 정리합니다. 단순 보관보다 "어떤 주제를 어느 단계까지 학습했는지"를 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
 
-> 기준일: 2026-08-26  
+> 기준일: 2026-08-27  
 > `000/python 00`: Day 01-25, Python 풀이 124개 확인
 
 ---
@@ -21,7 +21,7 @@
 | `005/` | 웹 교재 실습 | HTML5, HTML+CSS, 웹 디자인 교재 예제 |
 | `006/` | 머신러닝 교재 실습 | `머신 러닝 교과서 3판` Jupyter Notebook 실습 |
 | `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, `모던 자바스크립트 프로그래밍의 정석` 예제와 책형 뷰어 |
-| `008/` | Spring Boot / React 교재 실습 | `실전! 스프링 부트 3 & 리액트` 장별 예제 |
+| `008/` | Spring Boot / React 교재 실습 | `실전! 스프링 부트 3 & 리액트` Chapter 01-05 예제 |
 | `009/` | Python 교재 실습 | `점프투파이썬`, `초보자를 위한 파이썬 300제` 예제 |
 | `project/` | 풀스택 프로젝트 | Spring Boot + React 기반 개인 프로젝트 모음 |
 
@@ -137,10 +137,12 @@ HTML/CSS 중심의 웹 기초 교재 예제, 장별 `index.html`, CSS 파일, �
 └─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
    ├─ Chapter 01/
    ├─ Chapter 02/
-   └─ Chapter 03/
+   ├─ Chapter 03/
+   ├─ Chapter 04/
+   └─ Chapter 05/
 ```
 
-Chapter 01과 Chapter 03은 Gradle 기반 Spring Boot 프로젝트 구조를 포함하고, Chapter 02는 별도 README로 개념/실습 내용을 정리합니다.
+Chapter 01, 03, 04, 05는 Gradle 기반 Spring Boot 프로젝트 구조를 포함하고, Chapter 02는 별도 README로 개념/실습 내용을 정리합니다.
 
 ### `009/` Python 교재 실습
 
@@ -244,7 +246,7 @@ cd project\Game\backend
 `008` Spring Boot 교재 실습은 장별 폴더에서 실행합니다.
 
 ```powershell
-cd "008\실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발\Chapter 03"
+cd "008\실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발\Chapter 05"
 .\gradlew.bat bootRun
 ```
 
