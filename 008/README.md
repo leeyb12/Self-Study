@@ -1,13 +1,23 @@
-# 008 - Spring Boot / React 교재 실습
+# 008 - Spring / Spring Boot 교재 실습
 
-`실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발` 교재의 장별 예제를 정리하는 폴더입니다.
+Spring Framework와 Spring Boot / React 교재의 장별 예제와 개념 정리를 관리하는 폴더입니다.
 
-Spring Boot 프로젝트 생성, Gradle 실행, 백엔드 구조, React 연동 흐름을 장별 실습으로 따라갑니다.
+Spring Boot 프로젝트 생성, Gradle 실행, 백엔드 구조, React 연동 흐름, Spring Framework 기초 개념을 장별로 따라갑니다.
 
 ## 폴더 구조
 
 ```text
 008/
+├─ 스프링 프레임워크 첫걸음 (개정판)/
+│  ├─ 2장/
+│  │  ├─ 2-1.txt
+│  │  ├─ 2-2.txt
+│  │  ├─ 2-3.txt
+│  │  ├─ 2-4.txt
+│  │  ├─ 2-5.txt
+│  │  ├─ 2-6.txt
+│  │  └─ 2-7.txt
+│  └─ README.md
 ├─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
 │  ├─ Chapter 01/
 │  │  ├─ gradle/
@@ -42,6 +52,7 @@ Spring Boot 프로젝트 생성, Gradle 실행, 백엔드 구조, React 연동 �
 
 | 폴더 | 내용 |
 | --- | --- |
+| `스프링 프레임워크 첫걸음 (개정판)/2장` | Spring Framework 2장 개념 정리 |
 | `Chapter 01/` | Spring Boot 프로젝트 생성과 기본 실행 구조 |
 | `Chapter 02/` | 교재 개념/실습 내용 README 정리 |
 | `Chapter 03/` | Spring Boot 애플리케이션 확장 실습 |
