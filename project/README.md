@@ -9,7 +9,7 @@ project/
 ├─ ecommerce/          # 전자상거래 프로젝트
 │  ├─ Backend/
 │  └─ Frontend/
-├─ fridge/             # 냉장고 관련 실습 흔적, 정리 필요
+├─ fridge/             # 냉장고 관련 실습 보관 폴더
 │  └─ fridge/
 ├─ Game/               # 미니게임 모음
 │  ├─ backend/
@@ -40,8 +40,14 @@ project/
 | `Music/` | 음악 재생, 업로드, 게시판, 채팅 기능을 가진 프로젝트 | `Backend`, `Frontend`, `docs`, `sql` | Spring Boot, React CRA, WebSocket, JWT, Oracle |
 | `Note/` | Markdown 노트, 폴더, 첨부파일, AI 기능을 다루는 노트 프로젝트 | `Backend`, `Frontend`, `docs`, `uploads` | Spring Boot, MariaDB, React, TypeScript, Vite, Ollama |
 | `phonebook/` | 로그인 기반 연락처 관리 프로젝트 | `Backend`, `Frontend` | Spring Boot, JPA, React, Vite, MUI |
-| `fridge/` | 냉장고 관련 실습 폴더 | `fridge` 하위에 `bin` 중심 | Java/Spring 실습 흔적 |
-| `gyeongnam/` | 경남 빅데이터 관련 백엔드 실습 폴더 | `Backend` 하위에 `bin` 중심 | Java/Spring Boot 실습 흔적 |
+| `fridge/` | 냉장고 관련 실습 보관 폴더 | `fridge` 하위에 `bin` 산출물 중심 | Java/Spring 실습 흔적 |
+| `gyeongnam/` | 경남 빅데이터 관련 백엔드 실습 보관 폴더 | `Backend` 하위에 `bin` 산출물 중심 | Java/Spring Boot 실습 흔적 |
+
+## 보관 폴더 정리 상태
+
+`fridge/`와 `gyeongnam/`은 현재 원본 소스보다 IDE 빌드 산출물인 `bin/` 중심으로 남아 있습니다. 실행 가능한 프로젝트로 복원하려면 `src/`, `build.gradle` 또는 `pom.xml`, 설정 파일을 다시 확인해 프로젝트 구조를 재구성하는 과정이 필요합니다.
+
+현재 README에서는 이 두 폴더를 삭제하지 않고 학습 흔적 보관 위치로 표시합니다.
 
 ## 폴더 규칙
 
@@ -104,4 +110,4 @@ npm run dev
 - `Backend/README.md`에는 API 서버 역할, 주요 패키지, 실행 방법을 정리합니다.
 - `Frontend/README.md`에는 화면 구성, 주요 컴포넌트, 실행 방법을 정리합니다.
 - `docs/screenshots/`에는 README에서 사용하는 구현 화면 이미지를 보관합니다.
-- 구조가 아직 불완전한 프로젝트는 현재 상태를 숨기지 않고 “정리 필요”로 표시합니다.
+- 구조가 아직 불완전한 프로젝트는 현재 상태를 숨기지 않고 보관 폴더 또는 정리 대기 폴더로 표시합니다.

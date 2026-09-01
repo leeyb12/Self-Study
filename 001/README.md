@@ -11,6 +11,7 @@
 | `HTML-CSS-JavaScript2/` | JavaScript 외부 파일, 스타일 분리 등 추가 실습 |
 | `HTML-CSS-JavaScript3/` | 예제, 연습문제, 퀴즈, 미니 프로젝트 |
 | `HTML-CSS-JavaScript4/` | 후속 웹 실습 예제 |
+| `그림으로 쉽게 배우는 HTML+CSS+자바스크립트/` | HTML, CSS, JavaScript 교재 기반 장별 예제 |
 
 ## 학습 범위
 
@@ -19,6 +20,7 @@
 - 이미지, 오디오, 비디오 등 미디어 요소
 - JavaScript 기본 문법과 DOM 이벤트
 - 간단한 웹 페이지와 미니 프로젝트 제작
+- 장별 웹 교재 예제를 통한 HTML/CSS/JavaScript 흐름 복습
 
 ## 확인 방법
 

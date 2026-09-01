@@ -4,7 +4,7 @@
 
 학습 주제별로 `000`부터 `009`까지 번호 폴더를 나누고, 실제 애플리케이션 구현물은 `project` 폴더에 따로 정리합니다. 단순 보관보다 "어떤 주제를 어느 단계까지 학습했는지"를 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
 
-> 기준일: 2026-08-28  
+> 기준일: 2026-09-01  
 > `000/python 00`: Day 01-25, Python 풀이 124개 확인
 
 ---
@@ -14,13 +14,13 @@
 | 폴더 | 주제 | 현재 내용 |
 | --- | --- | --- |
 | `000/` | Python 코딩테스트 | `python 00` Day 01-25 풀이, `python 01` 추가 학습 |
-| `001/` | 웹 기초 | HTML/CSS/JavaScript 단계별 실습과 미니 프로젝트 |
+| `001/` | 웹 기초 | HTML/CSS/JavaScript 단계별 실습과 웹 교재 예제 |
 | `002/` | 혼공 시리즈 | Python, 데이터 분석, 머신러닝/딥러닝, JavaScript 교재 실습 |
 | `003/` | Java | `ThisIsJava` 교재 기반 Java 문법 실습 |
 | `004/` | CS / SQL 이론 | 컴퓨터 구조, 운영체제, 네트워크, SQL, 디자인 패턴 정리 |
 | `005/` | 웹 교재 실습 | HTML5, HTML+CSS, 웹 디자인 교재 예제 |
 | `006/` | 머신러닝 / 딥러닝 교재 실습 | 머신러닝 Notebook, 딥러닝 기반 자연어 처리 입문 실습 |
-| `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, `모던 자바스크립트 프로그래밍의 정석`, `모던 자바스크립트 Deep Dive` 정리 |
+| `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, 러닝스쿨, 모던 JavaScript 교재 예제와 개념 정리 |
 | `008/` | Spring / Spring Boot 교재 실습 | Spring Boot / React 장별 예제, Spring Framework 개정판 정리 |
 | `009/` | Python 교재 실습 | `점프투파이썬`, `초보자를 위한 파이썬 300제` 예제 |
 | `project/` | 풀스택 프로젝트 | Spring Boot + React 기반 개인 프로젝트 모음 |
@@ -40,7 +40,7 @@ Self-Study/
 │  ├─ HTML-CSS-JavaScript2/
 │  ├─ HTML-CSS-JavaScript3/
 │  ├─ HTML-CSS-JavaScript4/
-│  └─ HTML-CSS-JavaScript5/
+│  └─ 그림으로 쉽게 배우는 HTML+CSS+자바스크립트/
 ├─ 002/
 │  ├─ 혼공데With파이썬/
 │  ├─ 혼공머신러닝+딥러닝/
@@ -66,6 +66,7 @@ Self-Study/
 ├─ 007/
 │  ├─ Do it! 자바스크립트 기초/
 │  ├─ Do it! 자바스크립트 입문/
+│  ├─ 러닝스쿨! 자바스크립트 첫걸음/
 │  ├─ 모던 자바스크립트 Deep Dive/
 │  └─ 모던 자바스크립트 프로그래밍의 정석/
 ├─ 008/
@@ -124,7 +125,7 @@ Self-Study/
 
 ### `001/` HTML/CSS/JavaScript
 
-HTML 문서 구조, CSS 레이아웃과 스타일링, JavaScript 기본 문법, DOM 조작, 퀴즈와 미니 프로젝트를 단계별로 정리합니다.
+HTML 문서 구조, CSS 레이아웃과 스타일링, JavaScript 기본 문법, DOM 조작, 웹 교재 예제와 미니 프로젝트를 단계별로 정리합니다.
 
 ### `002/` 혼공 시리즈
 
@@ -148,7 +149,7 @@ HTML/CSS 중심의 웹 기초 교재 예제, 장별 `index.html`, CSS 파일, �
 
 ### `007/` JavaScript 교재 실습
 
-`Do it! 자바스크립트 기초`, `Do it! 자바스크립트 입문`, `모던 자바스크립트 프로그래밍의 정석`, `모던 자바스크립트 Deep Dive` 예제와 개념 정리를 관리합니다.
+`Do it! 자바스크립트 기초`, `Do it! 자바스크립트 입문`, `러닝스쿨! 자바스크립트 첫걸음`, `모던 자바스크립트 프로그래밍의 정석`, `모던 자바스크립트 Deep Dive` 예제와 개념 정리를 관리합니다.
 
 `모던 자바스크립트 프로그래밍의 정석`은 01~07장과 18장 예제가 들어 있으며, `index.html`은 예제를 실제 책처럼 볼 수 있는 학습 뷰어입니다. 왼쪽에는 코드, 오른쪽에는 실행 화면을 표시하고, 브라우저 위치 권한을 허용하면 현재 위치와 날씨 정보를 읽어옵니다.
 
@@ -232,8 +233,8 @@ project/
 | `Music` | 음악 플레이어 / 게시판 | 회원 인증, 음악 업로드/재생, 앨범 보관함, 게시판, 댓글, 채팅 | Spring Boot, React CRA, WebSocket, JWT, Oracle |
 | `Note` | AI Markdown 노트 | 노트, 폴더, 첨부파일, PDF 뷰어, 휴지통, AI 채팅/도구 | Spring Boot, MariaDB, React, TypeScript, Vite, Ollama |
 | `phonebook` | 연락처 관리 앱 | 로그인, 연락처 CRUD, 그룹 관리, 검색, 필터링 | Spring Boot, JPA, React, Vite, MUI |
-| `fridge` | 냉장고 관련 실습 | 현재는 산출물 중심, 정리 필요 | Java/Spring 실습 흔적 |
-| `gyeongnam` | 경남 빅데이터 관련 백엔드 실습 | 현재는 산출물 중심, 정리 필요 | Java/Spring Boot 실습 흔적 |
+| `fridge` | 냉장고 관련 실습 보관 폴더 | 현재는 `bin` 산출물 중심으로 남아 있어 원본 소스 복원 또는 재정리가 필요 | Java/Spring 실습 흔적 |
+| `gyeongnam` | 경남 빅데이터 관련 백엔드 실습 보관 폴더 | 현재는 컴파일 산출물 중심으로 남아 있어 실행 프로젝트로 쓰기 전 구조 정리가 필요 | Java/Spring Boot 실습 흔적 |
 
 ---
 
