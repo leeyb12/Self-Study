@@ -2,9 +2,9 @@
 
 개인 학습 과정에서 작성한 코딩테스트 풀이, 웹 기초 실습, 교재 예제, CS 정리 노트, Java/Spring/React 프로젝트를 모아 둔 저장소입니다.
 
-학습 주제별로 `000`부터 `009`까지 번호 폴더를 나누고, 실제 애플리케이션 구현물은 `project` 폴더에 따로 정리합니다. 단순 보관보다 "어떤 주제를 어느 단계까지 학습했는지"를 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
+학습 주제별로 `000`부터 `011`까지 번호 폴더를 나누고, 실제 애플리케이션 구현물은 `project` 폴더에 따로 정리합니다. 단순 보관보다 "어떤 주제를 어느 단계까지 학습했는지"를 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
 
-> 기준일: 2026-09-01  
+> 기준일: 2026-09-02  
 > `000/python 00`: Day 01-25, Python 풀이 124개 확인
 
 ---
@@ -23,6 +23,8 @@
 | `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, 러닝스쿨, 모던 JavaScript 교재 예제와 개념 정리 |
 | `008/` | Spring / Spring Boot 교재 실습 | Spring Boot / React 장별 예제, Spring Framework 개정판 정리 |
 | `009/` | Python 교재 실습 | `점프투파이썬`, `초보자를 위한 파이썬 300제` 예제 |
+| `010/` | 풀스택 웹 기초 | HTML/CSS, JavaScript 풀스택 입문 실습 |
+| `011/` | LLM / AI 애플리케이션 | Transformer와 LLM 기반 AI 애플리케이션 Notebook 실습 |
 | `project/` | 풀스택 프로젝트 | Spring Boot + React 기반 개인 프로젝트 모음 |
 
 ---
@@ -35,12 +37,12 @@ Self-Study/
 │  ├─ python 00/
 │  └─ python 01/
 ├─ 001/
+│  ├─ Do it! HTML+CSS+자바스크립트 웹 표준의 정석/
 │  ├─ HTML-CSS1/
-│  ├─ HTML-CSS-JavaScript1/
 │  ├─ HTML-CSS-JavaScript2/
 │  ├─ HTML-CSS-JavaScript3/
-│  ├─ HTML-CSS-JavaScript4/
-│  └─ 그림으로 쉽게 배우는 HTML+CSS+자바스크립트/
+│  ├─ 그림으로 쉽게 배우는 HTML+CSS+자바스크립트/
+│  └─ 코딩자율학습 HTML+CSS+자바스크립트/
 ├─ 002/
 │  ├─ 혼공데With파이썬/
 │  ├─ 혼공머신러닝+딥러닝/
@@ -75,6 +77,11 @@ Self-Study/
 ├─ 009/
 │  ├─ 점프투파이썬/
 │  └─ 초보자를 위한 파이썬 300제/
+├─ 010/
+│  ├─ fullstack-htmlcss/
+│  └─ fullstack-javascript/
+├─ 011/
+│  └─ LLM을 활용한 실전 AI 애플리케이션 개발/
 └─ project/
    ├─ ecommerce/
    ├─ fridge/
@@ -103,6 +110,8 @@ Self-Study/
 | `007/README.md` | JavaScript 교재 실습, 개념 정리, 책형 뷰어 정리 |
 | `008/README.md` | Spring / Spring Boot 교재 장별 실습 정리 |
 | `009/README.md` | Python 교재 예제와 문제 풀이 정리 |
+| `010/README.md` | 풀스택 웹 기초 실습 정리 |
+| `011/README.md` | LLM / AI 애플리케이션 Notebook 실습 정리 |
 | `project/README.md` | 풀스택 프로젝트 전체 구조 정리 |
 | `project/*/README.md` | 프로젝트별 기능, 실행 방법, 구현 화면 정리 |
 
@@ -125,7 +134,7 @@ Self-Study/
 
 ### `001/` HTML/CSS/JavaScript
 
-HTML 문서 구조, CSS 레이아웃과 스타일링, JavaScript 기본 문법, DOM 조작, 웹 교재 예제와 미니 프로젝트를 단계별로 정리합니다.
+HTML 문서 구조, CSS 레이아웃과 스타일링, JavaScript 기본 문법, DOM 조작, 웹 교재 예제와 미니 프로젝트를 단계별로 정리합니다. 최근에는 `Do it! HTML+CSS+자바스크립트 웹 표준의 정석`, `코딩자율학습 HTML+CSS+자바스크립트`처럼 교재명을 기준으로 폴더를 재정리했습니다.
 
 ### `002/` 혼공 시리즈
 
@@ -192,6 +201,34 @@ Python 교재 예제와 문제 풀이를 정리하는 폴더입니다.
 - Python 실행, 에디터, 문자열 기본 예제
 - `초보자를 위한 파이썬 300제` 001~040번 Notebook 풀이
 - 교재별/주제별 Python 기초 실습
+
+### `010/` 풀스택 웹 기초
+
+HTML/CSS와 JavaScript를 풀스택 학습의 기반으로 다시 정리하는 폴더입니다.
+
+```text
+010/
+├─ fullstack-htmlcss/
+│  └─ css/
+└─ fullstack-javascript/
+```
+
+`fullstack-htmlcss`는 CSS 파일 구조 실습이 들어 있고, `fullstack-javascript`는 이후 JavaScript 기초 실습을 이어서 정리할 공간입니다.
+
+### `011/` LLM / AI 애플리케이션
+
+LLM을 활용한 실전 AI 애플리케이션 개발 교재 실습을 Notebook으로 정리하는 폴더입니다.
+
+```text
+011/
+└─ LLM을 활용한 실전 AI 애플리케이션 개발/
+   ├─ 02장/
+   │  └─ chapter_2_transformer_with_code.ipynb
+   └─ 03장/
+      └─ chapter_3.ipynb
+```
+
+Transformer 구조와 LLM 활용 흐름을 코드로 따라가며 정리합니다.
 
 ---
 
@@ -333,6 +370,8 @@ python -m http.server 8765 --bind 127.0.0.1
 - `007` JavaScript 책형 뷰어에 추가할 예제 목록
 - `008` Spring Boot / React 교재 실습 Chapter 추가 여부
 - `009` Python 교재 실습 문제 번호와 Notebook 범위
+- `010` 풀스택 웹 기초 예제 추가 여부
+- `011` LLM / AI 애플리케이션 Notebook 장 범위
 - 프로젝트별 새 기능, 화면, 도메인
 - DB, 환경 변수, 포트 변경 여부
 
