@@ -1,50 +1,21 @@
-# 008 - Spring / Spring Boot 교재 실습
+# 008 - Spring Framework 교재 실습
 
-Spring Framework와 Spring Boot / React 교재의 장별 예제와 개념 정리를 관리하는 폴더입니다.
+Spring Framework 교재의 장별 예제와 개념 정리를 관리하는 폴더입니다.
 
-Spring Boot 프로젝트 생성, Gradle 실행, 백엔드 구조, React 연동 흐름, Spring Framework 기초 개념을 장별로 따라갑니다.
+현재는 `스프링 프레임워크 첫걸음 (개정판)`의 텍스트 예제를 장별로 정리합니다.
 
 ## 폴더 구조
 
 ```text
 008/
 ├─ 스프링 프레임워크 첫걸음 (개정판)/
-│  ├─ 2장/
-│  │  ├─ 2-1.txt
-│  │  ├─ 2-2.txt
-│  │  ├─ 2-3.txt
-│  │  ├─ 2-4.txt
-│  │  ├─ 2-5.txt
-│  │  ├─ 2-6.txt
-│  │  └─ 2-7.txt
+│  ├─ 예제/
+│  │  ├─ 2장/
+│  │  │  ├─ 2-1.txt
+│  │  │  ├─ ...
+│  │  │  └─ 2-11.txt
+│  │  └─ 3장/
 │  └─ README.md
-├─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
-│  ├─ Chapter 01/
-│  │  ├─ gradle/
-│  │  ├─ src/
-│  │  ├─ build.gradle
-│  │  ├─ gradlew
-│  │  └─ gradlew.bat
-│  ├─ Chapter 02/
-│  │  └─ README.md
-│  ├─ Chapter 03/
-│  │  ├─ gradle/
-│  │  ├─ src/
-│  │  ├─ build.gradle
-│  │  ├─ gradlew
-│  │  └─ gradlew.bat
-│  ├─ Chapter 04/
-│  │  ├─ gradle/
-│  │  ├─ src/
-│  │  ├─ build.gradle
-│  │  ├─ gradlew
-│  │  └─ gradlew.bat
-│  └─ Chapter 05/
-│     ├─ gradle/
-│     ├─ src/
-│     ├─ build.gradle
-│     ├─ gradlew
-│     └─ gradlew.bat
 └─ README.md
 ```
 
@@ -52,24 +23,11 @@ Spring Boot 프로젝트 생성, Gradle 실행, 백엔드 구조, React 연동 �
 
 | 폴더 | 내용 |
 | --- | --- |
-| `스프링 프레임워크 첫걸음 (개정판)/2장` | Spring Framework 2장 개념 정리 |
-| `Chapter 01/` | Spring Boot 프로젝트 생성과 기본 실행 구조 |
-| `Chapter 02/` | 교재 개념/실습 내용 README 정리 |
-| `Chapter 03/` | Spring Boot 애플리케이션 확장 실습 |
-| `Chapter 04/` | Spring Boot 장별 프로젝트 실습 |
-| `Chapter 05/` | Spring Boot 장별 프로젝트 실습 |
-
-## 실행 방법
-
-장별 Spring Boot 프로젝트 폴더에서 실행합니다.
-
-```powershell
-cd "008\실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발\Chapter 05"
-.\gradlew.bat bootRun
-```
+| `스프링 프레임워크 첫걸음 (개정판)/예제/2장` | Spring Framework 2장 텍스트 예제 |
+| `스프링 프레임워크 첫걸음 (개정판)/예제/3장` | 이후 3장 예제를 정리할 공간 |
 
 ## 정리 기준
 
-- 장별 실습은 `Chapter NN/` 폴더로 구분합니다.
+- 장별 실습은 `예제/N장/` 폴더로 구분합니다.
 - `build/`, `.gradle/`, `bin/` 같은 생성물은 Git 관리 대상에서 제외하는 것을 권장합니다.
 - 기능이 추가되면 실행 방법, 패키지 구조, 설정 파일 변경점을 README에 함께 기록합니다.

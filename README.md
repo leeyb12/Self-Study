@@ -2,7 +2,7 @@
 
 개인 학습 과정에서 작성한 코딩테스트 풀이, 웹 기초 실습, 교재 예제, CS 정리 노트, Java/Spring/React 프로젝트를 모아 둔 저장소입니다.
 
-학습 주제별로 `000`부터 `011`까지 번호 폴더를 나누고, 실제 애플리케이션 구현물은 `project` 폴더에 따로 정리합니다. 단순 보관보다 "어떤 주제를 어느 단계까지 학습했는지"를 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
+학습 주제별로 `000`부터 `012`까지 번호 폴더를 나누고, 실제 애플리케이션 구현물은 `project` 폴더에 따로 정리합니다. 단순 보관보다 "어떤 주제를 어느 단계까지 학습했는지"를 다시 확인할 수 있는 개인 학습 아카이브를 목표로 합니다.
 
 > 기준일: 2026-09-11  
 > `000/python 00`: Day 01-25, Python 풀이 124개 확인
@@ -21,10 +21,11 @@
 | `005/` | 웹 교재 실습 | HTML5, HTML+CSS, 웹 디자인 교재 예제 |
 | `006/` | 머신러닝 / 딥러닝 교재 실습 | 머신러닝 Notebook, 딥러닝 기반 자연어 처리 입문 실습 |
 | `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, 러닝스쿨, 모던 JavaScript 교재 예제와 개념 정리 |
-| `008/` | Spring / Spring Boot 교재 실습 | Spring Boot / React 장별 예제, Spring Framework 개정판 정리 |
+| `008/` | Spring Framework 교재 실습 | `스프링 프레임워크 첫걸음 (개정판)` 장별 텍스트 예제 정리 |
 | `009/` | Python 교재 실습 | `점프투파이썬`, `초보자를 위한 파이썬 300제` 예제 |
 | `010/` | 풀스택 웹 기초 | HTML/CSS, JavaScript 풀스택 입문 실습 |
 | `011/` | LLM / AI 애플리케이션 | Transformer와 LLM 기반 AI 애플리케이션 Notebook 실습 |
+| `012/` | Node.js 교재 실습 | `Do it! Node.js 프로그래밍 입문` 기본 예제 |
 | `project/` | 풀스택 프로젝트 | Spring Boot + React 기반 개인 프로젝트 모음 |
 
 ---
@@ -72,8 +73,7 @@ Self-Study/
 │  ├─ 모던 자바스크립트 Deep Dive/
 │  └─ 모던 자바스크립트 프로그래밍의 정석/
 ├─ 008/
-│  ├─ 스프링 프레임워크 첫걸음 (개정판)/
-│  └─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
+│  └─ 스프링 프레임워크 첫걸음 (개정판)/
 ├─ 009/
 │  ├─ 점프투파이썬/
 │  └─ 초보자를 위한 파이썬 300제/
@@ -82,6 +82,8 @@ Self-Study/
 │  └─ fullstack-javascript/
 ├─ 011/
 │  └─ LLM을 활용한 실전 AI 애플리케이션 개발/
+├─ 012/
+│  └─ Do it! Node.js 프로그래밍 입문/
 └─ project/
    ├─ ecommerce/
    ├─ fridge/
@@ -108,10 +110,11 @@ Self-Study/
 | `005/README.md` | 웹 교재 실습 정리 |
 | `006/README.md` | 머신러닝 / 딥러닝 교재 Notebook 실습 정리 |
 | `007/README.md` | JavaScript 교재 실습, 개념 정리, 책형 뷰어 정리 |
-| `008/README.md` | Spring / Spring Boot 교재 장별 실습 정리 |
+| `008/README.md` | Spring Framework 교재 장별 실습 정리 |
 | `009/README.md` | Python 교재 예제와 문제 풀이 정리 |
 | `010/README.md` | 풀스택 웹 기초 실습 정리 |
 | `011/README.md` | LLM / AI 애플리케이션 Notebook 실습 정리 |
+| `012/README.md` | Node.js 교재 실습 정리 |
 | `project/README.md` | 풀스택 프로젝트 전체 구조 정리 |
 | `project/*/README.md` | 프로젝트별 기능, 실행 방법, 구현 화면 정리 |
 
@@ -162,23 +165,19 @@ HTML/CSS 중심의 웹 기초 교재 예제, 장별 `index.html`, CSS 파일, �
 
 `모던 자바스크립트 프로그래밍의 정석`은 01~07장과 18장 예제가 들어 있으며, `index.html`은 예제를 실제 책처럼 볼 수 있는 학습 뷰어입니다. 왼쪽에는 코드, 오른쪽에는 실행 화면을 표시하고, 브라우저 위치 권한을 허용하면 현재 위치와 날씨 정보를 읽어옵니다.
 
-### `008/` Spring / Spring Boot 교재 실습
+### `008/` Spring Framework 교재 실습
 
-`실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발` 교재의 장별 예제와 `스프링 프레임워크 첫걸음 (개정판)` 정리 파일을 함께 관리합니다.
+`스프링 프레임워크 첫걸음 (개정판)` 교재의 장별 텍스트 예제를 관리합니다.
 
 ```text
 008/
-├─ 스프링 프레임워크 첫걸음 (개정판)/
-│  └─ 2장/
-└─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
-   ├─ Chapter 01/
-   ├─ Chapter 02/
-   ├─ Chapter 03/
-   ├─ Chapter 04/
-   └─ Chapter 05/
+└─ 스프링 프레임워크 첫걸음 (개정판)/
+   └─ 예제/
+      ├─ 2장/
+      └─ 3장/
 ```
 
-Spring Boot / React 교재의 Chapter 01, 03, 04, 05는 Gradle 기반 Spring Boot 프로젝트 구조를 포함하고, Chapter 02는 별도 README로 개념/실습 내용을 정리합니다. Spring Framework 개정판은 장별 텍스트 정리 파일로 관리합니다.
+현재는 2장 예제가 `2-1.txt`부터 `2-11.txt`까지 정리되어 있고, 3장 예제를 이어서 정리할 공간이 있습니다.
 
 ### `009/` Python 교재 실습
 
@@ -229,6 +228,20 @@ LLM을 활용한 실전 AI 애플리케이션 개발 교재 실습을 Notebook�
 ```
 
 Transformer 구조와 LLM 활용 흐름을 코드로 따라가며 정리합니다.
+
+### `012/` Node.js 교재 실습
+
+`Do it! Node.js 프로그래밍 입문` 교재의 Node.js 기본 예제를 정리하는 폴더입니다.
+
+```text
+012/
+└─ Do it! Node.js 프로그래밍 입문/
+   └─ basics/
+      └─ 01/
+         └─ hello.js
+```
+
+`hello.js`는 함수를 선언하고 문자열을 출력하는 Node.js 첫 실행 예제입니다.
 
 ---
 
@@ -281,7 +294,7 @@ project/
 | --- | --- |
 | Language | Python, Java, JavaScript, TypeScript |
 | Frontend | HTML, CSS, React, Vite, Create React App, MUI, Zustand, Recharts, Three.js |
-| Backend | Spring Boot, Spring Security, Spring Data JPA, Spring Batch, WebSocket/STOMP |
+| Backend | Spring Boot, Spring Security, Spring Data JPA, Spring Batch, WebSocket/STOMP, Node.js |
 | Database | Oracle XE, MariaDB, SQL |
 | Data / AI | Jupyter Notebook, scikit-learn, Ollama |
 | Build / Tooling | Gradle, npm, Vite, ESLint |
@@ -304,13 +317,6 @@ cd project\<프로젝트명>\Backend
 
 ```powershell
 cd project\Game\backend
-.\gradlew.bat bootRun
-```
-
-`008` Spring Boot 교재 실습은 장별 폴더에서 실행합니다.
-
-```powershell
-cd "008\실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발\Chapter 05"
 .\gradlew.bat bootRun
 ```
 
@@ -369,10 +375,11 @@ python -m http.server 8765 --bind 127.0.0.1
 - 새로 추가된 교재 폴더와 장 번호
 - `004` CS / SQL 이론 노트의 새 장과 Markdown 파일
 - `007` JavaScript 책형 뷰어에 추가할 예제 목록
-- `008` Spring Boot / React 교재 실습 Chapter 추가 여부
+- `008` Spring Framework 교재 실습 장별 예제 추가 여부
 - `009` Python 교재 실습 문제 번호와 Notebook 범위
 - `010` 풀스택 웹 기초 예제 추가 여부
 - `011` LLM / AI 애플리케이션 Notebook 장 범위
+- `012` Node.js 교재 실습 예제 추가 여부
 - 프로젝트별 새 기능, 화면, 도메인
 - DB, 환경 변수, 포트 변경 여부
 
