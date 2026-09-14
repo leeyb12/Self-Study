@@ -18,7 +18,7 @@
 | 폴더 | 내용 |
 | --- | --- |
 | `fullstack-htmlcss/` | CSS 파일 구조와 스타일 분리 실습 |
-| `fullstack-javascript/` | JavaScript 풀스택 기초 실습을 정리할 공간 |
+| `fullstack-javascript/` | JavaScript 풀스택 기초 실습을 분리해 보관할 폴더 |
 
 ## 정리 기준
 

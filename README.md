@@ -21,7 +21,7 @@
 | `005/` | 웹 교재 실습 | HTML5, HTML+CSS, 웹 디자인 교재 예제 |
 | `006/` | 머신러닝 / 딥러닝 교재 실습 | 머신러닝 Notebook, 딥러닝 기반 자연어 처리 입문 실습 |
 | `007/` | JavaScript 교재 실습 | `Do it!` 시리즈, 러닝스쿨, 모던 JavaScript 교재 예제와 개념 정리 |
-| `008/` | Spring / Spring Boot 교재 실습 | Spring Framework 텍스트 예제와 Spring Boot/React 교재 산출물 정리 |
+| `008/` | Spring Framework 교재 실습 | `스프링 프레임워크 첫걸음 (개정판)` 장별 텍스트 예제 정리 |
 | `009/` | Python 교재 실습 | `점프투파이썬`, `초보자를 위한 파이썬 300제` 예제 |
 | `010/` | 풀스택 웹 기초 | HTML/CSS, JavaScript 풀스택 입문 실습 |
 | `011/` | LLM / AI 애플리케이션 | Transformer와 LLM 기반 AI 애플리케이션 Notebook 실습 |
@@ -74,8 +74,7 @@ Self-Study/
 │  ├─ 모던 자바스크립트 Deep Dive/
 │  └─ 모던 자바스크립트 프로그래밍의 정석/
 ├─ 008/
-│  ├─ 스프링 프레임워크 첫걸음 (개정판)/
-│  └─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
+│  └─ 스프링 프레임워크 첫걸음 (개정판)/
 ├─ 009/
 │  ├─ 점프투파이썬/
 │  └─ 초보자를 위한 파이썬 300제/
@@ -112,7 +111,7 @@ Self-Study/
 | `005/README.md` | 웹 교재 실습 정리 |
 | `006/README.md` | 머신러닝 / 딥러닝 교재 Notebook 실습 정리 |
 | `007/README.md` | JavaScript 교재 실습, 개념 정리, 책형 뷰어 정리 |
-| `008/README.md` | Spring / Spring Boot 교재 장별 실습 정리 |
+| `008/README.md` | Spring Framework 교재 장별 실습 정리 |
 | `009/README.md` | Python 교재 예제와 문제 풀이 정리 |
 | `010/README.md` | 풀스택 웹 기초 실습 정리 |
 | `011/README.md` | LLM / AI 애플리케이션 Notebook 실습 정리 |
@@ -167,23 +166,19 @@ HTML/CSS 중심의 웹 기초 교재 예제, 장별 `index.html`, CSS 파일, �
 
 `모던 자바스크립트 프로그래밍의 정석`은 01~07장과 18장 예제가 들어 있으며, `index.html`은 예제를 실제 책처럼 볼 수 있는 학습 뷰어입니다. 왼쪽에는 코드, 오른쪽에는 실행 화면을 표시하고, 브라우저 위치 권한을 허용하면 현재 위치와 날씨 정보를 읽어옵니다.
 
-### `008/` Spring / Spring Boot 교재 실습
+### `008/` Spring Framework 교재 실습
 
-`스프링 프레임워크 첫걸음 (개정판)` 교재의 장별 텍스트 예제와 `실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발` 교재의 Spring Boot 산출물을 함께 관리합니다.
+`스프링 프레임워크 첫걸음 (개정판)` 교재의 장별 텍스트 예제를 관리합니다.
 
 ```text
 008/
-├─ 스프링 프레임워크 첫걸음 (개정판)/
-│  └─ 예제/
-│     ├─ 2장/
-│     └─ 3장/
-└─ 실전! 스프링 부트 3 & 리액트로 시작하는 모던 웹 애플리케이션 개발/
-   ├─ Chapter 04/
-   ├─ Chapter 05/
-   └─ Chapter 06/
+└─ 스프링 프레임워크 첫걸음 (개정판)/
+   └─ 예제/
+      ├─ 2장/
+      └─ 3장/
 ```
 
-Spring Framework 교재는 2장 예제가 `2-1.txt`부터 `2-11.txt`까지 정리되어 있고, 3장 예제를 이어서 정리할 공간이 있습니다. Spring Boot/React 교재 폴더는 현재 `Chapter 04~06`의 `bin` 산출물 중심으로 남아 있어 원본 소스와 빌드 파일 확인이 필요합니다.
+Spring Framework 교재는 2장 예제가 `2-1.txt`부터 `2-11.txt`까지 정리되어 있고, 3장 폴더는 다음 예제를 이어서 보관할 위치입니다.
 
 ### `009/` Python 교재 실습
 
@@ -218,7 +213,7 @@ HTML/CSS와 JavaScript를 풀스택 학습의 기반으로 다시 정리하는 �
 └─ fullstack-javascript/
 ```
 
-`fullstack-htmlcss`는 CSS 파일 구조 실습이 들어 있고, `fullstack-javascript`는 이후 JavaScript 기초 실습을 이어서 정리할 공간입니다.
+`fullstack-htmlcss`는 CSS 파일 구조 실습이 들어 있고, `fullstack-javascript`는 JavaScript 기초 실습을 분리해 보관하기 위한 폴더입니다.
 
 ### `011/` LLM / AI 애플리케이션
 
@@ -383,7 +378,7 @@ python -m http.server 8765 --bind 127.0.0.1
 - `004` CS / SQL 이론 노트의 새 장과 Markdown 파일
 - `006` 자연어 처리 Notebook 장 범위
 - `007` JavaScript 책형 뷰어에 추가할 예제 목록
-- `008` Spring / Spring Boot 교재 실습 장별 예제와 산출물 정리 여부
+- `008` Spring Framework 교재 실습 장별 예제 추가 여부
 - `009` Python 교재 실습 문제 번호와 Notebook 범위
 - `010` 풀스택 웹 기초 예제 추가 여부
 - `011` LLM / AI 애플리케이션 Notebook 장 범위
