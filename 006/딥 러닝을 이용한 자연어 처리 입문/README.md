@@ -6,8 +6,10 @@
 
 ```text
 딥 러닝을 이용한 자연어 처리 입문/
-└─ 01. Introduction/
-   └─ 1-4. pandas_numpy_matplotlib.ipynb
+├─ 01. Introduction/
+│  └─ 1-4. pandas_numpy_matplotlib.ipynb
+└─ 02. Text Preprocessing/
+   └─ 2-1. tokenization.ipynb
 ```
 
 ## 학습 내용
@@ -15,6 +17,7 @@
 | 위치 | 내용 |
 | --- | --- |
 | `01. Introduction/1-4. pandas_numpy_matplotlib.ipynb` | pandas, NumPy, Matplotlib 기초 실습 |
+| `02. Text Preprocessing/2-1. tokenization.ipynb` | 텍스트 전처리와 토큰화 실습 |
 
 ## 실행 방법
 

@@ -7,9 +7,9 @@
 | 폴더 | 내용 |
 | --- | --- |
 | `Do it! HTML+CSS+자바스크립트 웹 표준의 정석/` | HTML, CSS, JavaScript 기초와 DOM 실습, 웹 페이지 프로젝트 |
-| `HTML-CSS1/` | HTML/CSS 기초와 WCBCafe 예제 |
 | `HTML-CSS-JavaScript2/` | JavaScript 외부 파일, 스타일 분리 등 추가 실습 |
 | `HTML-CSS-JavaScript3/` | 예제, 연습문제, 퀴즈, 미니 프로젝트 |
+| `HTML5+CSS3 웹 표준의 정석/` | HTML5 문서 작성, 이미지, 표, CSS 연결 실습 |
 | `그림으로 쉽게 배우는 HTML+CSS+자바스크립트/` | HTML, CSS, JavaScript 교재 기반 장별 예제 |
 | `코딩자율학습 HTML+CSS+자바스크립트/` | HTML/CSS/JavaScript 장별 예제와 포트폴리오형 웹 페이지 실습 |
 

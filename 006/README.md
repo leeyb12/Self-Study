@@ -9,8 +9,10 @@
 ```text
 006/
 ├─ 딥 러닝을 이용한 자연어 처리 입문/
-│  └─ 01. Introduction/
-│     └─ 1-4. pandas_numpy_matplotlib.ipynb
+│  ├─ 01. Introduction/
+│  │  └─ 1-4. pandas_numpy_matplotlib.ipynb
+│  └─ 02. Text Preprocessing/
+│     └─ 2-1. tokenization.ipynb
 ├─ 머신 러닝 교과서 3판/
 │  ├─ ch01.ipynb
 │  ├─ ch02.ipynb
@@ -31,6 +33,7 @@
 | 파일 | 내용 |
 | --- | --- |
 | `딥 러닝을 이용한 자연어 처리 입문/01. Introduction/1-4. pandas_numpy_matplotlib.ipynb` | pandas, NumPy, Matplotlib 기초 실습 |
+| `딥 러닝을 이용한 자연어 처리 입문/02. Text Preprocessing/2-1. tokenization.ipynb` | 자연어 처리 전처리와 토큰화 실습 |
 | `ch01.ipynb` | 머신러닝 기본 개념과 학습 흐름 |
 | `ch02.ipynb` | 분류 알고리즘과 기초 모델 실습 |
 | `ch03.ipynb` | 사이킷런 기반 분류 모델과 평가 |
