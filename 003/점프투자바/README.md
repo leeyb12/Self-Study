@@ -9,10 +9,8 @@
 ├─ src/
 │  ├─ s0103/
 │  │  └─ HelloWorld.java
-│  ├─ s0301/
-│  │  ├─ Sample0301_01.java
-│  │  ├─ Sample0301_02.java
-│  │  └─ Sample0301_03.java
+│  ├─ s0301/ ... s0311/   # 자료형 예제
+│  ├─ s0401/ ... s0405/   # 제어문 예제
 │  └─ module-info.java
 ├─ bin/
 ├─ .classpath
@@ -24,7 +22,11 @@
 | 위치 | 내용 |
 | --- | --- |
 | `src/s0103/HelloWorld.java` | Java 기본 출력 예제 |
-| `src/s0301/` | 3장 기본 문법 예제 |
+| `src/s0301/` ~ `src/s0306/` | 숫자, 불리언, 문자, 문자열, StringBuffer, 배열 |
+| `src/s0307/` ~ `src/s0311/` | 리스트, 맵, 집합, 열거형, 형 변환 |
+| `src/s0401/` ~ `src/s0405/` | 조건문, switch, while, for와 향상된 for문 |
+
+`s0301`은 `Sample0301_01.java`부터 `_05.java`까지 있습니다. `s0405/`에는 `Sample0405_01.java`와 파일명은 `Sample0406_01.java`인 예제가 함께 있습니다. 파일의 `package` 선언은 모두 `s0405`입니다.
 
 ## 정리 기준
 
