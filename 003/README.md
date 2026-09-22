@@ -1,26 +1,28 @@
 # 003 - Java 실습
 
-`혼자공부하는자바` 교재 실습을 위한 Eclipse Java 프로젝트를 보관합니다.
+`이것이 자바다` 교재의 장별 Eclipse Java 프로젝트와 예제 소스를 보관합니다.
 
 ## 현재 구조
 
 ```text
 003/
-├─ .metadata/                 # Eclipse 워크스페이스 설정
 ├─ .gitignore
-└─ 혼자공부하는자바/
-   ├─ src/
-   │  └─ module-info.java
-   ├─ bin/                    # 컴파일 산출물
-   ├─ .classpath
-   ├─ .project
-   ├─ .settings/
-   └─ .gitignore
+└─ 이것이 자바다/
+   ├─ .metadata/              # Eclipse 워크스페이스 설정
+   ├─ chap02/
+   │  └─ src/exam02_char/
+   │     └─ CharExample.java
+   └─ chap05/
+      └─ src/
+         ├─ sec05/exam01_string_equals/
+         └─ sec06/
 ```
 
 ## 현재 상태
 
-- Eclipse 프로젝트 이름과 Java 모듈 이름은 `혼자공부하는자바`입니다.
-- 현재 `src/`에는 빈 모듈을 선언한 `module-info.java`만 있습니다.
-- Java 클래스 예제가 추가되면 패키지와 장별 학습 내용을 이 README에 기록합니다.
-- `bin/`과 `.metadata/`는 생성 파일이므로 각각의 `.gitignore`에서 제외합니다.
+| 프로젝트 | 현재 학습 내용 |
+| --- | --- |
+| `chap02` | `char` 타입과 문자 표현 예제 |
+| `chap05` | 문자열 동등 비교, 배열 선언과 생성, 배열 길이, 명령행 인수, 다차원 배열 |
+
+각 장은 별도의 Eclipse Java 프로젝트이며 `src/`에서 학습 소스를 확인합니다. `bin/`은 컴파일 산출물이고 `.metadata/`는 Eclipse 워크스페이스 설정입니다.
