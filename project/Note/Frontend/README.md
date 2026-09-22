@@ -1,5 +1,26 @@
 # React + TypeScript + Vite
 
+AI Markdown 노트 프로젝트의 React 클라이언트입니다. 인증, 폴더 탐색, 노트 편집·읽기, PDF 보기, 첨부파일, 휴지통과 AI 채팅 화면을 제공합니다.
+
+## 주요 구성
+
+- `NoteWorkspace`, `NoteEditor`, `NoteReader`: 노트 선택·편집·읽기 흐름
+- `FolderSidebar`, `NoteGrid`, `TrashGrid`: 폴더와 노트 목록 탐색
+- `AiChat`: 현재 문맥을 사용한 AI 대화
+- `PdfViewer`: 첨부 PDF 표시
+- `api/client.ts`, `types.ts`: 서버 통신과 데이터 타입 계약
+
+## 핵심 개념
+
+TypeScript 타입은 API 응답과 컴포넌트 props의 형태를 명시해 데이터 불일치를 빠르게 발견합니다. 편집 중인 로컬 상태와 서버에 저장된 상태를 구분하고 저장 성공 후 동기화해야 합니다. Markdown 출력은 신뢰할 수 없는 HTML이 실행되지 않도록 정제 과정이 필요합니다.
+
+## 실행
+
+```powershell
+npm install
+npm run dev
+```
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

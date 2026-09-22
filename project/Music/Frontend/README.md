@@ -1,5 +1,19 @@
 # Getting Started with Create React App
 
+Music 프로젝트의 React 클라이언트입니다. 로그인, 음원 재생, 앨범 보관함, 게시판, 실시간 채팅, 가사 편집과 테마 전환 화면을 제공합니다.
+
+## 프로젝트 구성
+
+- `pages/`: 로그인·회원가입, 플레이어, 앨범 보관함과 게시판 화면
+- `components/`: 업로드, 내비게이션, 가사 패널, 채팅과 디자인 선택 UI
+- `context/`: 인증, 플레이어 디자인과 테마 전역 상태
+- `styles/`: 플레이어와 모달을 포함한 화면별 CSS
+- `setupProxy.js`: 개발 환경의 백엔드 API 프록시
+
+## 핵심 개념
+
+HTML 오디오 요소의 재생 이벤트와 React 상태를 동기화해 현재 시간과 곡 정보를 표시합니다. Context는 여러 페이지에서 필요한 인증과 테마 상태를 공유합니다. WebSocket 채팅은 연결·구독·해제 생명주기를 컴포넌트 생명주기와 맞춰 관리해야 합니다.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

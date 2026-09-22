@@ -43,6 +43,14 @@ project/
 | `fridge/` | 냉장고 관련 실습 보관 폴더 | `fridge` 하위에 `bin` 산출물 중심 | Java/Spring 실습 흔적 |
 | `gyeongnam/` | 경남 빅데이터 관련 백엔드 실습 보관 폴더 | `Backend` 하위에 `bin` 산출물 중심 | Java/Spring Boot 실습 흔적 |
 
+## 공통 아키텍처 개념
+
+- React 클라이언트는 화면 상태를 관리하고 HTTP 요청으로 Spring Boot API와 통신합니다.
+- Controller는 요청과 응답을, Service는 업무 규칙을, Repository는 데이터 접근을 담당합니다.
+- DTO는 API 경계에서 전달할 데이터 모양을 정의하고 Entity가 화면에 직접 노출되는 것을 줄입니다.
+- 인증된 요청은 토큰 검증을 거쳐 사용자 권한을 확인한 뒤 도메인 로직으로 전달됩니다.
+- WebSocket은 서버와 클라이언트가 연결을 유지하며 양방향으로 데이터를 보낼 때 사용합니다.
+
 ## 보관 폴더 정리 상태
 
 `fridge/`와 `gyeongnam/`은 현재 원본 소스보다 IDE 빌드 산출물인 `bin/` 중심으로 남아 있습니다. 실행 가능한 프로젝트로 복원하려면 `src/`, `build.gradle` 또는 `pom.xml`, 설정 파일을 다시 확인해 프로젝트 구조를 재구성하는 과정이 필요합니다.
