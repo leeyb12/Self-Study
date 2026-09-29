@@ -16,6 +16,6 @@ function addList() {
 function showList() {
   var list = "<ul>";  // 목록을 시작하는 <ul> 태그 저장
   for (var i = 0; i < itemList.length; i++) {
-    list += "<li>" + itemList[i] + "<span class = 'close' id = >"
+    list += "<li>" + itemList[i] + "<span class = 'close' id=" + i + ">X</span></li>";  // 요소의 삭제 버튼을 <li>-</li>로 묶음 
   }
 }

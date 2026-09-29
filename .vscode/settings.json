@@ -1,4 +1,16 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "interactiveWindow.alwaysScrollOnNewCell": false,
+    "interactiveWindow.showExecutionHint": true,
+    "notebook.diff.enablePreview": true,
+    "notebook.consolidatedOutputButton": false,
+    "notebook.confirmDeleteRunningCell": true,
+    "notebook.breadcrumbs.showCodeCells": false,
+    "notebook.output.minimalErrorRendering": false,
+    "notebook.output.scrolling": true,
+    "notebook.consolidatedRunButton": true,
+    "notebook.compactView": true,
+    "notebook.experimental.generate": true,
+    "notebook.output.linkifyFilePaths": false
 }
