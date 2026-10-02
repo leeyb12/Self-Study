@@ -863,6 +863,7 @@ train_input = train_input.reshape(-1, 1)
 ### 사이킷런 로지스틱 회귀 주요 메서드 요약
 
 | 메서드 | 기능 |
+|--------|------|
 | <mark>fit(X, y)</mark> | 모델 학습 |
 | <mark>predict(X)</mark> | 클래스 예측 |
 | <mark>predict_proba(X)</mark> | 클래스별 확률 예측 |
