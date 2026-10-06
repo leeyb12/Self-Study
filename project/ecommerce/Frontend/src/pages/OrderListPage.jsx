@@ -25,7 +25,6 @@ export default function OrderListPage() {
   const [loading, setLoading] = useState(true);
 
   const load = (page = 0) => {
-    setLoading(true);
     getMyOrders({ page, size: 10 })
       .then((res) => {
         setOrders(res.data?.content || []);

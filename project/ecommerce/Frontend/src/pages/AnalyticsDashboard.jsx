@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
-  LineChart, Line, BarChart, Bar, FunnelChart, Funnel, LabelList,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell,
+  LineChart, Line, BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from 'recharts';
 import {
   getTopViewed, getTopPurchased, getTopKeywords, getDailyPurchase, getFunnel,

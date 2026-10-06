@@ -3,14 +3,12 @@ import { useForm } from 'react-hook-form';
 import { createOrder } from '../api/orders';
 import { clearCart } from '../api/cart';
 import { useState } from 'react';
-import useAuthStore from '../store/authStore';
 
 const PAYMENT_METHODS = ['카드', '계좌이체', '카카오페이', '네이버페이'];
 
 export default function CheckoutPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuthStore();
   const cart = state?.cart;
   const [error, setError] = useState('');
 

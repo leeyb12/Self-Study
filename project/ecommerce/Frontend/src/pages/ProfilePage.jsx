@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getMyInfo, updateProfile, withdraw } from '../api/auth';
@@ -20,6 +20,13 @@ export default function ProfilePage() {
 
   const { register, handleSubmit, reset } = useForm();
 
+  const loadReviews = useCallback((page) => {
+    getMyReviews({ page, size: 5 }).then((res) => {
+      setReviews(res.data?.content || []);
+      setReviewPage({ page: res.data?.page ?? 0, totalPages: res.data?.totalPages ?? 1 });
+    });
+  }, []);
+
   useEffect(() => {
     getMyInfo().then((res) => {
       setMember(res.data);
@@ -28,14 +35,7 @@ export default function ProfilePage() {
     });
     loadReviews(0);
     getMyBehaviorSummary().then((res) => setSummary(res.data));
-  }, []);
-
-  const loadReviews = (page) => {
-    getMyReviews({ page, size: 5 }).then((res) => {
-      setReviews(res.data?.content || []);
-      setReviewPage({ page: res.data?.page ?? 0, totalPages: res.data?.totalPages ?? 1 });
-    });
-  };
+  }, [loadReviews, reset, setUser]);
 
   const onSave = async (data) => {
     try {

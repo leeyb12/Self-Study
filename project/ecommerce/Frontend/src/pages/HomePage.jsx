@@ -20,7 +20,6 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
     const params = { page: currentPage, size: 20 };
     const kw = searchParams.get('keyword') || '';
     const cat = searchParams.get('category') || '';
@@ -37,7 +36,7 @@ export default function HomePage() {
         setPageInfo({ page: res.data?.page ?? 0, totalPages: res.data?.totalPages ?? 1 });
       })
       .finally(() => setLoading(false));
-  }, [searchParams]);
+  }, [currentPage, searchParams]);
 
   const handleSearch = (e) => {
     e.preventDefault();

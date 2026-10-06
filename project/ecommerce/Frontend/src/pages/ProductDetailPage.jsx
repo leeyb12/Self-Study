@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from '../api/products';
 import { addToCart } from '../api/cart';
@@ -22,17 +22,17 @@ export default function ProductDetailPage() {
   const [newContent, setNewContent] = useState('');
   const [reviewError, setReviewError] = useState('');
 
-  useEffect(() => {
-    getProduct(id).then((res) => setProduct(res.data));
-    loadReviews(0);
-  }, [id]);
-
-  const loadReviews = (page) => {
+  const loadReviews = useCallback((page) => {
     getProductReviews(id, { page, size: 5 }).then((res) => {
       setReviews(res.data?.content || []);
       setReviewPage({ page: res.data?.page ?? 0, totalPages: res.data?.totalPages ?? 1 });
     });
-  };
+  }, [id]);
+
+  useEffect(() => {
+    getProduct(id).then((res) => setProduct(res.data));
+    loadReviews(0);
+  }, [id, loadReviews]);
 
   const handleAddCart = async () => {
     if (!isAuthenticated) { navigate('/login'); return; }
