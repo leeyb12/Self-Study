@@ -21,15 +21,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.pknu26.ecommerce.security.JwtAuthenticationFilter;
 import com.pknu26.ecommerce.security.JwtTokenProvider;
 
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
  
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider = null;
  
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
