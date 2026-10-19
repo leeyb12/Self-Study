@@ -1,0 +1,7 @@
+CREATE USER java IDENTIFIED BY java12345;
+
+GRANT CONNECT, RESOURCE TO java;
+
+GRANT CREATE TABLE TO java;
+
+GRANT all privileges TO java; -- INSERT등 추가 권한 할당
