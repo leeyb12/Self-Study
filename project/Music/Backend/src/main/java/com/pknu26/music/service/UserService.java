@@ -30,8 +30,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void register(AuthRequest request) {
+        if (request.getUsername() == null || request.getUsername().isBlank()
+                || request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new IllegalArgumentException("아이디와 비밀번호를 입력해 주세요.");
+        }
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+            throw new IllegalStateException("이미 존재하는 아이디입니다.");
         }
         userRepository.save(User.builder()
                 .username(request.getUsername())

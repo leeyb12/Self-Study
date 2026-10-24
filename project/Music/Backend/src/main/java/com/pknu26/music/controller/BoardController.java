@@ -2,6 +2,7 @@ package com.pknu26.music.controller;
 
 import com.pknu26.music.dto.BoardDTO;
 import com.pknu26.music.dto.CommentDTO;
+import com.pknu26.music.dto.CommentRequest;
 import com.pknu26.music.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -71,10 +72,10 @@ public class BoardController {
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentDTO> addComment(
             @PathVariable("id")      Long id,
-            @RequestParam("content") String content,
+            @RequestBody CommentRequest request,
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(
-                boardService.addComment(id, content, userDetails.getUsername()));
+                boardService.addComment(id, request.content(), userDetails.getUsername()));
     }
 
     @DeleteMapping("/comments/{commentId}")

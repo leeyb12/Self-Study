@@ -5,7 +5,9 @@ import com.pknu26.music.security.JwtTokenProvider;
 import com.pknu26.music.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -28,9 +30,9 @@ public class AuthController {
             );
             String token = jwtTokenProvider.generateToken(request.getUsername());
             return ResponseEntity.ok(Map.of("token", token));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "아이디 또는 비밀번호가 틀렸습니다."));
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "아이디 또는 비밀번호가 올바르지 않습니다."));
         }
     }
 
@@ -39,8 +41,11 @@ public class AuthController {
         try {
             userService.register(request);
             return ResponseEntity.ok(Map.of("message", "회원가입 완료"));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest()
+                    .body(Map.of("error", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("error", e.getMessage()));
         }
     }

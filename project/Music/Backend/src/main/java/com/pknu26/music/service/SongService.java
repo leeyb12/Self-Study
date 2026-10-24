@@ -8,11 +8,13 @@ import com.pknu26.music.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,7 +26,8 @@ public class SongService {
     private final SongRepository songRepository;
     private final UserRepository userRepository;
 
-    private static final String STORAGE_PATH = "C:/music_storage/";
+    @Value("${app.storage.music-dir:C:/music_storage}")
+    private String storageDirectory;
 
     public void upload(String title, String artist, String lyrics,
                        MultipartFile musicFile, MultipartFile imageFile,
@@ -33,18 +36,18 @@ public class SongService {
         User uploader = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("유저 없음"));
 
-        new File(STORAGE_PATH).mkdirs();
+        Path storagePath = ensureDirectory(storageDirectory);
 
         String musicExt      = getExt(musicFile.getOriginalFilename());
         String musicFileName = UUID.randomUUID().toString() + musicExt;
-        String musicPath     = STORAGE_PATH + musicFileName;
+        String musicPath     = storagePath.resolve(musicFileName).toString();
         musicFile.transferTo(new File(musicPath));
 
         String imagePath = null;
         if (imageFile != null && !imageFile.isEmpty()) {
             String imageExt      = getExt(imageFile.getOriginalFilename());
             String imageFileName = UUID.randomUUID().toString() + imageExt;
-            imagePath = STORAGE_PATH + imageFileName;
+            imagePath = storagePath.resolve(imageFileName).toString();
             imageFile.transferTo(new File(imagePath));
         }
 
@@ -84,7 +87,7 @@ public class SongService {
 
         String imageExt      = getExt(imageFile.getOriginalFilename());
         String imageFileName = UUID.randomUUID().toString() + imageExt;
-        String imagePath     = STORAGE_PATH + imageFileName;
+        String imagePath     = ensureDirectory(storageDirectory).resolve(imageFileName).toString();
         imageFile.transferTo(new File(imagePath));
 
         song.updateImage(imagePath);
@@ -105,6 +108,7 @@ public class SongService {
         songRepository.delete(song);
     }
 
+    @Transactional(readOnly = true)
     public List<SongResponse> getAll(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("유저 없음"));
@@ -115,6 +119,7 @@ public class SongService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public SongResponse getOne(Long id, String username) {
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("곡 없음: " + id));
@@ -135,5 +140,11 @@ public class SongService {
         if (path == null) return;
         File file = new File(path);
         if (file.exists()) file.delete();
+    }
+
+    private Path ensureDirectory(String directory) throws IOException {
+        Path path = Path.of(directory).toAbsolutePath().normalize();
+        java.nio.file.Files.createDirectories(path);
+        return path;
     }
 }

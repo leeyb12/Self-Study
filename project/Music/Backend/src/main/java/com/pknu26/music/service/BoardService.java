@@ -11,11 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,8 +32,10 @@ public class BoardService {
     private final CommentRepository   commentRepository;
     private final UserRepository      userRepository;
 
-    private static final String STORAGE_PATH = "C:/music_storage/board/";
+    @Value("${app.storage.music-dir:C:/music_storage}")
+    private String storageDirectory;
 
+    @Transactional(readOnly = true)
     public List<BoardDTO> getAll() {
         return boardRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
@@ -38,8 +43,9 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public BoardDTO.PageResponse getPage(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(Math.max(page, 0), size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<BoardDTO> boardPage = boardRepository.findAll(pageable)
                 .map(BoardDTO::from);
 
@@ -53,6 +59,7 @@ public class BoardService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public BoardDTO getOne(Long id) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글 없음: " + id));
@@ -129,6 +136,7 @@ public class BoardService {
         boardFileRepository.delete(file);
     }
 
+    @Transactional(readOnly = true)
     public List<CommentDTO> getComments(Long boardId) {
         return commentRepository.findAllByBoardIdOrderByCreatedAtAsc(boardId)
                 .stream()
@@ -165,11 +173,12 @@ public class BoardService {
     }
 
     private void saveFile(Board board, MultipartFile file) throws IOException {
-        new File(STORAGE_PATH).mkdirs();
+        Path storagePath = Path.of(storageDirectory).resolve("board").toAbsolutePath().normalize();
+        Files.createDirectories(storagePath);
 
         String ext      = getExt(file.getOriginalFilename());
         String fileName = UUID.randomUUID().toString() + ext;
-        String path     = STORAGE_PATH + fileName;
+        String path     = storagePath.resolve(fileName).toString();
         file.transferTo(new File(path));
 
         String type = file.getContentType() != null
