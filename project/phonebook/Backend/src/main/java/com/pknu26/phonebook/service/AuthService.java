@@ -18,8 +18,10 @@ import com.pknu26.phonebook.repository.ContactGroupRepository;
 import com.pknu26.phonebook.repository.UserRepository;
 import com.pknu26.phonebook.security.JwtTokenProvider;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+@Builder 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
